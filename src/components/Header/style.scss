@@ -1,3 +1,5 @@
+@import '../../styles/global';
+
 .header {
     width: 100%;
     min-height: 60px;
@@ -7,7 +9,7 @@
 }
 
 .container {
-    max-width: 1440px;
+    max-width: 1440px - 64px;
     padding: 18px 32px;
     display: flex;
     align-items: center;
@@ -32,14 +34,16 @@
     .nav-item {
         padding-left: 10px;
         padding-right: 10px;
+
         a {
-            font-family: BarlowCondensed;
+            @include barlow-condensed;
+
             font-style: normal;
-            font-weight: 500;
             font-size: 20px;
             line-height: 24px;
             color: #82eacf;
             text-decoration: none;
+            text-transform: uppercase;
         }
     }
 }

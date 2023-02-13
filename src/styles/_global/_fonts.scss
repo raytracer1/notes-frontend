@@ -1,0 +1,43 @@
+// FONT STACK
+// --------------------------------------------------------------------------------------------
+
+/* Roboto mono. */
+
+/**
+ * Includes a font, provided in the TTF format only.
+ * $font-name {String}
+ * $font-weight {Number}
+ * $font-style {String}
+ * $font-url {String}
+ */
+ @mixin font-family-ttf(
+  $font-name, $font-weight, $font-style, $font-url) {
+  @font-face {
+    font-family: $font-name;
+    font-style: $font-style;
+    font-weight: $font-weight;
+    src: url('#{$font-url}.ttf') format('truetype');
+  }
+}
+
+// Using the implementation of this mixin provided by topcoder-react-utils
+// is not loading fonts correctly.  This may be a webpack related issue.
+@mixin font-family($font-name, $font-weight, $font-style, $font-url, $font-file) {
+  @font-face {
+    font-family: '#{$font-name}';
+    src: url('#{$font-url}#{$font-file}.eot');
+    src:
+      url('#{$font-url}#{$font-file}.eot?#iefix') format('embedded-opentype'),
+      url('#{$font-url}#{$font-file}.woff') format('woff'),
+      url('#{$font-url}#{$font-file}.ttf') format('truetype'),
+      url('#{$font-url}#{$font-file}.svg##{$font-name}') format('svg');
+    font-weight: $font-weight;
+    font-style: $font-style;
+  }
+}
+
+/* Barlow and BarlowCondensed is being used by TCO19 */
+@include font-family('BarlowCondensed', 400, normal, '../../assets/fonts/BarlowCondensed/', 'BarlowCondensed-Regular');
+@include font-family('BarlowCondensed', 500, normal, '../../assets/fonts/BarlowCondensed/', 'BarlowCondensed-Medium');
+@include font-family('BarlowCondensed', 600, normal, '../../assets/fonts/BarlowCondensed/', 'BarlowCondensed-SemiBold');
+@include font-family('BarlowCondensed', 700, normal, '../../assets/fonts/BarlowCondensed/', 'BarlowCondensed-Bold');

@@ -13,7 +13,7 @@ function Header() {
             <Nav navbar>
               <div className="nav">
                 <NavItem>
-                  <NavLink className="nav-link"  to='/home'>Home</NavLink>
+                  <NavLink className="nav-link"  to='/home'>home</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink className="nav-link" to='/space'>Create Learning Space</NavLink>

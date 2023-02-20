@@ -22,28 +22,41 @@
     height: 24px;
 }
 
-.navbar-nav {
-    margin: 0;
+i {
+    padding-right: 5px;
 }
 
 .nav {
+    margin-left: 20px;
     display: flex;
     flex-direction: row;
     list-style: none;
 
-    .nav-item {
+    .nav-link {
         padding-left: 10px;
         padding-right: 10px;
 
-        a {
-            @include barlow-condensed;
+        @include barlow-condensed;
 
-            font-style: normal;
-            font-size: 20px;
-            line-height: 24px;
-            color: #82eacf;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
+        font-style: normal;
+        font-size: 20px;
+        line-height: 24px;
+        color: #82eacf;
+        text-decoration: none;
+        text-transform: uppercase;
     }
+}
+
+.button {
+    margin-left: auto;
+    background-color: #0c0c0c;
+
+    @include barlow-condensed;
+
+    font-style: normal;
+    font-size: 20px;
+    line-height: 24px;
+    color: #82eacf;
+    text-decoration: none;
+    text-transform: uppercase;
 }

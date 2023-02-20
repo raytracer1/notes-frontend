@@ -15,10 +15,6 @@
     height: 24px;
 }
 
-.navbar-toggler {
-    display: none;
-}
-
 ul {
     list-style: none;
 }
@@ -27,8 +23,12 @@ span {
     padding-right: 5px;
 }
 
-.container-fluid, .container {
+.container-fluid {
     min-height: 60px;
+
+    @media(max-width:767px) {
+        padding: 0;
+    }
 }
 
 .container {
@@ -36,6 +36,37 @@ span {
     display: flex;
     flex-direction: row;
     align-items: center;
+    min-height: 60px;
+
+    @media(max-width:767px) {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0;
+        padding: 0;
+    }
+
+    .toggler {
+        @media(max-width:767px) {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding-left: 10px;
+        }
+        .navbar-toggler {
+            display: none;
+
+            @media(max-width:767px) {
+                display: block;
+            }
+        }
+
+        .logo {
+            @media(max-width:767px) {
+                display: block;
+            }
+        }
+    }
 
     .navbar-collapse {
         width: 100%;
@@ -45,8 +76,14 @@ span {
 
         .navbar-nav {
             padding-left: 0;
-            .nav-item:not(:last-child) {
-                padding-right: 20px;
+            .nav-item {
+                &:not(:last-child) {
+                    padding-right: 20px;
+                }
+
+                @media(max-width:767px) {
+                    padding: 10px 0;
+                }
             }
 
             &.button {
@@ -75,6 +112,24 @@ span {
 
             .nav-link {
                 color: #82eacf;
+            }
+        }
+
+        @media(max-width:767px) {
+            display: none !important;
+            padding: 0 0 0 10px;
+            margin: 0;
+            &.show {
+                display: flex !important;
+                flex-direction: column;
+                align-items: flex-start;
+
+                .navbar-nav {
+                    margin: 0;
+                    &.button {
+                        margin-left: unset;
+                    }
+                }
             }
         }
     }

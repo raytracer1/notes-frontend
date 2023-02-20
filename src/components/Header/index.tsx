@@ -15,10 +15,12 @@ function Header() {
     <div className='header'>
       <Navbar dark expand="md">
         <div className="container">
-          <NavbarToggler onClick={toggleNav} />
-          <NavbarBrand href="/">
-            <img className="img" src='logo192.png' alt='log' />
-          </NavbarBrand>
+          <div className="toggler">
+            <NavbarToggler onClick={toggleNav} />
+            <NavbarBrand className='logo' href="/">
+              <img className="img" src='logo192.png' alt='log' />
+            </NavbarBrand>
+          </div>
           <Collapse isOpen={isNavOpen} navbar>
             <Nav navbar>
               <NavItem>

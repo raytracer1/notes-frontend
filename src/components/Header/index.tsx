@@ -1,15 +1,30 @@
 import { useState } from "react";
 import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem,
-  Button } from 'reactstrap';
+  Button, Modal, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import './style.scss';
 
 function Header() {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>('');
+  const [passWord, setPassWord] = useState<string>('');
+  const [remember, setRemember] = useState<boolean>(false);
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   }
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  }
+
+  const handlelogin = (event:any) => {
+    toggleModal();
+    alert(" Username: " + userName + " Password: " + passWord
+        + " Remember: " + remember);
+    event.preventDefault();
+}
 
   return (
     <div className='header'>
@@ -36,7 +51,7 @@ function Header() {
             </Nav>
             <Nav className="button" navbar>
               <NavItem>
-                <Button outline>
+                <Button outline onClick={toggleModal}>
                   <span className="fa fa-sign-in fa-lg"></span>Login
                 </Button>
               </NavItem>
@@ -44,6 +59,46 @@ function Header() {
           </Collapse>
         </div>
       </Navbar>
+      <Modal isOpen={isModalOpen} toggle={toggleModal}>
+        <div className="modal-header">
+          <div className="modal-titel">Login</div>
+          <Button className="btn-close" onClick={toggleModal}>
+            <span>x</span>
+          </Button>
+        </div>
+        <ModalBody>
+          <Form onSubmit={handlelogin}>
+            <FormGroup>
+              <Label htmlFor="username">Username</Label>
+              <Input type="text" id="username" name="username"
+                innerRef={(input) => {
+                    if (input)
+                      setUserName(input.value)
+                  }
+                }/> 
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="password">Password</Label>
+              <Input type="text" id="password" name="password"
+                innerRef={(input) => {
+                  if (input)
+                    setPassWord(input.value)
+                }
+              }/> 
+            </FormGroup>
+            <FormGroup check>
+              <Input type="checkbox" name="remember"
+                innerRef={(input) => {
+                  if (input)
+                    setRemember((input as HTMLInputElement).checked)
+                }
+              }/> 
+                Remember me
+            </FormGroup>
+            <Button type="submit" value="submit" color="primary">Login</Button>
+          </Form>
+        </ModalBody>
+      </Modal>
     </div>
   );
 }

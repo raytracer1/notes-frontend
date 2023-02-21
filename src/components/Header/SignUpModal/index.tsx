@@ -44,7 +44,7 @@ const SignUpModal = ({
     >
       <Form onSubmit={handleSignUp}>
         <FormGroup>
-          <Label htmlFor='username'>UserName</Label>
+          <Label htmlFor='username'>Username</Label>
           <Input type='text' id='username' name='username'
             value={userName}
             onChange={(e) => {

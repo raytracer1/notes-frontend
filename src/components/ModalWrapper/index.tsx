@@ -19,7 +19,6 @@ const ModalWrapper = ({
       <div className='modal-header'>
         <div className='modal-titel'>{title}</div>
         <Button className='btn-close' onClick={toggleModal}>
-          <span>x</span>
         </Button>
       </div>
       <ModalBody>

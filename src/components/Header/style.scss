@@ -88,6 +88,10 @@ ul {
 
             &.button {
                 margin-left: auto;
+
+                .btn:focus {
+                    outline: unset;
+                }
             }
 
             .nav-link, .btn {

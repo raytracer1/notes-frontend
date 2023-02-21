@@ -9,7 +9,7 @@ function Main() {
     return (
       <div className='main'>
         <Header />
-        <div>
+        <div className='body'>
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/space' element={<Space />} />

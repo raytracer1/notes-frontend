@@ -1,4 +1,8 @@
 .main {
     display: flex;
     flex-direction: column;
+
+    .body {
+        min-height: calc(100vh - 120px);
+    }
 }

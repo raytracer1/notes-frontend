@@ -77,7 +77,7 @@ function Header() {
               </NavItem>
               <NavItem>
                 <Button outline onClick={toggleSignUpModal}>
-                  <span className='fa fa-sign-up fa-lg'></span>Sign Up
+                  <span className='fa fa-user fa-lg'></span>Sign Up
                 </Button>
               </NavItem>
             </Nav>

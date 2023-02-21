@@ -7,13 +7,13 @@ import './style.scss';
 
 function Main() {
     return (
-      <div className="main">
+      <div className='main'>
         <Header />
         <div>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/space" element={<Space />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path='/' element={<Home />} />
+            <Route path='/space' element={<Space />} />
+            <Route path='*' element={<Navigate to='/' replace />} />
           </Routes>
         </div>
         <Footer />

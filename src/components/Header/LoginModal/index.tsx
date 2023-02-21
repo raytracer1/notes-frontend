@@ -29,12 +29,12 @@ const LoginModal = ({
     <ModalWrapper
       isModalOpen={isModalOpen}
       toggleModal={toggleModal}
-      title="login"
+      title='login'
     >
       <Form onSubmit={handleLogin}>
         <FormGroup>
-          <Label htmlFor="email">Email</Label>
-          <Input type="text" id="email" name="email"
+          <Label htmlFor='email'>Email</Label>
+          <Input type='text' id='email' name='email'
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -42,8 +42,8 @@ const LoginModal = ({
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="password">Password</Label>
-          <Input type="text" id="password" name="password"
+          <Label htmlFor='password'>Password</Label>
+          <Input type='text' id='password' name='password'
             value={passWord}
             onChange={(e) => {
               setPassWord(e.target.value);
@@ -51,7 +51,7 @@ const LoginModal = ({
           />
         </FormGroup>
         <FormGroup check>
-          <Input type="checkbox" name="remember"
+          <Input type='checkbox' name='remember'
             checked={remember}
             onChange={(e) => {
               setRemember(e.target.checked)
@@ -59,7 +59,7 @@ const LoginModal = ({
           />
           Remember me
         </FormGroup>
-        <Button type="submit" value="submit" color="primary"
+        <Button type='submit' value='submit' color='primary'
           disabled={(email === '') || (passWord === '')}
         >
           Login

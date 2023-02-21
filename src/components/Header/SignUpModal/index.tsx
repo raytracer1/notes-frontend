@@ -29,12 +29,12 @@ const SignUpModal = ({
     <ModalWrapper
       isModalOpen={isModalOpen}
       toggleModal={toggleModal}
-      title="Sign Up"
+      title='Sign Up'
     >
       <Form onSubmit={handleSignUp}>
         <FormGroup>
-          <Label htmlFor="username">UserName</Label>
-          <Input type="text" id="username" name="username"
+          <Label htmlFor='username'>UserName</Label>
+          <Input type='text' id='username' name='username'
             value={userName}
             onChange={(e) => {
               setUserName(e.target.value);
@@ -42,8 +42,8 @@ const SignUpModal = ({
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="email">Email</Label>
-          <Input type="text" id="email" name="email"
+          <Label htmlFor='email'>Email</Label>
+          <Input type='text' id='email' name='email'
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -51,15 +51,15 @@ const SignUpModal = ({
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="password">Password</Label>
-          <Input type="text" id="password" name="password"
+          <Label htmlFor='password'>Password</Label>
+          <Input type='text' id='password' name='password'
             value={passWord}
             onChange={(e) => {
               setPassWord(e.target.value);
             }}
           />
         </FormGroup>
-        <Button type="submit" value="submit" color="primary"
+        <Button type='submit' value='submit' color='primary'
           disabled={(userName === '') || (email === '') || (passWord === '')}
         >
           Sign Up

@@ -16,9 +16,9 @@ const ModalWrapper = ({
 } : PropsWithChildren<IModalWrapperProps> ) => {
   return (
     <Modal isOpen={isModalOpen} toggle={toggleModal}>
-      <div className="modal-header">
-        <div className="modal-titel">{title}</div>
-        <Button className="btn-close" onClick={toggleModal}>
+      <div className='modal-header'>
+        <div className='modal-titel'>{title}</div>
+        <Button className='btn-close' onClick={toggleModal}>
           <span>x</span>
         </Button>
       </div>

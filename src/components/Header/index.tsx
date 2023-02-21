@@ -48,36 +48,36 @@ function Header() {
 
   return (
     <div className='header'>
-      <Navbar dark expand="md">
-        <div className="container">
-          <div className="toggler">
+      <Navbar dark expand='md'>
+        <div className='container'>
+          <div className='toggler'>
             <NavbarToggler onClick={toggleNav} />
             <NavbarBrand className='logo' href="/">
-              <img className="img" src='logo192.png' alt='log' />
+              <img className='img' src='logo192.png' alt='log' />
             </NavbarBrand>
           </div>
           <Collapse isOpen={isNavOpen} navbar>
             <Nav navbar>
               <NavItem>
-                <NavLink className="nav-link" to='/'>
-                  <span className="fa fa-home fa-lg"></span>Home
+                <NavLink className='nav-link' to='/'>
+                  <span className='fa fa-home fa-lg'></span>Home
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink className="nav-link" to='/space'>
-                  <span className="fa fa-info fa-lg"></span>Create Learning Space
+                <NavLink className='nav-link' to='/space'>
+                  <span className='fa fa-info fa-lg'></span>Create Learning Space
                 </NavLink>
               </NavItem>
             </Nav>
-            <Nav className="button" navbar>
+            <Nav className='button' navbar>
               <NavItem>
                 <Button outline onClick={toggleLoginModal}>
-                  <span className="fa fa-sign-in fa-lg"></span>Login
+                  <span className='fa fa-sign-in fa-lg'></span>Login
                 </Button>
               </NavItem>
               <NavItem>
                 <Button outline onClick={toggleSignUpModal}>
-                  <span className="fa fa-sign-up fa-lg"></span>Sign Up
+                  <span className='fa fa-sign-up fa-lg'></span>Sign Up
                 </Button>
               </NavItem>
             </Nav>

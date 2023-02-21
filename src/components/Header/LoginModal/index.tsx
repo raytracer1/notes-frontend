@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import ModalWrapper from '../../ModalWrapper';
+import { validEmail, validPassWord } from '../../../util/validate';
 
 interface ILoginModalProps {
   email: string,
@@ -25,10 +27,18 @@ const LoginModal = ({
   handleLogin,
 } : ILoginModalProps) => {
 
+  const [focus, setFocus] = useState<string>('');
+  const toggleLoginModalHeler = () => {
+    setEmail('');
+    setPassWord('');
+    setFocus('');
+    toggleModal();
+  }
+
   return (
     <ModalWrapper
       isModalOpen={isModalOpen}
-      toggleModal={toggleModal}
+      toggleModal={toggleLoginModalHeler}
       title='login'
     >
       <Form onSubmit={handleLogin}>
@@ -39,16 +49,44 @@ const LoginModal = ({
             onChange={(e) => {
               setEmail(e.target.value);
             }}
+            onFocus={() => {
+              setFocus('email');
+            }}
+            onBlur={() => {
+              setFocus('');
+            }}
           />
+          {
+            !validEmail(email) &&
+            focus !== 'email' && email.length > 0 && (
+              <span className='error'>
+                {'email should like xxx@yyy.com'}
+              </span>
+            )
+          }
         </FormGroup>
         <FormGroup>
           <Label htmlFor='password'>Password</Label>
-          <Input type='text' id='password' name='password'
+          <Input type='password' id='password' name='password'
             value={passWord}
             onChange={(e) => {
               setPassWord(e.target.value);
             }}
+            onFocus={() => {
+              setFocus('password');
+            }}
+            onBlur={() => {
+              setFocus('');
+            }}
           />
+          {
+            !validPassWord(passWord) &&
+            focus !== 'password' && passWord.length > 0 && (
+              <span className='error'>
+                {'Password length < 6'}
+              </span>
+            )
+          }
         </FormGroup>
         <FormGroup check>
           <Input type='checkbox' name='remember'
@@ -60,7 +98,7 @@ const LoginModal = ({
           Remember me
         </FormGroup>
         <Button type='submit' value='submit' color='primary'
-          disabled={(email === '') || (passWord === '')}
+          disabled={!validEmail(email) || !validPassWord(passWord)}
         >
           Login
         </Button>

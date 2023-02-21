@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import ModalWrapper from '../../ModalWrapper';
+import { validUserName, validEmail, validPassWord } from '../../../util/validate';
 
 interface ISignUpModalProps {
   userName: string,
@@ -25,10 +27,19 @@ const SignUpModal = ({
   handleSignUp,
 } : ISignUpModalProps) => {
 
+  const [focus, setFocus] = useState<string>('');
+  const toggleLoginModalHeler = () => {
+    setUserName('');
+    setEmail('');
+    setPassWord('');
+    setFocus('');
+    toggleModal();
+  }
+
   return (
     <ModalWrapper
       isModalOpen={isModalOpen}
-      toggleModal={toggleModal}
+      toggleModal={toggleLoginModalHeler}
       title='Sign Up'
     >
       <Form onSubmit={handleSignUp}>
@@ -39,7 +50,21 @@ const SignUpModal = ({
             onChange={(e) => {
               setUserName(e.target.value);
             }}
+            onFocus={() => {
+              setFocus('userName');
+            }}
+            onBlur={() => {
+              setFocus('');
+            }}
           />
+          {
+            !validUserName(userName) &&
+            focus !== 'userName' && userName.length > 0 && (
+              <span className='error'>
+                {'username should start with character and length between 6 and 20'}
+              </span>
+            )
+          }
         </FormGroup>
         <FormGroup>
           <Label htmlFor='email'>Email</Label>
@@ -48,19 +73,47 @@ const SignUpModal = ({
             onChange={(e) => {
               setEmail(e.target.value);
             }}
+            onFocus={() => {
+              setFocus('email');
+            }}
+            onBlur={() => {
+              setFocus('');
+            }}
           />
+          {
+            !validEmail(email) &&
+            focus !== 'email' && email.length > 0 && (
+              <span className='error'>
+                {'email should like xxx@yyy.com'}
+              </span>
+            )
+          }
         </FormGroup>
         <FormGroup>
           <Label htmlFor='password'>Password</Label>
-          <Input type='text' id='password' name='password'
+          <Input type='password' id='password' name='password'
             value={passWord}
             onChange={(e) => {
               setPassWord(e.target.value);
             }}
+            onFocus={() => {
+              setFocus('password');
+            }}
+            onBlur={() => {
+              setFocus('');
+            }}
           />
+          {
+            !validPassWord(passWord) &&
+            focus !== 'password' && passWord.length > 0 && (
+              <span className='error'>
+                {'Password length < 6'}
+              </span>
+            )
+          }
         </FormGroup>
         <Button type='submit' value='submit' color='primary'
-          disabled={(userName === '') || (email === '') || (passWord === '')}
+          disabled={!validUserName(userName) || !validEmail(email) || !validPassWord(passWord)}
         >
           Sign Up
         </Button>

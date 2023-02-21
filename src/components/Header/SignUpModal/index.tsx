@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { Button, Modal, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
-import './style.scss';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import ModalWrapper from '../../ModalWrapper';
 
 interface ISignUpModalProps {
   userName: string,
@@ -27,50 +26,46 @@ const SignUpModal = ({
 } : ISignUpModalProps) => {
 
   return (
-    <Modal isOpen={isModalOpen} toggle={toggleModal}>
-      <div className="modal-header">
-        <div className="modal-titel">Sign Up</div>
-        <Button className="btn-close" onClick={toggleModal}>
-          <span>x</span>
-        </Button>
-      </div>
-      <ModalBody>
-        <Form onSubmit={handleSignUp}>
+    <ModalWrapper
+      isModalOpen={isModalOpen}
+      toggleModal={toggleModal}
+      title="Sign Up"
+    >
+      <Form onSubmit={handleSignUp}>
         <FormGroup>
-            <Label htmlFor="username">UserName</Label>
-            <Input type="text" id="username" name="username"
-              value={userName}
-              onChange={(e) => {
-                setUserName(e.target.value);
-              }}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor="email">Email</Label>
-            <Input type="text" id="email" name="email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor="password">Password</Label>
-            <Input type="text" id="password" name="password"
-              value={passWord}
-              onChange={(e) => {
-                setPassWord(e.target.value);
-              }}
-            />
-          </FormGroup>
-          <Button type="submit" value="submit" color="primary"
-            disabled={(userName === '') || (email === '') || (passWord === '')}
-          >
-            Sign Up
-          </Button>
-        </Form>
-      </ModalBody>
-    </Modal>
+          <Label htmlFor="username">UserName</Label>
+          <Input type="text" id="username" name="username"
+            value={userName}
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="email">Email</Label>
+          <Input type="text" id="email" name="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="password">Password</Label>
+          <Input type="text" id="password" name="password"
+            value={passWord}
+            onChange={(e) => {
+              setPassWord(e.target.value);
+            }}
+          />
+        </FormGroup>
+        <Button type="submit" value="submit" color="primary"
+          disabled={(userName === '') || (email === '') || (passWord === '')}
+        >
+          Sign Up
+        </Button>
+      </Form>
+    </ModalWrapper>
   );
 }
   

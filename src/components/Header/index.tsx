@@ -39,7 +39,7 @@ function Header() {
   const handleSignUp = (event:any) => {
     toggleSignUpModal();
     alert(" userName: " + userName + " Password: " + passWord
-        + " Remember: " + remember);
+        + " email: " + email);
     event.preventDefault();
     setUserName('');
     setEmail('');

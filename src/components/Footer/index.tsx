@@ -6,22 +6,24 @@ function Footer() {
       <div className='footer'>
         <div className='footer-container'>
           <div className='content'>
-            <div className='links'>
-              <h5>Links</h5>
-              <ul className="list-unstyled">
-                <li><Link to='/home'>Home</Link></li>
-                <li><Link to='/space'>Create Learning Space</Link></li>
-              </ul>
-            </div>
-            <div className="address">
-              <h5>Our Address</h5>
-              <address>
-                TianFu New Zone<br />
-                Chengdu,Sichuan<br />
-                China<br />
-                <i className="fa fa-envelope fa-lg"></i>: <a href="mailto:zhengbijun123@gmail.com">
-                  zhengbijun123@gmail.com</a>
-              </address>
+            <div className='links-address'>
+              <div className='links'>
+                <h5>Links</h5>
+                <ul className="list-unstyled">
+                  <li><Link to='/home'>Home</Link></li>
+                  <li><Link to='/space'>Create Learning Space</Link></li>
+                </ul>
+              </div>
+              <div className="address">
+                <h5>Our Address</h5>
+                <address>
+                  TianFu New Zone<br />
+                  Chengdu,Sichuan<br />
+                  China<br />
+                  <i className="fa fa-envelope fa-lg"></i>: <a href="mailto:zhengbijun123@gmail.com">
+                    zhengbijun123@gmail.com</a>
+                </address>
+              </div>
             </div>
             <div className="social">
               <div className="text-center">

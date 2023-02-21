@@ -88,8 +88,13 @@ ul {
 
             &.button {
                 margin-left: auto;
+            }
 
-                .btn:focus {
+            .btn {
+                background-color: #fff;
+                color: #2c2c2c;
+
+                &:focus {
                     outline: unset;
                 }
             }

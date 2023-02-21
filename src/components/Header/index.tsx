@@ -24,6 +24,9 @@ function Header() {
     alert(" Username: " + userName + " Password: " + passWord
         + " Remember: " + remember);
     event.preventDefault();
+    setUserName('');
+    setPassWord('');
+    setRemember(false);
 }
 
   return (
@@ -71,29 +74,29 @@ function Header() {
             <FormGroup>
               <Label htmlFor="username">Username</Label>
               <Input type="text" id="username" name="username"
-                innerRef={(input) => {
-                    if (input)
-                      setUserName(input.value)
-                  }
-                }/> 
+                value={userName}
+                onChange={(e) => {
+                  setUserName(e.target.value);
+                }}
+              />
             </FormGroup>
             <FormGroup>
               <Label htmlFor="password">Password</Label>
               <Input type="text" id="password" name="password"
-                innerRef={(input) => {
-                  if (input)
-                    setPassWord(input.value)
-                }
-              }/> 
+                value={passWord}
+                onChange={(e) => {
+                  setPassWord(e.target.value);
+                }}
+              />
             </FormGroup>
             <FormGroup check>
               <Input type="checkbox" name="remember"
-                innerRef={(input) => {
-                  if (input)
-                    setRemember((input as HTMLInputElement).checked)
-                }
-              }/> 
-                Remember me
+                checked={remember}
+                onChange={(e) => {
+                  setRemember(e.target.checked)
+                }}
+              />
+              Remember me
             </FormGroup>
             <Button type="submit" value="submit" color="primary">Login</Button>
           </Form>

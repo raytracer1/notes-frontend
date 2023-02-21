@@ -2,11 +2,14 @@ import { useState } from "react";
 import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Button } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import LoginModal from "./LoginModal";
+import SignUpModal from "./SignUpModal";
 import './style.scss';
 
 function Header() {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [passWord, setPassWord] = useState<string>('');
   const [remember, setRemember] = useState<boolean>(false);
@@ -15,19 +18,33 @@ function Header() {
     setIsNavOpen(!isNavOpen);
   }
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+  const toggleLoginModal = () => {
+    setIsLoginModalOpen(!isLoginModalOpen);
+  }
+
+  const toggleSignUpModal = () => {
+    setIsSignUpModalOpen(!isSignUpModalOpen);
   }
 
   const handlelogin = (event:any) => {
-    toggleModal();
+    toggleLoginModal();
     alert(" email: " + email + " Password: " + passWord
         + " Remember: " + remember);
     event.preventDefault();
     setEmail('');
     setPassWord('');
     setRemember(false);
-}
+  }
+
+  const handleSignUp = (event:any) => {
+    toggleSignUpModal();
+    alert(" userName: " + userName + " Password: " + passWord
+        + " Remember: " + remember);
+    event.preventDefault();
+    setUserName('');
+    setEmail('');
+    setPassWord('');
+  }
 
   return (
     <div className='header'>
@@ -54,12 +71,12 @@ function Header() {
             </Nav>
             <Nav className="button" navbar>
               <NavItem>
-                <Button outline onClick={toggleModal}>
+                <Button outline onClick={toggleLoginModal}>
                   <span className="fa fa-sign-in fa-lg"></span>Login
                 </Button>
               </NavItem>
               <NavItem>
-                <Button outline onClick={toggleModal}>
+                <Button outline onClick={toggleSignUpModal}>
                   <span className="fa fa-sign-up fa-lg"></span>Sign Up
                 </Button>
               </NavItem>
@@ -74,9 +91,20 @@ function Header() {
         setPassWord={setPassWord}
         remember={remember}
         setRemember={setRemember}
-        isModalOpen={isModalOpen}
-        toggleModal={toggleModal}
+        isModalOpen={isLoginModalOpen}
+        toggleModal={toggleLoginModal}
         handleLogin={handlelogin}
+      />
+      <SignUpModal
+        userName={userName}
+        setUserName={setUserName}
+        email={email}
+        setEmail={setEmail}
+        passWord={passWord}
+        setPassWord={setPassWord}
+        isModalOpen={isSignUpModalOpen}
+        toggleModal={toggleSignUpModal}
+        handleSignUp={handleSignUp}
       />
     </div>
   );

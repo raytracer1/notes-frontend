@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem,
-  Button, Modal, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Button } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
+import LoginModal from "./LoginModal";
 import './style.scss';
 
 function Header() {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [passWord, setPassWord] = useState<string>('');
   const [remember, setRemember] = useState<boolean>(false);
 
@@ -21,10 +21,10 @@ function Header() {
 
   const handlelogin = (event:any) => {
     toggleModal();
-    alert(" Username: " + userName + " Password: " + passWord
+    alert(" email: " + email + " Password: " + passWord
         + " Remember: " + remember);
     event.preventDefault();
-    setUserName('');
+    setEmail('');
     setPassWord('');
     setRemember(false);
 }
@@ -58,50 +58,26 @@ function Header() {
                   <span className="fa fa-sign-in fa-lg"></span>Login
                 </Button>
               </NavItem>
+              <NavItem>
+                <Button outline onClick={toggleModal}>
+                  <span className="fa fa-sign-up fa-lg"></span>Sign Up
+                </Button>
+              </NavItem>
             </Nav>
           </Collapse>
         </div>
       </Navbar>
-      <Modal isOpen={isModalOpen} toggle={toggleModal}>
-        <div className="modal-header">
-          <div className="modal-titel">Login</div>
-          <Button className="btn-close" onClick={toggleModal}>
-            <span>x</span>
-          </Button>
-        </div>
-        <ModalBody>
-          <Form onSubmit={handlelogin}>
-            <FormGroup>
-              <Label htmlFor="username">Username</Label>
-              <Input type="text" id="username" name="username"
-                value={userName}
-                onChange={(e) => {
-                  setUserName(e.target.value);
-                }}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label htmlFor="password">Password</Label>
-              <Input type="text" id="password" name="password"
-                value={passWord}
-                onChange={(e) => {
-                  setPassWord(e.target.value);
-                }}
-              />
-            </FormGroup>
-            <FormGroup check>
-              <Input type="checkbox" name="remember"
-                checked={remember}
-                onChange={(e) => {
-                  setRemember(e.target.checked)
-                }}
-              />
-              Remember me
-            </FormGroup>
-            <Button type="submit" value="submit" color="primary">Login</Button>
-          </Form>
-        </ModalBody>
-      </Modal>
+      <LoginModal
+        email={email}
+        setEmail={setEmail}
+        passWord={passWord}
+        setPassWord={setPassWord}
+        remember={remember}
+        setRemember={setRemember}
+        isModalOpen={isModalOpen}
+        toggleModal={toggleModal}
+        handleLogin={handlelogin}
+      />
     </div>
   );
 }

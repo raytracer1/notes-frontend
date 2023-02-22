@@ -29,7 +29,7 @@ ul {
 }
 
 .container {
-    width: 1376px;
+    max-width: 1376px;
     display: flex;
     flex-direction: row;
     align-items: center;

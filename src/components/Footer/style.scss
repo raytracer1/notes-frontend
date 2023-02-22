@@ -23,6 +23,9 @@
     .content {
         display: flex;
         flex-direction: row;
+        width: 100%;
+        padding: 0 12px;
+        justify-content: space-between;
 
         @media(max-width:767px) {
             flex-direction: column;
@@ -32,28 +35,35 @@
         .links-address {
             display: flex;
             flex-direction: row;
+            justify-content: flex-start;
+            width: 66%;
 
             @media(max-width:767px) {
                 margin: 0;
+                width: 100%;
             }
 
-            .links, .address {
-                margin-right: 40px;
-                color: #d4d4d4;
+            .links-address-item {
+                width: 50%;
 
-                @media(max-width:767px) {
-                    margin: 0 10px;
+                .links, .address {
+                    color: #d4d4d4;
+
+                    a {
+                        text-decoration: none;
+                        color: #82eacf;
+                        opacity: 0.75;
+
+                        &:hover {
+                            text-decoration: underline;
+                            opacity: 1.0;
+                        }
+                    }
                 }
 
-                a {
-                    text-decoration: none;
-                    color: #82eacf;
-                    opacity: 0.75;
-
-                    &:hover {
-                        text-decoration: underline;
-                        opacity: 1.0;
-                    }
+                &.center {
+                    display: flex;
+                    justify-content: center;
                 }
             }
         }
@@ -61,11 +71,18 @@
         .social {
             display: flex;
             flex-direction: row;
+            justify-content: flex-end;
             align-items: center;
             color: #fff;
+            width: 33%;
+
+            @media(max-width:767px) {
+                width: 100%;
+                justify-content: center;
+            }
 
             .btn {
-                margin-right: 3px;
+                margin-left: 3px;
             }
         }
     }

@@ -48,6 +48,12 @@
                 a {
                     text-decoration: none;
                     color: #82eacf;
+                    opacity: 0.75;
+
+                    &:hover {
+                        text-decoration: underline;
+                        opacity: 1.0;
+                    }
                 }
             }
         }

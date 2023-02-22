@@ -44,8 +44,8 @@ const SignUpModal = ({
     >
       <Form onSubmit={handleSignUp}>
         <FormGroup>
-          <Label htmlFor='username'>Username</Label>
           <Input type='text' id='username' name='username'
+            placeholder='username'
             value={userName}
             onChange={(e) => {
               setUserName(e.target.value);
@@ -67,8 +67,8 @@ const SignUpModal = ({
           }
         </FormGroup>
         <FormGroup>
-          <Label htmlFor='email'>Email</Label>
           <Input type='text' id='email' name='email'
+            placeholder='email'
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -90,8 +90,8 @@ const SignUpModal = ({
           }
         </FormGroup>
         <FormGroup>
-          <Label htmlFor='password'>Password</Label>
           <Input type='password' id='password' name='password'
+            placeholder='password'
             value={passWord}
             onChange={(e) => {
               setPassWord(e.target.value);

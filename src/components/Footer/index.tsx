@@ -20,11 +20,11 @@ function Footer() {
                 <div className="address">
                   <h5>Our Address</h5>
                   <address>
-                    TianFu New Zone<br />
-                    Chengdu,Sichuan<br />
-                    China<br />
-                    <i className="fa fa-envelope fa-lg"></i>: <a href="mailto:zhengbijun123@gmail.com">
-                      zhengbijun123@gmail.com</a>
+                    aaaa bbb ccc<br />
+                    City,Province<br />
+                    Country<br />
+                    <i className="fa fa-envelope fa-lg"></i>: <a href="mailto:xxxx@gmail.com">
+                      xxxx@gmail.com</a>
                   </address>
                 </div>
               </div>
@@ -36,7 +36,7 @@ function Footer() {
                 <a className="btn btn-social-icon btn-linkedin" href="http://www.linkedin.com/in/"><i className="fa fa-linkedin"></i></a>
                 <a className="btn btn-social-icon btn-twitter" href="http://twitter.com/"><i className="fa fa-twitter"></i></a>
                 <a className="btn btn-social-icon btn-google" href="http://youtube.com/"><i className="fa fa-youtube"></i></a>
-                <a className="btn btn-social-icon" href="mailto:zhengbijun123@gmail.com"><i className="fa fa-envelope-o"></i></a>
+                <a className="btn btn-social-icon" href="xxxx@gmail.com"><i className="fa fa-envelope-o"></i></a>
               </div>
             </div>
           </div>

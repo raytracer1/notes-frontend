@@ -65,7 +65,7 @@ function Header() {
               </NavItem>
               <NavItem>
                 <NavLink className='nav-link' to='/space'>
-                  <span className='fa fa-info fa-lg'></span>Create Learning Space
+                  <span className='fa fa-book fa-lg'></span>Create Learning Space
                 </NavLink>
               </NavItem>
             </Nav>

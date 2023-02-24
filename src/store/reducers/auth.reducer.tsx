@@ -32,17 +32,11 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: { },
-  extraReducers: {
-    [loginUserAction.pending.type]: (state, action) => {
-      state = {
-        login: "pending",
-        users: {
-          userName: '',
-          token: ''
-        }
-      };
-    },
-    [loginUserAction.fulfilled.type]: (state, action) => {
+  extraReducers: builder => {
+    builder.addCase(loginUserAction.pending, (state, action) => {
+      state.login = 'pending';
+    });
+    builder.addCase(loginUserAction.fulfilled, (state, action) => {
       state = {
         login: "success",
         users: {
@@ -50,16 +44,10 @@ export const authSlice = createSlice({
           token: action.payload.data.token,
         }
       };
-    },
-    [loginUserAction.rejected.type]: (state, action) => {
-      state = {
-        login: "failed",
-        users: {
-          userName: '',
-          token: ''
-        }
-      };
-    },
+    });
+    builder.addCase(loginUserAction.rejected, (state, action) => {
+      state.login = 'failed';
+    });
   }
 });
 

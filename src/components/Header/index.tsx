@@ -25,6 +25,8 @@ function Header() {
     setIsNavOpen(!isNavOpen);
   }
 
+  console.log(loginStatus);
+
   const toggleLoginModal = () => {
     setIsLoginModalOpen(!isLoginModalOpen);
   }

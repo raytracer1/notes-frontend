@@ -3,6 +3,7 @@ import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Button } fr
 import { NavLink } from 'react-router-dom';
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
+import { getUsers } from "../../service/authService";
 import './style.scss';
 
 function Header() {
@@ -26,7 +27,7 @@ function Header() {
     setIsSignUpModalOpen(!isSignUpModalOpen);
   }
 
-  const handlelogin = (event:any) => {
+  const handleLogin = (event:any) => {
     toggleLoginModal();
     alert(" email: " + email + " Password: " + passWord
         + " Remember: " + remember);
@@ -34,6 +35,12 @@ function Header() {
     setEmail('');
     setPassWord('');
     setRemember(false);
+
+    getUsers().then((data: any) => {
+      if (data) {
+        console.log(data);
+      }
+    });
   }
 
   const handleSignUp = (event:any) => {
@@ -93,7 +100,7 @@ function Header() {
         setRemember={setRemember}
         isModalOpen={isLoginModalOpen}
         toggleModal={toggleLoginModal}
-        handleLogin={handlelogin}
+        handleLogin={handleLogin}
       />
       <SignUpModal
         userName={userName}

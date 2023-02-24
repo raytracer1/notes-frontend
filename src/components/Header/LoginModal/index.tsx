@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Input } from 'reactstrap';
 import ModalWrapper from '../../ModalWrapper';
 import { validEmail, validPassWord } from '../../../util/validate';
 

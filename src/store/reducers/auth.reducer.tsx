@@ -6,18 +6,26 @@ export const loginUserAction = createAsyncThunk(
   'users/loginUser',
   async (params: { userName: string, passWord: string }) => {
     const response = await loginUser(params.userName, params.passWord);
-    return response.data;
+    return { userName: params.userName, data: response.data};
   }
 )
 
 // Define a type for the slice state
 interface authState {
   login: string;
+  users: {
+    userName: string,
+    token: string,
+  };
 }
 
 // Define the initial state using that type
 const initialState: authState = {
   login: 'init',
+  users: {
+    userName: '',
+    token: '',
+  },
 };
 
 export const authSlice = createSlice({
@@ -26,21 +34,30 @@ export const authSlice = createSlice({
   reducers: { },
   extraReducers: {
     [loginUserAction.pending.type]: (state, action) => {
-      console.log("pending");
       state = {
-        login: "loading",
+        login: "pending",
+        users: {
+          userName: '',
+          token: ''
+        }
       };
     },
     [loginUserAction.fulfilled.type]: (state, action) => {
-      console.log("fulfilled");
       state = {
         login: "success",
+        users: {
+          userName: action.payload.userName,
+          token: action.payload.data.token,
+        }
       };
     },
     [loginUserAction.rejected.type]: (state, action) => {
-      console.log("rejected");
       state = {
         login: "failed",
+        users: {
+          userName: '',
+          token: ''
+        }
       };
     },
   }

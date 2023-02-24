@@ -1,30 +1,50 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { loginUser } from '../../service/authService';
+
+// First, create the thunk
+export const loginUserAction = createAsyncThunk(
+  'users/loginUser',
+  async (params: { email: string, passWord: string }) => {
+    const response = await loginUser(params.email, params.passWord);
+    return response.data;
+  }
+)
 
 // Define a type for the slice state
 interface authState {
-  login: boolean;
+  login: string;
 }
 
 // Define the initial state using that type
 const initialState: authState = {
-  login: false,
+  login: 'init',
 };
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: { 
-    setAuth: (
-      state: authState,
-      action: PayloadAction<boolean>
-    ) => {
-      state.login = action.payload;
+  reducers: { },
+  extraReducers: {
+    [loginUserAction.pending.type]: (state, action) => {
+      console.log("pending");
+      state = {
+        login: "loading",
+      };
     },
-  },
+    [loginUserAction.fulfilled.type]: (state, action) => {
+      console.log("fulfilled");
+      state = {
+        login: "success",
+      };
+    },
+    [loginUserAction.rejected.type]: (state, action) => {
+      console.log("rejected");
+      state = {
+        login: "failed",
+      };
+    },
+  }
 });
 
-export const {
-  setAuth,
-} = authSlice.actions;
 
 export default authSlice.reducer;

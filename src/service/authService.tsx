@@ -1,11 +1,17 @@
 import {apiInstance as Axios} from '../api/requestInterceptor';
 
-//Get the upload file data
+//Get users
 const getUsers = () => {
-  console.log("getUsers");
   return Axios.get('users');
 };
 
+//Login
+const loginUser = (email: string, password: string) => {
+  return Axios.post('users/login', { params: { email, password } });
+}
+
+
 export {
   getUsers,
+  loginUser,
 };

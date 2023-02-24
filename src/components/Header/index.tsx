@@ -3,10 +3,9 @@ import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Button } fr
 import { NavLink } from 'react-router-dom';
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
-import { getUsers } from "../../service/authService";
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  setAuth,
+  loginUserAction,
 } from '../../store/reducers/auth.reducer';
 import './style.scss';
 
@@ -43,13 +42,7 @@ function Header() {
     setPassWord('');
     setRemember(false);
 
-    getUsers().then((data: any) => {
-      if (data) {
-        console.log(data);
-      }
-    });
-
-    dispatch(setAuth(true));
+    dispatch(loginUserAction({email, passWord}));
   }
 
   console.log("loginStatus: " + loginStatus);

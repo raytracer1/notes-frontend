@@ -4,9 +4,16 @@ import { NavLink } from 'react-router-dom';
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
 import { getUsers } from "../../service/authService";
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  setAuth,
+} from '../../store/reducers/auth.reducer';
 import './style.scss';
 
 function Header() {
+  const loginStatus = useAppSelector((state) => state.auth.login);
+  const dispatch = useAppDispatch();
+
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState<boolean>(false);
@@ -30,7 +37,7 @@ function Header() {
   const handleLogin = (event:any) => {
     toggleLoginModal();
     alert(" email: " + email + " Password: " + passWord
-        + " Remember: " + remember);
+      + " Remember: " + remember);
     event.preventDefault();
     setEmail('');
     setPassWord('');
@@ -41,7 +48,11 @@ function Header() {
         console.log(data);
       }
     });
+
+    dispatch(setAuth(true));
   }
+
+  console.log("loginStatus: " + loginStatus);
 
   const handleSignUp = (event:any) => {
     toggleSignUpModal();

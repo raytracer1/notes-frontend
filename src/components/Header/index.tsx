@@ -34,18 +34,9 @@ function Header() {
   }
 
   const handleLogin = (event:any) => {
-    toggleLoginModal();
-    alert(" email: " + email + " Password: " + passWord
-      + " Remember: " + remember);
+    dispatch(loginUserAction({userName, passWord}));
     event.preventDefault();
-    setEmail('');
-    setPassWord('');
-    setRemember(false);
-
-    dispatch(loginUserAction({email, passWord}));
   }
-
-  console.log("loginStatus: " + loginStatus);
 
   const handleSignUp = (event:any) => {
     toggleSignUpModal();
@@ -96,8 +87,8 @@ function Header() {
         </div>
       </Navbar>
       <LoginModal
-        email={email}
-        setEmail={setEmail}
+        userName={userName}
+        setUserName={setUserName}
         passWord={passWord}
         setPassWord={setPassWord}
         remember={remember}

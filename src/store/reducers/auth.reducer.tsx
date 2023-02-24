@@ -4,8 +4,8 @@ import { loginUser } from '../../service/authService';
 // First, create the thunk
 export const loginUserAction = createAsyncThunk(
   'users/loginUser',
-  async (params: { email: string, passWord: string }) => {
-    const response = await loginUser(params.email, params.passWord);
+  async (params: { userName: string, passWord: string }) => {
+    const response = await loginUser(params.userName, params.passWord);
     return response.data;
   }
 )

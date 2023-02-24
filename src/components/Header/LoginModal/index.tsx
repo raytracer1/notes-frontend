@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 import ModalWrapper from '../../ModalWrapper';
-import { validEmail, validPassWord } from '../../../util/validate';
+import { validUserName, validPassWord } from '../../../util/validate';
 
 interface ILoginModalProps {
-  email: string,
-  setEmail: (userName: string) => void,
+  userName: string,
+  setUserName: (userName: string) => void,
   passWord: string,
   setPassWord: (passWord: string) => void,
   remember: boolean,
@@ -16,8 +16,8 @@ interface ILoginModalProps {
 }
 
 const LoginModal = ({
-  email,
-  setEmail,
+  userName,
+  setUserName,
   passWord,
   setPassWord,
   remember,
@@ -29,7 +29,7 @@ const LoginModal = ({
 
   const [focus, setFocus] = useState<string>('');
   const toggleLoginModalHeler = () => {
-    setEmail('');
+    setUserName('');
     setPassWord('');
     setFocus('');
     toggleModal();
@@ -43,24 +43,24 @@ const LoginModal = ({
     >
       <Form onSubmit={handleLogin}>
         <FormGroup>
-          <Input type='text' id='email' name='email'
-            placeholder='email'
-            value={email}
+          <Input type='text' id='username' name='username'
+            placeholder='username'
+            value={userName}
             onChange={(e) => {
-              setEmail(e.target.value);
+              setUserName(e.target.value);
             }}
             onFocus={() => {
-              setFocus('email');
+              setFocus('username');
             }}
             onBlur={() => {
               setFocus('');
             }}
           />
           {
-            !validEmail(email) &&
-            focus !== 'email' && email.length > 0 && (
+            !validUserName(userName) &&
+            focus !== 'username' && userName.length > 0 && (
               <span className='error'>
-                {'email should like xxx@yyy.com'}
+                {'username should start with character and length between 6 and 20'}
               </span>
             )
           }
@@ -98,7 +98,7 @@ const LoginModal = ({
           Remember me
         </FormGroup>
         <Button type='submit' value='submit' color='primary'
-          disabled={!validEmail(email) || !validPassWord(passWord)}
+          disabled={!validUserName(userName) || !validPassWord(passWord)}
         >
           Login
         </Button>

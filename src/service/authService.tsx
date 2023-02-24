@@ -6,10 +6,9 @@ const getUsers = () => {
 };
 
 //Login
-const loginUser = (email: string, password: string) => {
-  return Axios.post('users/login', { params: { email, password } });
+const loginUser = (userName: string, passWord: string) => {
+  return Axios.post('users/login', { username: userName, password: passWord } );
 }
-
 
 export {
   getUsers,

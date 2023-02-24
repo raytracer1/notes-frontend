@@ -37,13 +37,7 @@ export const authSlice = createSlice({
       state.login = 'pending';
     });
     builder.addCase(loginUserAction.fulfilled, (state, action) => {
-      state = {
-        login: "success",
-        users: {
-          userName: action.payload.userName,
-          token: action.payload.data.token,
-        }
-      };
+      state.login = 'success';
     });
     builder.addCase(loginUserAction.rejected, (state, action) => {
       state.login = 'failed';

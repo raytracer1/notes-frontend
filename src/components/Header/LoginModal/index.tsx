@@ -4,36 +4,29 @@ import ModalWrapper from '../../ModalWrapper';
 import { validUserName, validPassWord } from '../../../util/validate';
 
 interface ILoginModalProps {
-  userName: string,
-  setUserName: (userName: string) => void,
-  passWord: string,
-  setPassWord: (passWord: string) => void,
-  remember: boolean,
-  setRemember: (remember: boolean) => void,
   isModalOpen: boolean,
   toggleModal: () => void,
-  handleLogin: (event: any) => void,
+  handleLogin: (userName: string, passWord: string) => void,
   loginStatus: string,
 }
 
 const LoginModal = ({
-  userName,
-  setUserName,
-  passWord,
-  setPassWord,
-  remember,
-  setRemember,
   isModalOpen,
   toggleModal,
   handleLogin,
   loginStatus,
 } : ILoginModalProps) => {
 
+  const [userName, setUserName] = useState<string>('');
+  const [passWord, setPassWord] = useState<string>('');
+  const [remember, setRemember] = useState<boolean>(false);
   const [focus, setFocus] = useState<string>('');
   const [loginError, setLoginError] = useState<string>('');
+
   const toggleLoginModalHeler = () => {
     setUserName('');
     setPassWord('');
+    setRemember(false);
     setFocus('');
     toggleModal();
   }
@@ -52,7 +45,11 @@ const LoginModal = ({
       toggleModal={toggleLoginModalHeler}
       title='login'
     >
-      <Form onSubmit={handleLogin}>
+      <Form onSubmit={(event:any) => {
+          handleLogin(userName, passWord);
+          event.preventDefault();
+        }
+      }>
         <FormGroup>
           <Input type='text' id='username' name='username'
             placeholder='username'

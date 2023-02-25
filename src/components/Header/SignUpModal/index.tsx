@@ -4,28 +4,20 @@ import ModalWrapper from '../../ModalWrapper';
 import { validUserName, validEmail, validPassWord } from '../../../util/validate';
 
 interface ISignUpModalProps {
-  userName: string,
-  setUserName: (userName: string) => void,
-  email: string,
-  setEmail: (userName: string) => void,
-  passWord: string,
-  setPassWord: (passWord: string) => void,
   isModalOpen: boolean,
   toggleModal: () => void,
   handleSignUp: (event: any) => void,
 }
 
 const SignUpModal = ({
-  userName,
-  setUserName,
-  email,
-  setEmail,
-  passWord,
-  setPassWord,
   isModalOpen,
   toggleModal,
   handleSignUp,
 } : ISignUpModalProps) => {
+
+  const [userName, setUserName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [passWord, setPassWord] = useState<string>('');
 
   const [focus, setFocus] = useState<string>('');
   const toggleLoginModalHeler = () => {

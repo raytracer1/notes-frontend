@@ -17,10 +17,6 @@ function Header() {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [passWord, setPassWord] = useState<string>('');
-  const [remember, setRemember] = useState<boolean>(false);
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
@@ -34,19 +30,12 @@ function Header() {
     setIsSignUpModalOpen(!isSignUpModalOpen);
   }
 
-  const handleLogin = (event:any) => {
+  const handleLogin = (userName: string, passWord: string) => {
     dispatch(loginUserAction({userName, passWord}));
-    event.preventDefault();
   }
 
   const handleSignUp = (event:any) => {
     toggleSignUpModal();
-    alert(" userName: " + userName + " Password: " + passWord
-        + " email: " + email);
-    event.preventDefault();
-    setUserName('');
-    setEmail('');
-    setPassWord('');
   }
 
   return (
@@ -105,24 +94,12 @@ function Header() {
         </div>
       </Navbar>
       <LoginModal
-        userName={userName}
-        setUserName={setUserName}
-        passWord={passWord}
-        setPassWord={setPassWord}
-        remember={remember}
-        setRemember={setRemember}
         isModalOpen={isLoginModalOpen}
         toggleModal={toggleLoginModal}
         handleLogin={handleLogin}
         loginStatus={loginStatus}
       />
       <SignUpModal
-        userName={userName}
-        setUserName={setUserName}
-        email={email}
-        setEmail={setEmail}
-        passWord={passWord}
-        setPassWord={setPassWord}
         isModalOpen={isSignUpModalOpen}
         toggleModal={toggleSignUpModal}
         handleSignUp={handleSignUp}

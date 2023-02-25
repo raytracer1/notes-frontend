@@ -12,6 +12,7 @@ import './style.scss';
 function Header() {
   const authStatus = useAppSelector((state) => state.auth.authenticated);
   const loginStatus = useAppSelector((state) => state.auth.login);
+  const userName = useAppSelector((state) => state.auth.user.userName);
   const dispatch = useAppDispatch();
 
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
@@ -79,12 +80,7 @@ function Header() {
                 <Nav className='button' navbar>
                   <NavItem>
                     <Button outline>
-                      <span className='fa fa-sign-out fa-lg'></span>Login out
-                    </Button>
-                  </NavItem>
-                  <NavItem>
-                    <Button outline>
-                      <span className='fa fa-user fa-lg'></span>users
+                      <span className='fa fa-user fa-lg'></span>{userName}
                     </Button>
                   </NavItem>
                 </Nav>

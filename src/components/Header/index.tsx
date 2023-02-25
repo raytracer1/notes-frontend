@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Button } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import LoginModal from "./LoginModal";
@@ -10,6 +10,7 @@ import {
 import './style.scss';
 
 function Header() {
+  const authStatus = useAppSelector((state) => state.auth.authenticated);
   const loginStatus = useAppSelector((state) => state.auth.login);
   const dispatch = useAppDispatch();
 
@@ -24,8 +25,6 @@ function Header() {
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   }
-
-  console.log(loginStatus);
 
   const toggleLoginModal = () => {
     setIsLoginModalOpen(!isLoginModalOpen);

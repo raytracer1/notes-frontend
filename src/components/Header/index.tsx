@@ -72,18 +72,35 @@ function Header() {
                 </NavLink>
               </NavItem>
             </Nav>
-            <Nav className='button' navbar>
-              <NavItem>
-                <Button outline onClick={toggleLoginModal}>
-                  <span className='fa fa-sign-in fa-lg'></span>Login
-                </Button>
-              </NavItem>
-              <NavItem>
-                <Button outline onClick={toggleSignUpModal}>
-                  <span className='fa fa-user fa-lg'></span>Sign Up
-                </Button>
-              </NavItem>
-            </Nav>
+            {
+              authStatus === false ? (
+                <Nav className='button' navbar>
+                  <NavItem>
+                    <Button outline onClick={toggleLoginModal}>
+                      <span className='fa fa-sign-in fa-lg'></span>Login
+                    </Button>
+                  </NavItem>
+                  <NavItem>
+                    <Button outline onClick={toggleSignUpModal}>
+                      <span className='fa fa-user fa-lg'></span>Sign Up
+                    </Button>
+                  </NavItem>
+                </Nav>
+              ) : (
+                <Nav className='button' navbar>
+                  <NavItem>
+                    <Button outline>
+                      <span className='fa fa-sign-out fa-lg'></span>Login out
+                    </Button>
+                  </NavItem>
+                  <NavItem>
+                    <Button outline>
+                      <span className='fa fa-user fa-lg'></span>users
+                    </Button>
+                  </NavItem>
+                </Nav>
+              )
+            }
           </Collapse>
         </div>
       </Navbar>
@@ -97,6 +114,7 @@ function Header() {
         isModalOpen={isLoginModalOpen}
         toggleModal={toggleLoginModal}
         handleLogin={handleLogin}
+        loginStatus={loginStatus}
       />
       <SignUpModal
         userName={userName}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 import ModalWrapper from '../../ModalWrapper';
 import { validUserName, validPassWord } from '../../../util/validate';
@@ -13,6 +13,7 @@ interface ILoginModalProps {
   isModalOpen: boolean,
   toggleModal: () => void,
   handleLogin: (event: any) => void,
+  loginStatus: string,
 }
 
 const LoginModal = ({
@@ -25,15 +26,25 @@ const LoginModal = ({
   isModalOpen,
   toggleModal,
   handleLogin,
+  loginStatus,
 } : ILoginModalProps) => {
 
   const [focus, setFocus] = useState<string>('');
+  const [loginError, setLoginError] = useState<string>('');
   const toggleLoginModalHeler = () => {
     setUserName('');
     setPassWord('');
     setFocus('');
     toggleModal();
   }
+
+  useEffect(() => {
+    if (loginStatus === 'success') {
+      toggleLoginModalHeler();
+    } else if (loginStatus === 'failed') {
+      setLoginError('username or password error');
+    }
+  }, [loginStatus]);
 
   return (
     <ModalWrapper
@@ -45,9 +56,11 @@ const LoginModal = ({
         <FormGroup>
           <Input type='text' id='username' name='username'
             placeholder='username'
+            disabled={loginStatus === 'pending'}
             value={userName}
             onChange={(e) => {
               setUserName(e.target.value);
+              setLoginError('');
             }}
             onFocus={() => {
               setFocus('username');
@@ -68,9 +81,11 @@ const LoginModal = ({
         <FormGroup>
           <Input type='password' id='password' name='password'
             placeholder='password'
+            disabled={loginStatus === 'pending'}
             value={passWord}
             onChange={(e) => {
               setPassWord(e.target.value);
+              setLoginError('');
             }}
             onFocus={() => {
               setFocus('password');
@@ -90,6 +105,7 @@ const LoginModal = ({
         </FormGroup>
         <FormGroup check>
           <Input type='checkbox' name='remember'
+            disabled={loginStatus === 'pending'}
             checked={remember}
             onChange={(e) => {
               setRemember(e.target.checked)
@@ -97,10 +113,26 @@ const LoginModal = ({
           />
           Remember me
         </FormGroup>
+        {
+          loginError !== '' && (
+            <div className='login-error'>
+              <span className="error">
+                {loginError}
+              </span>
+            </div>
+          )
+        }
         <Button type='submit' value='submit' color='primary'
-          disabled={!validUserName(userName) || !validPassWord(passWord)}
+          disabled={!validUserName(userName)
+            || !validPassWord(passWord)
+            || loginStatus === 'pending'
+          }
         >
-          Login
+          {
+            loginStatus === 'pending' ? (
+              <div className='spinner'></div>
+            ) : "login"
+          }
         </Button>
       </Form>
     </ModalWrapper>

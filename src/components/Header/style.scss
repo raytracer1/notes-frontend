@@ -64,6 +64,8 @@ ul {
         }
 
         .logo {
+            display: flex;
+            align-items: center;
             @media(max-width:767px) {
                 display: block;
                 margin-left: 20px;
@@ -132,6 +134,13 @@ ul {
 
             .nav-link {
                 color: #82eacf;
+            }
+
+            svg {
+                margin-top: -5px;
+                width: 23px;
+                height: 23px;
+                margin-right: 5px;
             }
         }
 

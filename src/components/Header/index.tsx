@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   loginUserAction, logoutUserAction,
 } from '../../store/reducers/auth.reducer';
+import { ReactComponent as IconBlackHole }from '../../assets/svg/black-hole.svg';
 import './style.scss';
 
 function Header() {
@@ -69,7 +70,7 @@ function Header() {
               </NavItem>
               <NavItem>
                 <NavLink className='nav-link' to='/space'>
-                  <span className='fa fa-book fa-lg'></span>Create Learning Space
+                  <IconBlackHole />Create Learning Space
                 </NavLink>
               </NavItem>
             </Nav>

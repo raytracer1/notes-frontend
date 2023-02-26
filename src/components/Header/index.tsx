@@ -5,7 +5,7 @@ import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  loginUserAction,
+  loginUserAction, logoutUserAction,
 } from '../../store/reducers/auth.reducer';
 import './style.scss';
 
@@ -33,6 +33,10 @@ function Header() {
 
   const handleLogin = (userName: string, passWord: string) => {
     dispatch(loginUserAction({userName, passWord}));
+  }
+
+  const handleLogout = () => {
+    dispatch(logoutUserAction());
   }
 
   const handleSignUp = (event:any) => {
@@ -78,6 +82,11 @@ function Header() {
                 </Nav>
               ) : (
                 <Nav className='button' navbar>
+                  <NavItem>
+                    <Button outline onClick={handleLogout}>
+                      <span className='fa fa-sign-out fa-lg'></span>logout
+                    </Button>
+                  </NavItem>
                   <NavItem>
                     <Button outline>
                       <span className='fa fa-user fa-lg'></span>{userName}

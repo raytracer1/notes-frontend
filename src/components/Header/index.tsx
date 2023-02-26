@@ -52,6 +52,13 @@ function Header() {
             <NavbarBrand className='logo' href="/">
               <img className='img' src='logo192.png' alt='log' />
             </NavbarBrand>
+            {
+              authStatus === true && (
+                <div className="user mobile">
+                  <span>{userName.substring(0, 2)}</span>
+                </div>
+              )
+            }
           </div>
           <Collapse isOpen={isNavOpen} navbar>
             <Nav navbar>
@@ -81,18 +88,9 @@ function Header() {
                   </NavItem>
                 </Nav>
               ) : (
-                <Nav className='button' navbar>
-                  <NavItem>
-                    <Button outline onClick={handleLogout}>
-                      <span className='fa fa-sign-out fa-lg'></span>logout
-                    </Button>
-                  </NavItem>
-                  <NavItem>
-                    <Button outline>
-                      <span className='fa fa-user fa-lg'></span>{userName}
-                    </Button>
-                  </NavItem>
-                </Nav>
+                <div className="user desktop">
+                  <span>{userName.substring(0, 2)}</span>
+                </div>
               )
             }
           </Collapse>

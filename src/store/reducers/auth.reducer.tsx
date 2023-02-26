@@ -25,15 +25,16 @@ interface authState {
 
 // Define the initial state using that type
 const initialState: authState = {
-  authenticated: false,
+  authenticated: localStorage.getItem('user') ? true : false,
   login: 'init',
-  user: {
-    userName: '',
-    token: '',
-    email: '',
-    country: '',
-    imageUrl: '',
-  },
+  user: localStorage.getItem('user') ?
+    JSON.parse(localStorage.getItem('user')!) : {
+      userName: '',
+      token: '',
+      email: '',
+      country: '',
+      imageUrl: '',
+    },
 };
 
 export const authSlice = createSlice({
@@ -53,7 +54,8 @@ export const authSlice = createSlice({
         email: action.payload.data.email,
         country: action.payload.data.country,
         imageUrl: action.payload.data.imageUrl,
-      }
+      };
+      localStorage.setItem('user', JSON.stringify(state.user));
     });
     builder.addCase(loginUserAction.rejected, (state, action) => {
       state.login = 'failed';

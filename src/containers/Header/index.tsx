@@ -3,12 +3,12 @@ import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Button } fr
 import { NavLink } from 'react-router-dom';
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
+import ProfileTooltip from "./ProfileTooltip";
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   loginUserAction, logoutUserAction,
 } from '../../store/reducers/auth.reducer';
 import { ReactComponent as IconBlackHole }from '../../assets/svg/black-hole.svg';
-import Tooltip from "../../components/Tooltip";
 import './style.scss';
 
 function Header() {
@@ -91,14 +91,9 @@ function Header() {
                 </Nav>
               ) : (
                 <div className="user desktop">
-                  <Tooltip
-                    id='profile-tooltip'
-                    position='down'
-                    content={(<div>test</div>)}
-                    className='tooltip'
-                  >
+                  <ProfileTooltip>
                     <span>{userName.substring(0, 2)}</span>
-                  </Tooltip>
+                  </ProfileTooltip>
                 </div>
               )
             }

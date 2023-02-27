@@ -1,8 +1,6 @@
 // FONT STACK
 // --------------------------------------------------------------------------------------------
 
-/* Roboto mono. */
-
 /**
  * Includes a font, provided in the TTF format only.
  * $font-name {String}
@@ -20,8 +18,6 @@
   }
 }
 
-// Using the implementation of this mixin provided by topcoder-react-utils
-// is not loading fonts correctly.  This may be a webpack related issue.
 @mixin font-family($font-name, $font-weight, $font-style, $font-url, $font-file) {
   @font-face {
     font-family: '#{$font-name}';
@@ -36,8 +32,40 @@
   }
 }
 
-/* Barlow and BarlowCondensed is being used by TCO19 */
 @include font-family('BarlowCondensed', 400, normal, '../../assets/fonts/BarlowCondensed/', 'BarlowCondensed-Regular');
 @include font-family('BarlowCondensed', 500, normal, '../../assets/fonts/BarlowCondensed/', 'BarlowCondensed-Medium');
 @include font-family('BarlowCondensed', 600, normal, '../../assets/fonts/BarlowCondensed/', 'BarlowCondensed-SemiBold');
 @include font-family('BarlowCondensed', 700, normal, '../../assets/fonts/BarlowCondensed/', 'BarlowCondensed-Bold');
+
+
+/* Roboto mono. */
+ @include font-family-ttf(
+  'Roboto Mono', 100, normal,
+  '../../assets/fonts/roboto-mono/RobotoMono-Thin');
+@include font-family-ttf(
+  'Roboto Mono', 100, italic,
+  '../../assets/fonts/roboto-mono/RobotoMono-ThinItalic');
+@include font-family-ttf(
+  'Roboto Mono', 300, normal,
+  '../../assets/fonts/roboto-mono/RobotoMono-Light');
+@include font-family-ttf(
+  'Roboto Mono', 300, italic,
+  '../../assets/fonts/roboto-mono/RobotoMono-LightItalic');
+@include font-family-ttf(
+  'Roboto Mono', 400, normal,
+  '../../assets/fonts/roboto-mono/RobotoMono-Regular');
+@include font-family-ttf(
+  'Roboto Mono', 400, italic,
+  '../../assets/fonts/roboto-mono/RobotoMono-Italic');
+@include font-family-ttf(
+  'Roboto Mono', 500, normal,
+  '../../assets/fonts/roboto-mono/RobotoMono-Medium');
+@include font-family-ttf(
+  'Roboto Mono', 500, italic,
+  '../../assets/fonts/roboto-mono/RobotoMono-MediumItalic');
+@include font-family-ttf(
+  'Roboto Mono', 700, normal,
+  '../../assets/fonts/roboto-mono/RobotoMono-Bold');
+@include font-family-ttf(
+  'Roboto Mono', 700, italic,
+  '../../assets/fonts/roboto-mono/RobotoMono-BoldItalic');

@@ -37,7 +37,7 @@ const LoginModal = ({
     } else if (loginStatus === 'failed') {
       setLoginError('username or password error');
     }
-  }, [loginStatus]);
+  }, [loginStatus, toggleLoginModalHeler]);
 
   return (
     <ModalWrapper

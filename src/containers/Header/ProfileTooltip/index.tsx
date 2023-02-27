@@ -1,16 +1,6 @@
-import _ from 'lodash';
 import React, { PropsWithChildren } from "react";
-import { useEffect, useState } from "react";
-import { AlignType } from "@rc-component/trigger";
 import Tooltip from '../../../components/Tooltip';
 import './style.scss';
-
-/** Handles arrow placement of the Progressbar tooltip
- *  because rc-tooltip doesnot display arrow correctly
- *  for progressbar tooltip out of the box.
- */
-function onPopupAlign(TooltipNode: HTMLElement, align: AlignType) {
-}
 
 interface IProfileTooltipProps {
 }
@@ -34,7 +24,6 @@ const ProfileTooltip = ({
       position='bottomRight'
       content={tip}
       className='tooltip'
-      onPopupAlign={onPopupAlign}
       showArrow={false}
     >
       {children}

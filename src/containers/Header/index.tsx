@@ -45,6 +45,12 @@ function Header() {
     toggleSignUpModal();
   }
 
+  const userIcon = (
+    <ProfileTooltip>
+      <span>{userName.substring(0, 2)}</span>
+    </ProfileTooltip>
+  )
+
   return (
     <div className='header'>
       <Navbar dark expand='md'>
@@ -57,7 +63,7 @@ function Header() {
             {
               authStatus === true && (
                 <div className='user mobile'>
-                  <span>{userName.substring(0, 2)}</span>
+                  {userIcon}
                 </div>
               )
             }
@@ -91,9 +97,7 @@ function Header() {
                 </Nav>
               ) : (
                 <div className='user desktop'>
-                  <ProfileTooltip>
-                    <span>{userName.substring(0, 2)}</span>
-                  </ProfileTooltip>
+                  {userIcon}
                 </div>
               )
             }

@@ -8,6 +8,7 @@ import {
   loginUserAction, logoutUserAction,
 } from '../../store/reducers/auth.reducer';
 import { ReactComponent as IconBlackHole }from '../../assets/svg/black-hole.svg';
+import Tooltip from "../../components/Tooltip";
 import './style.scss';
 
 function Header() {
@@ -55,7 +56,7 @@ function Header() {
             </NavbarBrand>
             {
               authStatus === true && (
-                <div className="user mobile">
+                <div className='user mobile'>
                   <span>{userName.substring(0, 2)}</span>
                 </div>
               )
@@ -90,7 +91,14 @@ function Header() {
                 </Nav>
               ) : (
                 <div className="user desktop">
-                  <span>{userName.substring(0, 2)}</span>
+                  <Tooltip
+                    id='profile-tooltip'
+                    position='down'
+                    content={(<div>test</div>)}
+                    className='tooltip'
+                  >
+                    <span>{userName.substring(0, 2)}</span>
+                  </Tooltip>
                 </div>
               )
             }

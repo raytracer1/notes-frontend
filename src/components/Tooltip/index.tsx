@@ -6,17 +6,17 @@ import React, { PropsWithChildren, ReactElement } from "react";
 import RCTooltip from 'rc-tooltip';
 
 import 'rc-tooltip/assets/bootstrap.css';
-import { AlignType } from "@rc-component/trigger";
+import type { ActionType, AlignType } from '@rc-component/trigger/lib/interface';
 
 interface ITooltipProps {
   id: string,
-  position: string,
+  position?: string,
   content: ReactElement,
   className: string,
   onTooltipHover?: ((visible?: boolean) => void),
   onPopupAlign?: ((popupDomNode: HTMLElement, align: AlignType) => void) | undefined,
   align?: AlignType,
-  trigger?: ['hover'],
+  trigger?: ActionType[],
   defaultVisible?: boolean,
 }
 

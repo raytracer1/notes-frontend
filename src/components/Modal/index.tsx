@@ -1,21 +1,21 @@
 import React, { PropsWithChildren } from "react";
-import { Button, Modal, ModalBody } from 'reactstrap';
+import { Button, Modal as ReactModal, ModalBody } from 'reactstrap';
 import './style.scss';
 
-interface IModalWrapperProps {
+interface IModalProps {
   isModalOpen: boolean,
   toggleModal: () => void,
   title: string,
 }
 
-const ModalWrapper = ({
+const Modal = ({
   isModalOpen,
   toggleModal,
   title,
   children,
-} : PropsWithChildren<IModalWrapperProps> ) => {
+} : PropsWithChildren<IModalProps> ) => {
   return (
-    <Modal isOpen={isModalOpen} toggle={toggleModal}>
+    <ReactModal isOpen={isModalOpen} toggle={toggleModal}>
       <div className='modal-header'>
         <div className='modal-titel'>{title}</div>
         <Button className='btn-close' onClick={toggleModal}>
@@ -24,8 +24,8 @@ const ModalWrapper = ({
       <ModalBody>
         {children}
       </ModalBody>
-    </Modal>
+    </ReactModal>
   )
 }
 
-export default ModalWrapper;
+export default Modal;

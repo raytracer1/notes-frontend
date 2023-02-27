@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input } from 'reactstrap';
-import ModalWrapper from '../../ModalWrapper';
+import ModalWrapper from '../../../components/ModalWrapper';
 import { validUserName, validPassWord } from '../../../util/validate';
 
 interface ILoginModalProps {

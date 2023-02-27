@@ -6,6 +6,7 @@ import React, { PropsWithChildren, ReactElement } from "react";
 import RCTooltip from 'rc-tooltip';
 
 import 'rc-tooltip/assets/bootstrap.css';
+import { AlignType } from "@rc-component/trigger";
 
 interface ITooltipProps {
   id: string,
@@ -13,8 +14,8 @@ interface ITooltipProps {
   content: ReactElement,
   className: string,
   onTooltipHover?: ((visible?: boolean) => void),
-  placeArrow?: ((popupDomNode: Element, align: Object) => void) | undefined,
-  align?: {},
+  onPopupAlign?: ((popupDomNode: HTMLElement, align: AlignType) => void) | undefined,
+  align?: AlignType,
   trigger?: ['hover'],
   defaultVisible?: boolean,
 }
@@ -25,7 +26,7 @@ function Tooltip({
   content,
   className,
   onTooltipHover,
-  placeArrow,
+  onPopupAlign,
   align,
   trigger,
   defaultVisible,
@@ -38,7 +39,7 @@ function Tooltip({
       overlay={content}
       overlayClassName={className}
       onVisibleChange={onTooltipHover}
-      onPopupAlign={placeArrow}
+      onPopupAlign={onPopupAlign}
       align={align}
       trigger={trigger}
       defaultVisible={defaultVisible}

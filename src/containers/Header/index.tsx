@@ -90,7 +90,7 @@ function Header() {
                   </NavItem>
                 </Nav>
               ) : (
-                <div className="user desktop">
+                <div className='user desktop'>
                   <ProfileTooltip>
                     <span>{userName.substring(0, 2)}</span>
                   </ProfileTooltip>

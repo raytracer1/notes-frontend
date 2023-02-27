@@ -1,6 +1,9 @@
 @import '../../../styles/global';
 
 .tooltip {
+    position: absolute;
+    opacity: 1.0;
+
     .rc-tooltip-arrow {
         display: none;
     }
@@ -8,37 +11,37 @@
     .rc-tooltip-inner {
         background-color: white;
         padding: 0;
+    }
 
-        .content {
-            padding: 24px 32px;
-            display: flex;
-            flex-direction: column;
+    .content {
+        padding: 24px 32px;
+        display: flex;
+        flex-direction: column;
+    }
 
-            ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
 
-                li {
-                    @include roboto-sans-regular;
+        li {
+            @include roboto-sans-regular;
 
-                    font-style: normal;
-                    font-weight: 400;
-                    font-size: 14px;
-                    line-height: 22px;
-                    text-transform: capitalize;
-                    color: #767676;
-                    width: 190px;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 22px;
+            text-transform: capitalize;
+            color: #767676;
+            width: 190px;
 
-                    &:not(:first-child) {
-                        margin-top: 8px;
-                    }
+            &:not(:first-child) {
+                margin-top: 8px;
+            }
 
-                    &:hover {
-                        color: #0c0c0c;
-                        font-weight: 700;
-                    }
-                }
+            &:hover {
+                color: #0c0c0c;
+                font-weight: 700;
             }
         }
     }

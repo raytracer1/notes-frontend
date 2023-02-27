@@ -35,6 +35,7 @@ const ProfileTooltip = ({
       content={tip}
       className='tooltip'
       onPopupAlign={onPopupAlign}
+      showArrow={false}
     >
       {children}
     </Tooltip>

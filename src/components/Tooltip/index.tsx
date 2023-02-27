@@ -18,6 +18,7 @@ interface ITooltipProps {
   align?: AlignType,
   trigger?: ActionType[],
   defaultVisible?: boolean,
+  showArrow?: boolean,
 }
 
 function Tooltip({
@@ -30,6 +31,7 @@ function Tooltip({
   align,
   trigger,
   defaultVisible,
+  showArrow,
   children,
 } : PropsWithChildren<ITooltipProps>) {
   return (
@@ -41,6 +43,7 @@ function Tooltip({
       onVisibleChange={onTooltipHover}
       onPopupAlign={onPopupAlign}
       align={align}
+      showArrow={showArrow}
       trigger={trigger}
       defaultVisible={defaultVisible}
     >

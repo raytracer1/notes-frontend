@@ -6,13 +6,15 @@ import { validUserName, validEmail, validPassWord } from '../../../util/validate
 interface ISignUpModalProps {
   isModalOpen: boolean,
   toggleModal: () => void,
-  handleSignUp: (event: any) => void,
+  handleSignUp: (userName: string, email: string, passWord: string) => void,
+  signupStatus: string,
 }
 
 const SignUpModal = ({
   isModalOpen,
   toggleModal,
   handleSignUp,
+  signupStatus,
 } : ISignUpModalProps) => {
 
   const [userName, setUserName] = useState<string>('');
@@ -34,10 +36,14 @@ const SignUpModal = ({
       toggleModal={toggleLoginModalHeler}
       title='Sign Up'
     >
-      <Form onSubmit={handleSignUp}>
+      <Form onSubmit={(e) => {
+        e.preventDefault();
+        handleSignUp(userName, email, passWord);
+      }}>
         <FormGroup>
           <Input type='text' id='username' name='username'
             placeholder='username'
+            disabled={signupStatus === 'pending'}
             value={userName}
             onChange={(e) => {
               setUserName(e.target.value);
@@ -61,6 +67,7 @@ const SignUpModal = ({
         <FormGroup>
           <Input type='text' id='email' name='email'
             placeholder='email'
+            disabled={signupStatus === 'pending'}
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -84,6 +91,7 @@ const SignUpModal = ({
         <FormGroup>
           <Input type='password' id='password' name='password'
             placeholder='password'
+            disabled={signupStatus === 'pending'}
             value={passWord}
             onChange={(e) => {
               setPassWord(e.target.value);
@@ -104,10 +112,28 @@ const SignUpModal = ({
             )
           }
         </FormGroup>
+        {
+          signupStatus !== 'init' && (
+            signupStatus === 'success' ? (
+              <div className="msg">
+                <span className="success">success</span>
+              </div>
+            ) : (
+              <div className="msg">
+                <span className="error">error</span>
+              </div>
+            )
+          )
+        }
         <Button type='submit' value='submit' color='primary'
-          disabled={!validUserName(userName) || !validEmail(email) || !validPassWord(passWord)}
+          disabled={!validUserName(userName) || !validEmail(email) ||
+            !validPassWord(passWord) || signupStatus === 'pending'}
         >
-          Sign Up
+          {
+            signupStatus === 'pending' ? (
+              <div className='spinner'></div>
+            ) : "sign up"
+          }
         </Button>
       </Form>
     </ModalWrapper>

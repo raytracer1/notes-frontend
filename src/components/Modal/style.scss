@@ -63,6 +63,24 @@
                     font-size: 12px;
                 }
 
+                .msg {
+                    margin-bottom: 1rem;
+                    display: flex;
+                    justify-content: center;
+
+                    font-weight: 700;
+                    font-size: 16px;
+
+                    .success {
+                        color: #82eacf;;
+                    }
+
+                    .error {
+                        font-weight: 700;
+                        font-size: 16px;
+                    }
+                }
+
                 .login-error {
                     margin-bottom: 10px;
                     display: flex;

@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loginUser, logoutUser } from '../../service/authService';
+import { loginUser, logoutUser, signupUser } from '../../service/authService';
 
 const getToken = () => {
   return localStorage.getItem('user') &&
     JSON.parse(localStorage.getItem('user')!).token;
 }
 
-// First, create the thunk
 export const loginUserAction = createAsyncThunk(
   'users/loginUser',
   async (params: { userName: string, passWord: string }) => {
@@ -23,6 +22,15 @@ export const logoutUserAction = createAsyncThunk(
   }
 )
 
+export const signupUserAction = createAsyncThunk(
+  'users/signupUser',
+  async (params: { userName: string, email: string, passWord: string }) => {
+    const response = await signupUser(params.userName, params.email, params.passWord);
+    console.log(response);
+    return response.data;
+  }
+)
+
 // Define a type for the slice state
 interface authState {
   authenticated: boolean;
@@ -34,6 +42,8 @@ interface authState {
     country: string,
     imageUrl: string,
   };
+  signup: string;
+  signupErr: string;
 }
 
 // Define the initial state using that type
@@ -48,6 +58,8 @@ const initialState: authState = {
       country: '',
       imageUrl: '',
     },
+  signup: 'init',
+  signupErr: '',
 };
 
 export const authSlice = createSlice({
@@ -86,6 +98,16 @@ export const authSlice = createSlice({
         imageUrl: '',
       };
       localStorage.removeItem('user');
+    });
+    builder.addCase(signupUserAction.pending, (state, action) => {
+      state.signup = 'pending';
+    });
+    builder.addCase(signupUserAction.fulfilled, (state, action) => {
+      state.signup = 'success';
+    });
+    builder.addCase(signupUserAction.rejected, (state, action) => {
+      state.signup = 'failed';
+      state.signupErr = action.error.message!;
     });
   }
 });

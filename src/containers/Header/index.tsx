@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Button } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import LoginModal from "./LoginModal";
@@ -6,7 +6,7 @@ import SignUpModal from "./SignUpModal";
 import ProfileTooltip from "./ProfileTooltip";
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  loginUserAction, logoutUserAction,
+  loginUserAction, logoutUserAction, signupUserAction,
 } from '../../store/reducers/auth.reducer';
 import { ReactComponent as IconBlackHole }from '../../assets/svg/black-hole.svg';
 import './style.scss';
@@ -15,6 +15,7 @@ function Header() {
   const authStatus = useAppSelector((state) => state.auth.authenticated);
   const loginStatus = useAppSelector((state) => state.auth.login);
   const userName = useAppSelector((state) => state.auth.user.userName);
+  const signupStatus = useAppSelector((state) => state.auth.signup);
   const dispatch = useAppDispatch();
 
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
@@ -41,8 +42,8 @@ function Header() {
     dispatch(logoutUserAction());
   }
 
-  const handleSignUp = (event:any) => {
-    toggleSignUpModal();
+  const handleSignUp = (userName: string, email: string, passWord: string) => {
+    dispatch(signupUserAction({userName, email, passWord}));
   }
 
   const userIcon = (
@@ -116,6 +117,7 @@ function Header() {
         isModalOpen={isSignUpModalOpen}
         toggleModal={toggleSignUpModal}
         handleSignUp={handleSignUp}
+        signupStatus={signupStatus}
       />
     </div>
   );

@@ -10,7 +10,12 @@ const logoutUser = (token: string) => {
   return AxiosToken(token).get('users/logout');
 }
 
+const signupUser = (userName: string, email: string, passWord: string) => {
+  return Axios.post('users/signup', { username: userName, email: email, password: passWord });
+}
+
 export {
   loginUser,
   logoutUser,
+  signupUser,
 };

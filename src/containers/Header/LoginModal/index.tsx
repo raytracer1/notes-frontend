@@ -39,6 +39,7 @@ const LoginModal = ({
     if (loginStatus === 'success') {
       toggleLoginModalHeler();
     }
+  // eslint-disable-next-line
   }, [loginStatus]);
 
   return (

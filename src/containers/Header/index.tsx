@@ -6,7 +6,7 @@ import SignUpModal from "./SignUpModal";
 import ProfileTooltip from "./ProfileTooltip";
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  loginUserAction, logoutUserAction, signupUserAction,
+  loginUserAction, logoutUserAction, signupUserAction, clearSignup,
 } from '../../store/reducers/auth.reducer';
 import { ReactComponent as IconBlackHole }from '../../assets/svg/black-hole.svg';
 import './style.scss';
@@ -31,6 +31,7 @@ function Header() {
   }
 
   const toggleSignUpModal = () => {
+    dispatch(clearSignup());
     setIsSignUpModalOpen(!isSignUpModalOpen);
   }
 

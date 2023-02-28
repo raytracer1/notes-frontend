@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 import ModalWrapper from '../../../components/Modal';
 import { validUserName, validEmail, validPassWord } from '../../../util/validate';
@@ -20,6 +20,7 @@ const SignUpModal = ({
   const [userName, setUserName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [passWord, setPassWord] = useState<string>('');
+  const [signupError, setSignupError] = useState<string>('');
 
   const [focus, setFocus] = useState<string>('');
   const toggleLoginModalHeler = () => {
@@ -29,6 +30,16 @@ const SignUpModal = ({
     setFocus('');
     toggleModal();
   }
+
+  useEffect(() => {
+    if (signupStatus === 'failed') {
+      setSignupError('error');
+    } else if (signupStatus === 'success') {
+      setSignupError('success');
+    } else {
+      setSignupError('');
+    }
+  }, [signupStatus]);
 
   return (
     <ModalWrapper
@@ -113,8 +124,8 @@ const SignUpModal = ({
           }
         </FormGroup>
         {
-          signupStatus !== 'init' && (
-            signupStatus === 'success' ? (
+          signupError !== '' && (
+            signupError === 'success' ? (
               <div className="msg">
                 <span className="success">success</span>
               </div>

@@ -22,6 +22,7 @@
         margin: 0;
 
         li {
+            cursor: pointer;
             @include roboto-sans-regular;
 
             font-style: normal;

@@ -46,7 +46,9 @@ function Header() {
   }
 
   const userIcon = (
-    <ProfileTooltip>
+    <ProfileTooltip
+      handleLogout={handleLogout}
+    >
       <span>{userName.substring(0, 2)}</span>
     </ProfileTooltip>
   )

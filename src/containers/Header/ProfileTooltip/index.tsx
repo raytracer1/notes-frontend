@@ -3,17 +3,23 @@ import Tooltip from '../../../components/Tooltip';
 import './style.scss';
 
 interface IProfileTooltipProps {
+  handleLogout: () => void,
 }
 
 const ProfileTooltip = ({
+  handleLogout,
   children,
 } :  PropsWithChildren<IProfileTooltipProps>) => {
 
   const tip = (
     <div className='content'>
       <ul>
-        <li>my profile</li>
-        <li>log out</li>
+        <li>
+          my profile
+        </li>
+        <li onClick={handleLogout}>
+          log out
+        </li>
       </ul>
     </div>
   )

@@ -6,7 +6,7 @@ import SignUpModal from "./SignUpModal";
 import ProfileTooltip from "./ProfileTooltip";
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  loginUserAction, logoutUserAction, signupUserAction, clearSignup,
+  loginUserAction, clearLoginAction, logoutUserAction, signupUserAction, clearSignupAction,
 } from '../../store/reducers/auth.reducer';
 import { ReactComponent as IconBlackHole }from '../../assets/svg/black-hole.svg';
 import './style.scss';
@@ -14,8 +14,10 @@ import './style.scss';
 function Header() {
   const authStatus = useAppSelector((state) => state.auth.authenticated);
   const loginStatus = useAppSelector((state) => state.auth.login);
+  const loginErr = useAppSelector((state) => state.auth.loginErr);
   const userName = useAppSelector((state) => state.auth.user.userName);
   const signupStatus = useAppSelector((state) => state.auth.signup);
+  const signupErr = useAppSelector((state) => state.auth.signupErr);
   const dispatch = useAppDispatch();
 
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
@@ -30,21 +32,29 @@ function Header() {
     setIsLoginModalOpen(!isLoginModalOpen);
   }
 
-  const toggleSignUpModal = () => {
-    dispatch(clearSignup());
-    setIsSignUpModalOpen(!isSignUpModalOpen);
-  }
-
   const handleLogin = (userName: string, passWord: string) => {
     dispatch(loginUserAction({userName, passWord}));
+  }
+
+  const clearLoginErr = () => {
+    dispatch(clearLoginAction());
   }
 
   const handleLogout = () => {
     dispatch(logoutUserAction());
   }
 
+  const toggleSignUpModal = () => {
+    dispatch(clearSignupAction());
+    setIsSignUpModalOpen(!isSignUpModalOpen);
+  }
+
   const handleSignUp = (userName: string, email: string, passWord: string) => {
     dispatch(signupUserAction({userName, email, passWord}));
+  }
+
+  const clearSignupErr = () => {
+    dispatch(clearSignupAction());
   }
 
   const userIcon = (
@@ -113,12 +123,16 @@ function Header() {
         toggleModal={toggleLoginModal}
         handleLogin={handleLogin}
         loginStatus={loginStatus}
+        loginErr={loginErr}
+        clearLoginErr={clearLoginErr}
       />
       <SignUpModal
         isModalOpen={isSignUpModalOpen}
         toggleModal={toggleSignUpModal}
         handleSignUp={handleSignUp}
         signupStatus={signupStatus}
+        signupErr={signupErr}
+        clearSignupErr={clearSignupErr}
       />
     </div>
   );

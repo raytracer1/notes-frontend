@@ -4,15 +4,18 @@ import { loginUser, logoutUser, signupUser } from '../../service/authService';
 const getToken = () => {
   const token = localStorage.getItem('user') &&
     JSON.parse(localStorage.getItem('user')!).token;
-
   return token;
 }
 
 export const loginUserAction = createAsyncThunk(
   'users/loginUser',
-  async (params: { userName: string, passWord: string }) => {
-    const response = await loginUser(params.userName, params.passWord);
-    return { userName: params.userName, data: response.data};
+  async (params: { userName: string, passWord: string }, { rejectWithValue }) => {
+    try {
+      const response = await loginUser(params.userName, params.passWord);
+      return { userName: params.userName, data: response.data};
+    } catch(err: any) {
+      return rejectWithValue(err.response.data);
+    }
   }
 )
 
@@ -26,9 +29,14 @@ export const logoutUserAction = createAsyncThunk(
 
 export const signupUserAction = createAsyncThunk(
   'users/signupUser',
-  async (params: { userName: string, email: string, passWord: string }) => {
-    const response = await signupUser(params.userName, params.email, params.passWord);
-    return response.data;
+  async (params: { userName: string, email: string, passWord: string },
+    { rejectWithValue }) => {
+    try {
+      const response = await signupUser(params.userName, params.email, params.passWord);
+      return response.data;
+    } catch(err: any) {
+      return rejectWithValue(err.response.data);
+    }
   }
 )
 
@@ -36,6 +44,7 @@ export const signupUserAction = createAsyncThunk(
 interface authState {
   authenticated: boolean;
   login: string;
+  loginErr: string;
   user: {
     userName: string,
     token: string,
@@ -51,6 +60,7 @@ interface authState {
 const initialState: authState = {
   authenticated: localStorage.getItem('user') ? true : false,
   login: 'init',
+  loginErr: '',
   user: localStorage.getItem('user') ?
     JSON.parse(localStorage.getItem('user')!) : {
       userName: '',
@@ -67,7 +77,11 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    clearSignup: (state) => {
+    clearLoginAction: (state) => {
+      state.login = 'init';
+      state.loginErr = '';
+    },
+    clearSignupAction: (state) => {
       state.signup = 'init';
       state.signupErr = '';
     },
@@ -90,6 +104,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(loginUserAction.rejected, (state, action) => {
       state.login = 'failed';
+      state.loginErr = (action.payload as any).err.message;
     });
     builder.addCase(logoutUserAction.fulfilled ||
       logoutUserAction.rejected, (state, action) => {
@@ -112,13 +127,14 @@ export const authSlice = createSlice({
     });
     builder.addCase(signupUserAction.rejected, (state, action) => {
       state.signup = 'failed';
-      state.signupErr = action.error.message!;
+      state.signupErr = (action.payload as any).err.message;
     });
   }
 });
 
 export const {
-  clearSignup,
+  clearLoginAction,
+  clearSignupAction,
 } = authSlice.actions;
 
 export default authSlice.reducer;

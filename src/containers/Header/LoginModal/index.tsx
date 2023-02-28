@@ -8,6 +8,8 @@ interface ILoginModalProps {
   toggleModal: () => void,
   handleLogin: (userName: string, passWord: string) => void,
   loginStatus: string,
+  loginErr: string,
+  clearLoginErr: () => void;
 }
 
 const LoginModal = ({
@@ -15,13 +17,14 @@ const LoginModal = ({
   toggleModal,
   handleLogin,
   loginStatus,
+  loginErr,
+  clearLoginErr,
 } : ILoginModalProps) => {
 
   const [userName, setUserName] = useState<string>('');
   const [passWord, setPassWord] = useState<string>('');
   const [remember, setRemember] = useState<boolean>(false);
   const [focus, setFocus] = useState<string>('');
-  const [loginError, setLoginError] = useState<string>('');
 
   const toggleLoginModalHeler = () => {
     setUserName('');
@@ -29,13 +32,12 @@ const LoginModal = ({
     setRemember(false);
     setFocus('');
     toggleModal();
+    clearLoginErr();
   }
 
   useEffect(() => {
     if (loginStatus === 'success') {
       toggleLoginModalHeler();
-    } else if (loginStatus === 'failed') {
-      setLoginError('username or password error');
     }
   }, [loginStatus]);
 
@@ -57,7 +59,7 @@ const LoginModal = ({
             value={userName}
             onChange={(e) => {
               setUserName(e.target.value);
-              setLoginError('');
+              clearLoginErr();
             }}
             onFocus={() => {
               setFocus('username');
@@ -82,7 +84,7 @@ const LoginModal = ({
             value={passWord}
             onChange={(e) => {
               setPassWord(e.target.value);
-              setLoginError('');
+              clearLoginErr();
             }}
             onFocus={() => {
               setFocus('password');
@@ -111,12 +113,20 @@ const LoginModal = ({
           Remember me
         </FormGroup>
         {
-          loginError !== '' && (
-            <div className='login-error'>
-              <span className="error">
-                {loginError}
-              </span>
-            </div>
+          loginStatus === 'failed' && (
+            loginErr !== '' ? (
+              <div className='msg'>
+                <span className="error">
+                  {loginErr}
+                </span>
+              </div>
+            ) : (
+              <div className='login-error'>
+                <span className="error">
+                  unknown error
+                </span>
+              </div>
+            )
           )
         }
         <Button type='submit' value='submit' color='primary'

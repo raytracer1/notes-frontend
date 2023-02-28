@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 import ModalWrapper from '../../../components/Modal';
 import { validUserName, validEmail, validPassWord } from '../../../util/validate';
@@ -8,6 +8,8 @@ interface ISignUpModalProps {
   toggleModal: () => void,
   handleSignUp: (userName: string, email: string, passWord: string) => void,
   signupStatus: string,
+  signupErr: string,
+  clearSignupErr: () => void,
 }
 
 const SignUpModal = ({
@@ -15,12 +17,13 @@ const SignUpModal = ({
   toggleModal,
   handleSignUp,
   signupStatus,
+  signupErr,
+  clearSignupErr,
 } : ISignUpModalProps) => {
 
   const [userName, setUserName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [passWord, setPassWord] = useState<string>('');
-  const [signupError, setSignupError] = useState<string>('');
 
   const [focus, setFocus] = useState<string>('');
   const toggleLoginModalHeler = () => {
@@ -29,17 +32,8 @@ const SignUpModal = ({
     setPassWord('');
     setFocus('');
     toggleModal();
+    clearSignupErr();
   }
-
-  useEffect(() => {
-    if (signupStatus === 'failed') {
-      setSignupError('error');
-    } else if (signupStatus === 'success') {
-      setSignupError('success');
-    } else {
-      setSignupError('');
-    }
-  }, [signupStatus]);
 
   return (
     <ModalWrapper
@@ -124,14 +118,21 @@ const SignUpModal = ({
           }
         </FormGroup>
         {
-          signupError !== '' && (
-            signupError === 'success' ? (
+          signupStatus === 'success' && (
+            <div className="msg">
+              <span className="success">success</span>
+            </div>
+          )
+        }
+        {
+          signupStatus === 'failed' && (
+            signupErr !== '' ? (
               <div className="msg">
-                <span className="success">success</span>
+                <span className="error">{signupErr}</span>
               </div>
             ) : (
               <div className="msg">
-                <span className="error">error</span>
+                <span className="error">unknown error</span>
               </div>
             )
           )

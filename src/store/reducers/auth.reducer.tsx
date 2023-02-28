@@ -2,8 +2,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { loginUser, logoutUser, signupUser } from '../../service/authService';
 
 const getToken = () => {
-  return localStorage.getItem('user') &&
+  const token = localStorage.getItem('user') &&
     JSON.parse(localStorage.getItem('user')!).token;
+
+  return token;
 }
 
 export const loginUserAction = createAsyncThunk(
@@ -26,7 +28,6 @@ export const signupUserAction = createAsyncThunk(
   'users/signupUser',
   async (params: { userName: string, email: string, passWord: string }) => {
     const response = await signupUser(params.userName, params.email, params.passWord);
-    console.log(response);
     return response.data;
   }
 )
@@ -90,8 +91,7 @@ export const authSlice = createSlice({
     builder.addCase(loginUserAction.rejected, (state, action) => {
       state.login = 'failed';
     });
-    builder.addCase(logoutUserAction.pending ||
-      logoutUserAction.fulfilled ||
+    builder.addCase(logoutUserAction.fulfilled ||
       logoutUserAction.rejected, (state, action) => {
       state.authenticated = false;
       state.login = 'init';

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 import ModalWrapper from '../../../components/Modal';
-import { validUserName, validPassWord } from '../../../util/validate';
+import { validEmail, validPassWord } from '../../../util/validate';
 
 interface ILoginModalProps {
   isModalOpen: boolean,
   toggleModal: () => void,
-  handleLogin: (userName: string, passWord: string) => void,
+  handleLogin: (email: string, passWord: string) => void,
   loginStatus: string,
   loginErr: string,
   clearLoginErr: () => void;
@@ -21,13 +21,13 @@ const LoginModal = ({
   clearLoginErr,
 } : ILoginModalProps) => {
 
-  const [userName, setUserName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [passWord, setPassWord] = useState<string>('');
   const [remember, setRemember] = useState<boolean>(false);
   const [focus, setFocus] = useState<string>('');
 
   const toggleLoginModalHeler = () => {
-    setUserName('');
+    setEmail('');
     setPassWord('');
     setRemember(false);
     setFocus('');
@@ -49,31 +49,31 @@ const LoginModal = ({
       title='login'
     >
       <Form onSubmit={(event:any) => {
-          handleLogin(userName, passWord);
+          handleLogin(email, passWord);
           event.preventDefault();
         }
       }>
         <FormGroup>
-          <Input type='text' id='username' name='username'
-            placeholder='username'
+          <Input type='text' id='email' name='email'
+            placeholder='email'
             disabled={loginStatus === 'pending'}
-            value={userName}
+            value={email}
             onChange={(e) => {
-              setUserName(e.target.value);
+              setEmail(e.target.value);
               clearLoginErr();
             }}
             onFocus={() => {
-              setFocus('username');
+              setFocus('email');
             }}
             onBlur={() => {
               setFocus('');
             }}
           />
           {
-            !validUserName(userName) &&
-            focus !== 'username' && userName.length > 0 && (
+            !validEmail(email) &&
+            focus !== 'email' && email.length > 0 && (
               <span className='error'>
-                {'username should start with character and length between 6 and 20'}
+                {'email should like xxx@yyy.com'}
               </span>
             )
           }
@@ -131,7 +131,7 @@ const LoginModal = ({
           )
         }
         <Button type='submit' value='submit' color='primary'
-          disabled={!validUserName(userName)
+          disabled={!validEmail(email)
             || !validPassWord(passWord)
             || loginStatus === 'pending'
           }

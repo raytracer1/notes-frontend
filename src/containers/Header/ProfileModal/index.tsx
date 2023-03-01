@@ -7,8 +7,7 @@ interface IProfileModalProps {
   isModalOpen: boolean,
   toggleModal: () => void,
   handleUpdate: (
-    firstName?: string,
-    lastName?: string,
+    gender?: string,
     country?: string,
     imageUrl?: string,
   ) => void,
@@ -16,10 +15,9 @@ interface IProfileModalProps {
   updateErr: string,
   clearUpdateErr: () => void;
   user : {
-    userName: string,
     email: string,
-    firstName: string,
-    lastName: string,
+    userName: string,
+    gender: string,
     country: string,
     imageUrl: string,
   },
@@ -35,22 +33,19 @@ const ProfileModal = ({
   user,
 } : IProfileModalProps) => {
 
-  const [firstName, setFirstName] = useState<string>(user.firstName ? user.firstName : '');
-  const [lastName, setLastName] = useState<string>(user.lastName ? user.lastName : '');
+  const [gender, setGender] = useState<string>(user.gender ? user.gender : '');
   const [country, setCountry] = useState<string>(user.country ? user.country : '');
   const [imageUrl, setImageUrl] = useState<string>(user.imageUrl ? user.imageUrl : '');
 
   const toggleProfileModalHeler = () => {
-    setFirstName(user.firstName ? user.firstName : '');
-    setLastName(user.lastName ? user.lastName : '');
+    setGender(user.gender ? user.gender : '');
     setCountry(user.country ? user.country : '');
     toggleModal();
     clearUpdateErr();
   }
 
   const profileChanged = () => {
-    return (firstName !== '' && user.firstName !== firstName) ||
-      (lastName !== '' && user.lastName !== lastName) ||
+    return (gender !== '' && user.gender !== gender) ||
       (country !== '' && user.country !== country) ||
       (imageUrl !== '' && user.imageUrl !== imageUrl);
   }
@@ -62,31 +57,20 @@ const ProfileModal = ({
       title='profile'
     >
       <div className='user-image'>
-        <img src={user.imageUrl} alt='user image' />
+        <img src={user.imageUrl} alt='user icon' />
       </div>
       <Form onSubmit={(event:any) => {
-          handleUpdate(firstName, lastName, country, imageUrl);
+          handleUpdate(gender, country, imageUrl);
           event.preventDefault();
         }
       }>
         <FormGroup>
-          <Input type='text' id='firstName' name='firstName'
-            placeholder='First Name'
+          <Input type='text' id='gender' name='gender'
+            placeholder='gender'
             disabled={updateStatus === 'pending'}
-            value={firstName}
+            value={gender}
             onChange={(e) => {
-              setFirstName(e.target.value);
-              clearUpdateErr();
-            }}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Input type='text' id='lastName' name='lastName'
-            placeholder='Last Name'
-            disabled={updateStatus === 'pending'}
-            value={lastName}
-            onChange={(e) => {
-              setLastName(e.target.value);
+              setGender(e.target.value);
               clearUpdateErr();
             }}
           />

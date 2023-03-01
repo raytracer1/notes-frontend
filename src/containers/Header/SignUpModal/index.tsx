@@ -46,30 +46,6 @@ const SignUpModal = ({
         handleSignUp(userName, email, passWord);
       }}>
         <FormGroup>
-          <Input type='text' id='username' name='username'
-            placeholder='username'
-            disabled={signupStatus === 'pending'}
-            value={userName}
-            onChange={(e) => {
-              setUserName(e.target.value);
-            }}
-            onFocus={() => {
-              setFocus('userName');
-            }}
-            onBlur={() => {
-              setFocus('');
-            }}
-          />
-          {
-            !validUserName(userName) &&
-            focus !== 'userName' && userName.length > 0 && (
-              <span className='error'>
-                {'username should start with character and length between 6 and 20'}
-              </span>
-            )
-          }
-        </FormGroup>
-        <FormGroup>
           <Input type='text' id='email' name='email'
             placeholder='email'
             disabled={signupStatus === 'pending'}
@@ -89,6 +65,30 @@ const SignUpModal = ({
             focus !== 'email' && email.length > 0 && (
               <span className='error'>
                 {'email should like xxx@yyy.com'}
+              </span>
+            )
+          }
+        </FormGroup>
+        <FormGroup>
+          <Input type='text' id='username' name='username'
+            placeholder='username'
+            disabled={signupStatus === 'pending'}
+            value={userName}
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+            onFocus={() => {
+              setFocus('userName');
+            }}
+            onBlur={() => {
+              setFocus('');
+            }}
+          />
+          {
+            !validUserName(userName) &&
+            focus !== 'userName' && userName.length > 0 && (
+              <span className='error'>
+                {'username should start with character and length between 6 and 20'}
               </span>
             )
           }

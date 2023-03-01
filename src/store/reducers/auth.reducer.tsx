@@ -3,10 +3,10 @@ import { loginUser, logoutUser, signupUser } from '../../service/authService';
 
 export const loginUserAction = createAsyncThunk(
   'auth/loginUser',
-  async (params: { userName: string, passWord: string }, { rejectWithValue }) => {
+  async (params: { email: string, passWord: string }, { rejectWithValue }) => {
     try {
-      const response = await loginUser(params.userName, params.passWord);
-      return { userName: params.userName, data: response.data};
+      const response = await loginUser(params.email, params.passWord);
+      return { data: response.data};
     } catch(err: any) {
       return rejectWithValue(err.response.data);
     }
@@ -41,10 +41,9 @@ interface authState {
   login: string;
   loginErr: string;
   user: {
-    userName: string,
     email: string,
-    firstName: string,
-    lastName: string,
+    userName: string,
+    gender: string,
     country: string,
     imageUrl: string,
   };
@@ -61,8 +60,9 @@ const initialState: authState = {
   loginErr: '',
   user: localStorage.getItem('user') ?
     JSON.parse(localStorage.getItem('user')!) : {
-      userName: '',
       email: '',
+      userName: '',
+      gender: '',
       country: '',
       imageUrl: '',
     },
@@ -79,10 +79,9 @@ export const authSlice = createSlice({
       state.token = '';
       state.login = 'init';
       state.user = {
-        userName: '',
         email: '',
-        firstName: '',
-        lastName: '',
+        userName: '',
+        gender: '',
         country: '',
         imageUrl: '',
       };
@@ -107,10 +106,9 @@ export const authSlice = createSlice({
       state.token = action.payload.data.token;
       state.login = 'success';
       state.user = {
-        userName: action.payload.userName,
         email: action.payload.data.email,
-        firstName: action.payload.data.firstName,
-        lastName:  action.payload.data.lastName,
+        userName: action.payload.data.userName,
+        gender: action.payload.data.gender,
         country: action.payload.data.country,
         imageUrl: action.payload.data.imageUrl,
       };
@@ -126,10 +124,9 @@ export const authSlice = createSlice({
       state.login = 'init';
       state.token = '';
       state.user = {
-        userName: '',
         email: '',
-        firstName: '',
-        lastName: '',
+        userName: '',
+        gender: '',
         country: '',
         imageUrl: '',
       };
@@ -141,10 +138,9 @@ export const authSlice = createSlice({
       state.token = '';
       state.login = 'init';
       state.user = {
-        userName: '',
         email: '',
-        firstName: '',
-        lastName: '',
+        userName: '',
+        gender: '',
         country: '',
         imageUrl: '',
       };

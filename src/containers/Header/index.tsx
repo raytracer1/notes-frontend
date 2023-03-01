@@ -35,8 +35,8 @@ function Header() {
     setIsLoginModalOpen(!isLoginModalOpen);
   }
 
-  const handleLogin = (userName: string, passWord: string) => {
-    dispatch(loginUserAction({userName, passWord}));
+  const handleLogin = (email: string, passWord: string) => {
+    dispatch(loginUserAction({email, passWord}));
   }
 
   const clearLoginErr = () => {
@@ -64,20 +64,21 @@ function Header() {
   }
 
   const handleUpdate = (
-    firstName?: string, lastName?: string, country?: string, imageUrl?: string
+    gender?: string, country?: string, imageUrl?: string
   ) => {
     console.log('update');
   }
 
+  const userNameSafe = userName ? userName : "Visitor";
   const userIcon = (
     isProfileModalOpen ? (
-      <span>{userName.substring(0, 2)}</span>
+      <span>{userNameSafe.substring(0, 2)}</span>
     ) : (
       <ProfileTooltip
         handleLogout={handleLogout}
         toggleProfileModal={toggleProfileModal}
       >
-        <span>{userName.substring(0, 2)}</span>
+        <span>{userNameSafe.substring(0, 2)}</span>
       </ProfileTooltip>
     )
   );

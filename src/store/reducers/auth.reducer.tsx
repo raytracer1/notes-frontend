@@ -104,7 +104,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(loginUserAction.rejected, (state, action) => {
       state.login = 'failed';
-      state.loginErr = (action.payload as any).err.message;
+      state.loginErr = (action.payload as any)?.err.message;
     });
     builder.addCase(logoutUserAction.fulfilled ||
       logoutUserAction.rejected, (state, action) => {
@@ -127,7 +127,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(signupUserAction.rejected, (state, action) => {
       state.signup = 'failed';
-      state.signupErr = (action.payload as any).err.message;
+      state.signupErr = (action.payload as any)?.err.message;
     });
   }
 });

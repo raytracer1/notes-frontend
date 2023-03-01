@@ -71,6 +71,18 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    autoLogoutAction: (state) => {
+      state.authenticated = false;
+      state.login = 'init';
+      state.user = {
+        userName: '',
+        token: '',
+        email: '',
+        country: '',
+        imageUrl: '',
+      };
+      localStorage.removeItem('user');
+    },
     clearLoginAction: (state) => {
       state.login = 'init';
       state.loginErr = '';
@@ -138,6 +150,7 @@ export const authSlice = createSlice({
 });
 
 export const {
+  autoLogoutAction,
   clearLoginAction,
   clearSignupAction,
 } = authSlice.actions;

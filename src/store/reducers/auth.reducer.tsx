@@ -1,12 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { loginUser, logoutUser, signupUser } from '../../service/authService';
 
-const getToken = () => {
-  const token = localStorage.getItem('user') &&
-    JSON.parse(localStorage.getItem('user')!).token;
-  return token;
-}
-
 export const loginUserAction = createAsyncThunk(
   'users/loginUser',
   async (params: { userName: string, passWord: string }, { rejectWithValue }) => {
@@ -22,7 +16,7 @@ export const loginUserAction = createAsyncThunk(
 export const logoutUserAction = createAsyncThunk(
   'users/logoutUser',
   async () => {
-    const response = await logoutUser(getToken());
+    const response = await logoutUser();
     return response.data;
   }
 )

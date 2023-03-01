@@ -1,4 +1,4 @@
-import { apiInstance as Axios, apiInstanceToken as AxiosToken } from '../api/requestInterceptor';
+import { apiInstance as Axios } from '../api/requestInterceptor';
 
 //Login
 const loginUser = (userName: string, passWord: string) => {
@@ -6,8 +6,8 @@ const loginUser = (userName: string, passWord: string) => {
 }
 
 //Logout
-const logoutUser = (token: string) => {
-  return AxiosToken(token).get('users/logout');
+const logoutUser = () => {
+  return Axios.get('users/logout');
 }
 
 const signupUser = (userName: string, email: string, passWord: string) => {

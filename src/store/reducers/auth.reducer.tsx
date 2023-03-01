@@ -106,8 +106,19 @@ export const authSlice = createSlice({
       state.login = 'failed';
       state.loginErr = (action.payload as any)?.err.message;
     });
-    builder.addCase(logoutUserAction.fulfilled ||
-      logoutUserAction.rejected, (state, action) => {
+    builder.addCase(logoutUserAction.fulfilled, (state, action) => {
+      state.authenticated = false;
+      state.login = 'init';
+      state.user = {
+        userName: '',
+        token: '',
+        email: '',
+        country: '',
+        imageUrl: '',
+      };
+      localStorage.removeItem('user');
+    });
+    builder.addCase(logoutUserAction.rejected, (state, action) => {
       state.authenticated = false;
       state.login = 'init';
       state.user = {

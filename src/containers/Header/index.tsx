@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useState } from 'react';
 import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Button } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
-import LoginModal from "./LoginModal";
-import SignUpModal from "./SignUpModal";
-import ProfileTooltip from "./ProfileTooltip";
+import LoginModal from './LoginModal';
+import SignUpModal from './SignUpModal';
+import ProfileTooltip from './ProfileTooltip';
+import ProfileModal from './ProfileModal';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  loginUserAction, clearLoginAction, logoutUserAction, signupUserAction, clearSignupAction,
+  loginUserAction, clearLoginErrAction, logoutUserAction, signupUserAction, clearSignupErrAction,
 } from '../../store/reducers/auth.reducer';
-import { ReactComponent as IconBlackHole }from '../../assets/svg/black-hole.svg';
+import { ReactComponent as IconBlackHole } from '../../assets/svg/black-hole.svg';
 import './style.scss';
 
 function Header() {
@@ -18,11 +19,13 @@ function Header() {
   const userName = useAppSelector((state) => state.auth.user.userName);
   const signupStatus = useAppSelector((state) => state.auth.signup);
   const signupErr = useAppSelector((state) => state.auth.signupErr);
+  const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
 
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState<boolean>(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState<boolean>(false);
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
@@ -37,7 +40,7 @@ function Header() {
   }
 
   const clearLoginErr = () => {
-    dispatch(clearLoginAction());
+    dispatch(clearLoginErrAction());
   }
 
   const handleLogout = () => {
@@ -45,7 +48,6 @@ function Header() {
   }
 
   const toggleSignUpModal = () => {
-    dispatch(clearSignupAction());
     setIsSignUpModalOpen(!isSignUpModalOpen);
   }
 
@@ -54,16 +56,31 @@ function Header() {
   }
 
   const clearSignupErr = () => {
-    dispatch(clearSignupAction());
+    dispatch(clearSignupErrAction());
+  }
+
+  const toggleProfileModal = () => {
+    setIsProfileModalOpen(!isProfileModalOpen);
+  }
+
+  const handleUpdate = (
+    firstName?: string, lastName?: string, country?: string, imageUrl?: string
+  ) => {
+    console.log('update');
   }
 
   const userIcon = (
-    <ProfileTooltip
-      handleLogout={handleLogout}
-    >
+    isProfileModalOpen ? (
       <span>{userName.substring(0, 2)}</span>
-    </ProfileTooltip>
-  )
+    ) : (
+      <ProfileTooltip
+        handleLogout={handleLogout}
+        toggleProfileModal={toggleProfileModal}
+      >
+        <span>{userName.substring(0, 2)}</span>
+      </ProfileTooltip>
+    )
+  );
 
   return (
     <div className='header'>
@@ -133,6 +150,15 @@ function Header() {
         signupStatus={signupStatus}
         signupErr={signupErr}
         clearSignupErr={clearSignupErr}
+      />
+      <ProfileModal
+        isModalOpen={isProfileModalOpen}
+        toggleModal={toggleProfileModal}
+        handleUpdate={handleUpdate}
+        updateStatus={loginStatus}
+        updateErr={loginErr}
+        clearUpdateErr={clearLoginErr}
+        user={user}
       />
     </div>
   );

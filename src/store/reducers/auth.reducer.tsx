@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { loginUser, logoutUser, signupUser } from '../../service/authService';
 
 export const loginUserAction = createAsyncThunk(
-  'users/loginUser',
+  'auth/loginUser',
   async (params: { userName: string, passWord: string }, { rejectWithValue }) => {
     try {
       const response = await loginUser(params.userName, params.passWord);
@@ -14,7 +14,7 @@ export const loginUserAction = createAsyncThunk(
 )
 
 export const logoutUserAction = createAsyncThunk(
-  'users/logoutUser',
+  'auth/logoutUser',
   async () => {
     const response = await logoutUser();
     return response.data;
@@ -22,7 +22,7 @@ export const logoutUserAction = createAsyncThunk(
 )
 
 export const signupUserAction = createAsyncThunk(
-  'users/signupUser',
+  'auth/signupUser',
   async (params: { userName: string, email: string, passWord: string },
     { rejectWithValue }) => {
     try {
@@ -37,12 +37,14 @@ export const signupUserAction = createAsyncThunk(
 // Define a type for the slice state
 interface authState {
   authenticated: boolean;
+  token: string,
   login: string;
   loginErr: string;
   user: {
     userName: string,
-    token: string,
     email: string,
+    firstName: string,
+    lastName: string,
     country: string,
     imageUrl: string,
   };
@@ -53,12 +55,13 @@ interface authState {
 // Define the initial state using that type
 const initialState: authState = {
   authenticated: localStorage.getItem('user') ? true : false,
+  token: localStorage.getItem('token') ?
+    localStorage.getItem('token')! : '',
   login: 'init',
   loginErr: '',
   user: localStorage.getItem('user') ?
     JSON.parse(localStorage.getItem('user')!) : {
       userName: '',
-      token: '',
       email: '',
       country: '',
       imageUrl: '',
@@ -73,21 +76,24 @@ export const authSlice = createSlice({
   reducers: {
     autoLogoutAction: (state) => {
       state.authenticated = false;
+      state.token = '';
       state.login = 'init';
       state.user = {
         userName: '',
-        token: '',
         email: '',
+        firstName: '',
+        lastName: '',
         country: '',
         imageUrl: '',
       };
       localStorage.removeItem('user');
+      localStorage.removeItem('token');
     },
-    clearLoginAction: (state) => {
+    clearLoginErrAction: (state) => {
       state.login = 'init';
       state.loginErr = '';
     },
-    clearSignupAction: (state) => {
+    clearSignupErrAction: (state) => {
       state.signup = 'init';
       state.signupErr = '';
     },
@@ -98,15 +104,18 @@ export const authSlice = createSlice({
     });
     builder.addCase(loginUserAction.fulfilled, (state, action) => {
       state.authenticated = true;
+      state.token = action.payload.data.token;
       state.login = 'success';
       state.user = {
         userName: action.payload.userName,
-        token: action.payload.data.token,
         email: action.payload.data.email,
+        firstName: action.payload.data.firstName,
+        lastName:  action.payload.data.lastName,
         country: action.payload.data.country,
         imageUrl: action.payload.data.imageUrl,
       };
       localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('token', state.token);
     });
     builder.addCase(loginUserAction.rejected, (state, action) => {
       state.login = 'failed';
@@ -115,26 +124,32 @@ export const authSlice = createSlice({
     builder.addCase(logoutUserAction.fulfilled, (state, action) => {
       state.authenticated = false;
       state.login = 'init';
+      state.token = '';
       state.user = {
         userName: '',
-        token: '',
         email: '',
+        firstName: '',
+        lastName: '',
         country: '',
         imageUrl: '',
       };
       localStorage.removeItem('user');
+      localStorage.removeItem('token');
     });
     builder.addCase(logoutUserAction.rejected, (state, action) => {
       state.authenticated = false;
+      state.token = '';
       state.login = 'init';
       state.user = {
         userName: '',
-        token: '',
         email: '',
+        firstName: '',
+        lastName: '',
         country: '',
         imageUrl: '',
       };
       localStorage.removeItem('user');
+      localStorage.removeItem('token');
     });
     builder.addCase(signupUserAction.pending, (state, action) => {
       state.signup = 'pending';
@@ -151,8 +166,8 @@ export const authSlice = createSlice({
 
 export const {
   autoLogoutAction,
-  clearLoginAction,
-  clearSignupAction,
+  clearLoginErrAction,
+  clearSignupErrAction,
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -6,8 +6,7 @@ import { apiInstance } from '../api/requestInterceptor';
 import { baseURL } from '../config';
 
 const getToken = () => {
-  const token = localStorage.getItem('user') &&
-    JSON.parse(localStorage.getItem('user')!).token;
+  const token = localStorage.getItem('token');
   return token;
 }
 const store = configureStore({

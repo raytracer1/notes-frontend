@@ -122,7 +122,7 @@ const LoginModal = ({
                 </span>
               </div>
             ) : (
-              <div className='login-error'>
+              <div className='msg'>
                 <span className="error">
                   unknown error
                 </span>

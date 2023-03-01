@@ -4,17 +4,19 @@ import './style.scss';
 
 interface IProfileTooltipProps {
   handleLogout: () => void,
+  toggleProfileModal: () => void,
 }
 
 const ProfileTooltip = ({
   handleLogout,
+  toggleProfileModal,
   children,
 } :  PropsWithChildren<IProfileTooltipProps>) => {
 
   const tip = (
     <div className='content'>
       <ul>
-        <li>
+        <li onClick={toggleProfileModal}>
           my profile
         </li>
         <li onClick={handleLogout}>

@@ -79,6 +79,20 @@ const ProfileModal = ({
               <option>Female</option>
             </Input>
           </FormGroup>
+          <FormGroup>
+            <label htmlFor='country'>country</label>
+            <Input type='select' id='country' name='country'
+              disabled={updateStatus === 'pending'}
+              value={country}
+              onChange={(e) => {
+                setCountry(e.target.value);
+                clearUpdateErr();
+              }}
+            >
+              <option>china</option>
+              <option>America</option>
+            </Input>
+          </FormGroup>
           {
             updateStatus === 'failed' && (
               updateErr !== '' ? (

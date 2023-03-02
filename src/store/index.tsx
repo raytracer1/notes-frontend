@@ -53,7 +53,7 @@ apiInstance.interceptors.response.use(
     }
     try {
       const res : any = await axios({
-        url: baseURL + '/users/checkJWTToken',
+        url: baseURL + '/user/checkJWTToken',
         method: 'GET',
         headers: {
           Authorization: `Bearer ` + store_token,

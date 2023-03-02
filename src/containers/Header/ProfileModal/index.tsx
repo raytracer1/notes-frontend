@@ -125,6 +125,10 @@ const ProfileModal = ({
               <option>America</option>
             </Input>
           </FormGroup>
+          <div className='interests'>
+            <div className='label'>interests</div>
+            <div className='add'>add interests</div>
+          </div>
           {
             updateStatus === 'success' && (
               <div className='msg'>

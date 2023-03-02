@@ -23,13 +23,11 @@ const LoginModal = ({
 
   const [email, setEmail] = useState<string>('');
   const [passWord, setPassWord] = useState<string>('');
-  const [remember, setRemember] = useState<boolean>(false);
   const [focus, setFocus] = useState<string>('');
 
   const toggleLoginModalHeler = () => {
     setEmail('');
     setPassWord('');
-    setRemember(false);
     setFocus('');
     toggleModal();
     clearLoginErr();
@@ -102,16 +100,6 @@ const LoginModal = ({
               </span>
             )
           }
-        </FormGroup>
-        <FormGroup check>
-          <Input type='checkbox' name='remember'
-            disabled={loginStatus === 'pending'}
-            checked={remember}
-            onChange={(e) => {
-              setRemember(e.target.checked)
-            }}
-          />
-          Remember me
         </FormGroup>
         {
           loginStatus === 'failed' && (

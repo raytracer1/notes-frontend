@@ -113,6 +113,10 @@ export const authSlice = createSlice({
       state.signup = 'init';
       state.signupErr = '';
     },
+    clearUpdateErrAction: (state) => {
+      state.update = 'init';
+      state.updateErr = '';
+    },
   },
 
   extraReducers: builder => {
@@ -196,6 +200,7 @@ export const {
   autoLogoutAction,
   clearLoginErrAction,
   clearSignupErrAction,
+  clearUpdateErrAction,
 } = authSlice.actions;
 
 export default authSlice.reducer;

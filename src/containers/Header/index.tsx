@@ -7,7 +7,9 @@ import ProfileTooltip from './ProfileTooltip';
 import ProfileModal from './ProfileModal';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  loginUserAction, clearLoginErrAction, logoutUserAction, signupUserAction, clearSignupErrAction, updateUserAction,
+  loginUserAction, clearLoginErrAction, logoutUserAction,
+  signupUserAction, clearSignupErrAction,
+  updateUserAction, clearUpdateErrAction,
 } from '../../store/reducers/auth.reducer';
 import { ReactComponent as IconBlackHole } from '../../assets/svg/black-hole.svg';
 import './style.scss';
@@ -19,6 +21,8 @@ function Header() {
   const userName = useAppSelector((state) => state.auth.user.userName);
   const signupStatus = useAppSelector((state) => state.auth.signup);
   const signupErr = useAppSelector((state) => state.auth.signupErr);
+  const updateStatus = useAppSelector((state) => state.auth.update);
+  const updateErr = useAppSelector((state) => state.auth.updateErr);
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
 
@@ -67,6 +71,10 @@ function Header() {
     gender: string, country: string, imageUrl: string
   ) => {
     dispatch(updateUserAction({gender, country, imageUrl}));
+  }
+
+  const clearUpdateErr = () => {
+    dispatch(clearUpdateErrAction());
   }
 
   const userNameSafe = userName ? userName : "Visitor";
@@ -156,9 +164,9 @@ function Header() {
         isModalOpen={isProfileModalOpen}
         toggleModal={toggleProfileModal}
         handleUpdate={handleUpdate}
-        updateStatus={loginStatus}
-        updateErr={loginErr}
-        clearUpdateErr={clearLoginErr}
+        updateStatus={updateStatus}
+        updateErr={updateErr}
+        clearUpdateErr={clearUpdateErr}
         user={user}
       />
     </div>

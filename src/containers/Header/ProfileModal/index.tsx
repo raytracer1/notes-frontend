@@ -44,9 +44,18 @@ const ProfileModal = ({
     clearUpdateErr();
   }
 
+  const uploadGender = () => {
+    return gender === 'secret' ? '' : gender;
+  }
+
+  const uploadCountry = () => {
+    return country === 'secret' ? '' : country;
+  }
+
   const profileChanged = () => {
-    return (gender !== 'secret' && user.gender !== gender) ||
-      (country !== 'secret' && user.country !== country) ||
+
+    return (user.gender !== uploadGender()) ||
+      (user.country !== uploadCountry()) ||
       (imageUrl !== '' && user.imageUrl !== imageUrl);
   }
 
@@ -68,7 +77,7 @@ const ProfileModal = ({
       </div>
       <div className='user-info'>
         <Form onSubmit={(event:any) => {
-            handleUpdate(gender, country, imageUrl);
+            handleUpdate(uploadGender(), uploadCountry(), imageUrl);
             event.preventDefault();
           }
         }>

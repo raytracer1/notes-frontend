@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 import ModalWrapper from '../../../components/Modal';
 import './style.scss';
@@ -37,6 +37,21 @@ const ProfileModal = ({
   const [country, setCountry] = useState<string>(user.country ? user.country : 'secret');
   const [imageUrl, setImageUrl] = useState<string>(user.imageUrl ? user.imageUrl : '');
 
+  useEffect(() => {
+    if (gender !== user.gender) {
+      setGender(user.gender);
+    }
+
+    if (country !== user.country) {
+      setCountry(user.country);
+    }
+
+    if (imageUrl !== user.imageUrl) {
+      setImageUrl(user.imageUrl)
+    }
+
+  }, [user]);
+
   const toggleProfileModalHeler = () => {
     setGender(user.gender ? user.gender : 'secret');
     setCountry(user.country ? user.country : 'secret');
@@ -53,7 +68,6 @@ const ProfileModal = ({
   }
 
   const profileChanged = () => {
-
     return (user.gender !== uploadGender()) ||
       (user.country !== uploadCountry()) ||
       (imageUrl !== '' && user.imageUrl !== imageUrl);

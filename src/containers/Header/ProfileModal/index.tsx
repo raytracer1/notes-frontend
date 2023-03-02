@@ -33,13 +33,13 @@ const ProfileModal = ({
   user,
 } : IProfileModalProps) => {
 
-  const [gender, setGender] = useState<string>(user.gender ? user.gender : '');
-  const [country, setCountry] = useState<string>(user.country ? user.country : '');
+  const [gender, setGender] = useState<string>(user.gender ? user.gender : 'male');
+  const [country, setCountry] = useState<string>(user.country ? user.country : 'China');
   const [imageUrl, setImageUrl] = useState<string>(user.imageUrl ? user.imageUrl : '');
 
   const toggleProfileModalHeler = () => {
-    setGender(user.gender ? user.gender : '');
-    setCountry(user.country ? user.country : '');
+    setGender(user.gender ? user.gender : 'male');
+    setCountry(user.country ? user.country : 'China');
     toggleModal();
     clearUpdateErr();
   }
@@ -89,7 +89,7 @@ const ProfileModal = ({
                 clearUpdateErr();
               }}
             >
-              <option>china</option>
+              <option>China</option>
               <option>America</option>
             </Input>
           </FormGroup>

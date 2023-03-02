@@ -13,11 +13,9 @@
         border-radius: 4px;
 
         label {
-            font-family: Roboto,Helvetica,Arial,sans-serif;
-            font-weight: 400;
-            font-weight: 500!important;
-            font-size: 11px!important;
-            line-height: 10px;
+            @include roboto-sans-regular;
+            font-weight: 500;
+            font-size: 11px;
             line-height: 10px;
             color: #137d60;
             padding-left: 10px;

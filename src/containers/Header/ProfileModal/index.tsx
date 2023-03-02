@@ -57,7 +57,14 @@ const ProfileModal = ({
       title='profile'
     >
       <div className='user-image'>
-        <img src={user.imageUrl} alt='user icon' />
+        <img src={user.imageUrl} alt='user icon'
+          onError={(e) => {
+            if (e.target) {
+              (e.target as HTMLImageElement).src = 'image/error.png'
+            }
+            e.preventDefault();
+          }}
+        />
       </div>
       <div className='user-info'>
         <Form onSubmit={(event:any) => {

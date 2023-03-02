@@ -59,49 +59,54 @@ const ProfileModal = ({
       <div className='user-image'>
         <img src={user.imageUrl} alt='user icon' />
       </div>
-      <Form onSubmit={(event:any) => {
-          handleUpdate(gender, country, imageUrl);
-          event.preventDefault();
-        }
-      }>
-        <FormGroup>
-          <Input type='text' id='gender' name='gender'
-            placeholder='gender'
-            disabled={updateStatus === 'pending'}
-            value={gender}
-            onChange={(e) => {
-              setGender(e.target.value);
-              clearUpdateErr();
-            }}
-          />
-        </FormGroup>
-        {
-          updateStatus === 'failed' && (
-            updateErr !== '' ? (
-              <div className='msg'>
-                <span className="error">
-                  {updateErr}
-                </span>
-              </div>
-            ) : (
-              <div className='msg'>
-                <span className="error">
-                  unknown error
-                </span>
-              </div>
-            )
-          )
-        }
-        <Button type='submit' value='submit' color='primary'
-          disabled={updateStatus === 'pending' || !profileChanged()}
-        >
-          {
-            updateStatus === 'pending' ? (
-              <div className='spinner'></div>
-            ) : "save changes"
+      <div className='user-info'>
+        <Form onSubmit={(event:any) => {
+            handleUpdate(gender, country, imageUrl);
+            event.preventDefault();
           }
-        </Button>
-      </Form>
+        }>
+          <FormGroup>
+            <label htmlFor='gender'>gender</label>
+            <Input type='select' id='gender' name='gender'
+              disabled={updateStatus === 'pending'}
+              value={gender}
+              onChange={(e) => {
+                setGender(e.target.value);
+                clearUpdateErr();
+              }}
+            >
+              <option>male</option>
+              <option>Female</option>
+            </Input>
+          </FormGroup>
+          {
+            updateStatus === 'failed' && (
+              updateErr !== '' ? (
+                <div className='msg'>
+                  <span className="error">
+                    {updateErr}
+                  </span>
+                </div>
+              ) : (
+                <div className='msg'>
+                  <span className="error">
+                    unknown error
+                  </span>
+                </div>
+              )
+            )
+          }
+          <Button type='submit' value='submit' color='primary'
+            disabled={updateStatus === 'pending' || !profileChanged()}
+          >
+            {
+              updateStatus === 'pending' ? (
+                <div className='spinner'></div>
+              ) : "save changes"
+            }
+          </Button>
+        </Form>
+      </div>
     </ModalWrapper>
   );
 }

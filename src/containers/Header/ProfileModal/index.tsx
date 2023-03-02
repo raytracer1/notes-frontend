@@ -103,6 +103,13 @@ const ProfileModal = ({
             </Input>
           </FormGroup>
           {
+            updateStatus === 'success' && (
+              <div className='msg'>
+                <span className="success">success</span>
+              </div>
+            )
+          }
+          {
             updateStatus === 'failed' && (
               updateErr !== '' ? (
                 <div className='msg'>

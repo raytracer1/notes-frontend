@@ -7,7 +7,7 @@ import ProfileTooltip from './ProfileTooltip';
 import ProfileModal from './ProfileModal';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  loginUserAction, clearLoginErrAction, logoutUserAction, signupUserAction, clearSignupErrAction,
+  loginUserAction, clearLoginErrAction, logoutUserAction, signupUserAction, clearSignupErrAction, updateUserAction,
 } from '../../store/reducers/auth.reducer';
 import { ReactComponent as IconBlackHole } from '../../assets/svg/black-hole.svg';
 import './style.scss';
@@ -64,9 +64,9 @@ function Header() {
   }
 
   const handleUpdate = (
-    gender?: string, country?: string, imageUrl?: string
+    gender: string, country: string, imageUrl: string
   ) => {
-    console.log('update');
+    dispatch(updateUserAction({gender, country, imageUrl}));
   }
 
   const userNameSafe = userName ? userName : "Visitor";

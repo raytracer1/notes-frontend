@@ -7,9 +7,9 @@ interface IProfileModalProps {
   isModalOpen: boolean,
   toggleModal: () => void,
   handleUpdate: (
-    gender?: string,
-    country?: string,
-    imageUrl?: string,
+    gender: string,
+    country: string,
+    imageUrl: string,
   ) => void,
   updateStatus: string,
   updateErr: string,

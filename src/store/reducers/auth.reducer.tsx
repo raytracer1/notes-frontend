@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loginUser, logoutUser, signupUser } from '../../service/authService';
+import { loginUser, logoutUser, signupUser, updateUser } from '../../service/authService';
 
 export const loginUserAction = createAsyncThunk(
   'auth/loginUser',
@@ -34,6 +34,19 @@ export const signupUserAction = createAsyncThunk(
   }
 )
 
+export const updateUserAction = createAsyncThunk(
+  'auth/updateUser',
+  async (params: { gender: string, country: string, imageUrl: string },
+    { rejectWithValue }) => {
+    try {
+      const response = await updateUser(params.gender, params.country, params.imageUrl);
+      return response.data;
+    } catch(err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+)
+
 // Define a type for the slice state
 interface authState {
   authenticated: boolean;
@@ -49,6 +62,8 @@ interface authState {
   };
   signup: string;
   signupErr: string;
+  update: string;
+  updateErr: string;
 }
 
 // Define the initial state using that type
@@ -68,6 +83,8 @@ const initialState: authState = {
     },
   signup: 'init',
   signupErr: '',
+  update: 'init',
+  updateErr: '',
 };
 
 export const authSlice = createSlice({
@@ -97,7 +114,9 @@ export const authSlice = createSlice({
       state.signupErr = '';
     },
   },
+
   extraReducers: builder => {
+
     builder.addCase(loginUserAction.pending, (state, action) => {
       state.login = 'pending';
     });
@@ -119,6 +138,7 @@ export const authSlice = createSlice({
       state.login = 'failed';
       state.loginErr = (action.payload as any)?.err.message;
     });
+
     builder.addCase(logoutUserAction.fulfilled, (state, action) => {
       state.authenticated = false;
       state.login = 'init';
@@ -147,6 +167,7 @@ export const authSlice = createSlice({
       localStorage.removeItem('user');
       localStorage.removeItem('token');
     });
+
     builder.addCase(signupUserAction.pending, (state, action) => {
       state.signup = 'pending';
     });
@@ -156,6 +177,17 @@ export const authSlice = createSlice({
     builder.addCase(signupUserAction.rejected, (state, action) => {
       state.signup = 'failed';
       state.signupErr = (action.payload as any)?.err.message;
+    });
+
+    builder.addCase(updateUserAction.pending, (state, action) => {
+      state.update = 'pending';
+    });
+    builder.addCase(updateUserAction.fulfilled, (state, action) => {
+      state.update = 'success';
+    });
+    builder.addCase(updateUserAction.rejected, (state, action) => {
+      state.update = 'failed';
+      state.updateErr = (action.payload as any)?.err.message;
     });
   }
 });

@@ -6,7 +6,7 @@ export const loginUserAction = createAsyncThunk(
   async (params: { email: string, passWord: string }, { rejectWithValue }) => {
     try {
       const response = await loginUser(params.email, params.passWord);
-      return { data: response.data};
+      return response.data;
     } catch(err: any) {
       return rejectWithValue(err.response.data);
     }
@@ -126,14 +126,14 @@ export const authSlice = createSlice({
     });
     builder.addCase(loginUserAction.fulfilled, (state, action) => {
       state.authenticated = true;
-      state.token = action.payload.data.token;
+      state.token = action.payload.token;
       state.login = 'success';
       state.user = {
-        email: action.payload.data.email,
-        userName: action.payload.data.userName,
-        gender: action.payload.data.gender,
-        country: action.payload.data.country,
-        imageUrl: action.payload.data.imageUrl,
+        email: action.payload.email,
+        userName: action.payload.userName,
+        gender: action.payload.gender,
+        country: action.payload.country,
+        imageUrl: action.payload.imageUrl,
       };
       localStorage.setItem('user', JSON.stringify(state.user));
       localStorage.setItem('token', state.token);
@@ -188,6 +188,9 @@ export const authSlice = createSlice({
     });
     builder.addCase(updateUserAction.fulfilled, (state, action) => {
       state.update = 'success';
+      state.user.gender = action.payload.gender;
+      state.user.country = action.payload.country;
+      state.user.imageUrl = action.payload.imageUrl;
     });
     builder.addCase(updateUserAction.rejected, (state, action) => {
       state.update = 'failed';

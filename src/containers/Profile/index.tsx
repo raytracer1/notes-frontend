@@ -119,7 +119,7 @@ function Profile() {
                 </p>
               </div>
               <div className='inputs'>
-                <FormGroup>
+                <FormGroup className={updateStatus === 'pending' ? 'disabled' : ''}>
                   <label htmlFor='gender'>gender</label>
                   <Input type='select' id='gender' name='gender'
                     disabled={updateStatus === 'pending'}
@@ -134,7 +134,7 @@ function Profile() {
                     <option>Female</option>
                   </Input>
                 </FormGroup>
-                <FormGroup>
+                <FormGroup className={updateStatus === 'pending' ? 'disabled' : ''}>
                   <label htmlFor='country'>country</label>
                   <Input type='select' id='country' name='country'
                     disabled={updateStatus === 'pending'}

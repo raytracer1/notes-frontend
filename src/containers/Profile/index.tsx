@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  updateUserAction, clearUpdateErrAction,
+  updateUserAction, clearUpdateErrAction, refreshUserAction,
 } from '../../store/reducers/auth.reducer';
 import './style.scss';
 
@@ -15,10 +15,16 @@ function Profile() {
   const user = useAppSelector((state) => state.auth.user);
   const updateStatus = useAppSelector((state) => state.auth.update);
   const updateErr = useAppSelector((state) => state.auth.updateErr);
+  const getStatus = useAppSelector((state) => state.auth.refresh);
+  const getErr = useAppSelector((state) => state.auth.refreshErr);
 
   const [gender, setGender] = useState<string>(user.gender ? user.gender : 'secret');
   const [country, setCountry] = useState<string>(user.country ? user.country : 'secret');
   const [imageUrl, setImageUrl] = useState<string>(user.imageUrl ? user.imageUrl : '');
+
+  useEffect(() => {
+    dispatch(refreshUserAction());
+  }, []);
 
   useEffect(() => {
     if (!authenticated) {

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loginUser, logoutUser, signupUser, updateUser } from '../../service/authService';
+import { loginUser, logoutUser, signupUser, updateUser, refreshUser } from '../../service/authService';
 
 export const loginUserAction = createAsyncThunk(
   'auth/loginUser',
@@ -47,6 +47,14 @@ export const updateUserAction = createAsyncThunk(
   }
 )
 
+export const refreshUserAction = createAsyncThunk(
+  'auth/refreshUser',
+  async () => {
+    const response = await refreshUser();
+    return response.data;
+  }
+)
+
 // Define a type for the slice state
 interface authState {
   authenticated: boolean;
@@ -64,6 +72,8 @@ interface authState {
   signupErr: string;
   update: string;
   updateErr: string;
+  refresh: string;
+  refreshErr: string;
 }
 
 // Define the initial state using that type
@@ -85,6 +95,8 @@ const initialState: authState = {
   signupErr: '',
   update: 'init',
   updateErr: '',
+  refresh: 'init',
+  refreshErr: '',
 };
 
 export const authSlice = createSlice({
@@ -117,6 +129,10 @@ export const authSlice = createSlice({
       state.update = 'init';
       state.updateErr = '';
     },
+    clearRefreshErrAction: (state) => {
+      state.refresh = 'init';
+      state.refreshErr = '';
+    },
   },
 
   extraReducers: builder => {
@@ -140,7 +156,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(loginUserAction.rejected, (state, action) => {
       state.login = 'failed';
-      state.loginErr = (action.payload as any)?.err.message;
+      state.loginErr = (action.payload as any)?.err?.message;
     });
 
     builder.addCase(logoutUserAction.fulfilled, (state, action) => {
@@ -197,6 +213,26 @@ export const authSlice = createSlice({
       state.update = 'failed';
       state.updateErr = (action.payload as any)?.err?.message;
     });
+
+    builder.addCase(refreshUserAction.pending, (state, action) => {
+      state.refresh = 'pending';
+    });
+    builder.addCase(refreshUserAction.fulfilled, (state, action) => {
+      state.refresh = 'success';
+      state.refreshErr = '';
+      state.user = {
+        email: action.payload.email,
+        userName: action.payload.userName,
+        gender: action.payload.gender,
+        country: action.payload.country,
+        imageUrl: action.payload.imageUrl,
+      };
+      localStorage.setItem('user', JSON.stringify(state.user));
+    });
+    builder.addCase(refreshUserAction.rejected, (state, action) => {
+      state.refresh = 'failed';
+      state.refreshErr = (action.payload as any)?.err?.message;
+    });
   }
 });
 
@@ -205,6 +241,7 @@ export const {
   clearLoginErrAction,
   clearSignupErrAction,
   clearUpdateErrAction,
+  clearRefreshErrAction,
 } = authSlice.actions;
 
 export default authSlice.reducer;

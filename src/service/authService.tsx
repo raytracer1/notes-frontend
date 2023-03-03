@@ -18,9 +18,14 @@ const updateUser = (gender: string, country: string, imageUrl: string) => {
   return Axios.post('user/update', { gender: gender, country: country, imageUrl: imageUrl });
 }
 
+const refreshUser = () => {
+  return Axios.get('user/refresh');
+}
+
 export {
   loginUser,
   logoutUser,
   signupUser,
   updateUser,
+  refreshUser,
 };

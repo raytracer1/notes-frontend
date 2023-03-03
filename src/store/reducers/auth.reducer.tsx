@@ -191,6 +191,7 @@ export const authSlice = createSlice({
       state.user.gender = action.payload.gender;
       state.user.country = action.payload.country;
       state.user.imageUrl = action.payload.imageUrl;
+      localStorage.setItem('user', JSON.stringify(state.user));
     });
     builder.addCase(updateUserAction.rejected, (state, action) => {
       state.update = 'failed';

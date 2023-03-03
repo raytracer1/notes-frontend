@@ -24,7 +24,6 @@ function Header() {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState<boolean>(false);
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState<boolean>(false);
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
@@ -60,15 +59,11 @@ function Header() {
 
   const userNameSafe = userName ? userName : "Visitor";
   const userIcon = (
-    isProfileModalOpen ? (
+    <UserTooltip
+      handleLogout={handleLogout}
+    >
       <span>{userNameSafe.substring(0, 2)}</span>
-    ) : (
-      <UserTooltip
-        handleLogout={handleLogout}
-      >
-        <span>{userNameSafe.substring(0, 2)}</span>
-      </UserTooltip>
-    )
+    </UserTooltip>
   );
 
   return (

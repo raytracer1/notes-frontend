@@ -12,11 +12,11 @@ function Profile() {
   const dispatch = useAppDispatch();
 
   const authenticated = useAppSelector((state) => state.auth.authenticated);
+  const refreshStatus = useAppSelector((state) => state.auth.refresh);
+  const refreshErr = useAppSelector((state) => state.auth.refreshErr);
   const user = useAppSelector((state) => state.auth.user);
   const updateStatus = useAppSelector((state) => state.auth.update);
   const updateErr = useAppSelector((state) => state.auth.updateErr);
-  const getStatus = useAppSelector((state) => state.auth.refresh);
-  const getErr = useAppSelector((state) => state.auth.refreshErr);
 
   const [gender, setGender] = useState<string>(user.gender ? user.gender : 'secret');
   const [country, setCountry] = useState<string>(user.country ? user.country : 'secret');
@@ -24,28 +24,15 @@ function Profile() {
 
   useEffect(() => {
     dispatch(refreshUserAction());
+  // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (!authenticated) {
       navigate('/');
     }
+  // eslint-disable-next-line
   }, [authenticated]);
-
-  useEffect(() => {
-    if (gender !== user.gender) {
-      setGender(user.gender);
-    }
-
-    if (country !== user.country) {
-      setCountry(user.country);
-    }
-
-    if (imageUrl !== user.imageUrl) {
-      setImageUrl(user.imageUrl)
-    }
-
-  }, [user]);
 
   const handleUpdate = (
     gender: string, country: string, imageUrl: string
@@ -79,6 +66,30 @@ function Profile() {
         }
       }>
         <div className='btn-container top'>
+          {
+            updateStatus === 'success' && (
+              <div className='msg'>
+                <span className="success">success</span>
+              </div>
+            )
+          }
+          {
+            updateStatus === 'failed' && (
+              updateErr !== '' ? (
+                <div className='msg'>
+                  <span className="error">
+                    {updateErr}
+                  </span>
+                </div>
+              ) : (
+                <div className='msg'>
+                  <span className="error">
+                    unknown error
+                  </span>
+                </div>
+              )
+            )
+          }
           <Button type='submit' value='submit' color='primary'
             disabled={updateStatus === 'pending' || !profileChanged()}
           >
@@ -119,10 +130,7 @@ function Profile() {
             </div>
             <div className='card-body'>
               <div className='description'>
-                <p>By keeping this information up to date we may contact you about relevant freelance
-                  opportunites at Topcoder, or even surprise you with a cool T-shirt. Sharing your contact
-                  details will never result in robocalls about health insurance plans or junk mail.
-                </p>
+                <p>Sharing your details.</p>
               </div>
               <div className='inputs'>
                 <FormGroup className={updateStatus === 'pending' ? 'disabled' : ''}>
@@ -171,30 +179,6 @@ function Profile() {
             </div>
           </div>
         </div>
-        {
-          updateStatus === 'success' && (
-            <div className='msg'>
-              <span className="success">success</span>
-            </div>
-          )
-        }
-        {
-          updateStatus === 'failed' && (
-            updateErr !== '' ? (
-              <div className='msg'>
-                <span className="error">
-                  {updateErr}
-                </span>
-              </div>
-            ) : (
-              <div className='msg'>
-                <span className="error">
-                  unknown error
-                </span>
-              </div>
-            )
-          )
-        }
         <div className='btn-container'>
           <Button type='submit' value='submit' color='primary'
             disabled={updateStatus === 'pending' || !profileChanged()}

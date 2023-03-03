@@ -2,14 +2,14 @@ import React, { PropsWithChildren } from "react";
 import Tooltip from '../../../components/Tooltip';
 import './style.scss';
 
-interface IProfileTooltipProps {
+interface IUserTooltipProps {
   handleLogout: () => void
 }
 
-const ProfileTooltip = ({
+const UserTooltip = ({
   handleLogout,
   children,
-} :  PropsWithChildren<IProfileTooltipProps>) => {
+} :  PropsWithChildren<IUserTooltipProps>) => {
 
   const tip = (
     <div className='content'>
@@ -37,4 +37,4 @@ const ProfileTooltip = ({
   );
 }
   
-export default ProfileTooltip;
+export default UserTooltip;

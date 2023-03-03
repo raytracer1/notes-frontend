@@ -3,7 +3,7 @@ import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Button } fr
 import { NavLink } from 'react-router-dom';
 import LoginModal from './LoginModal';
 import SignUpModal from './SignUpModal';
-import ProfileTooltip from './ProfileTooltip';
+import UserTooltip from './UserTooltip';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   loginUserAction, clearLoginErrAction, logoutUserAction,
@@ -63,11 +63,11 @@ function Header() {
     isProfileModalOpen ? (
       <span>{userNameSafe.substring(0, 2)}</span>
     ) : (
-      <ProfileTooltip
+      <UserTooltip
         handleLogout={handleLogout}
       >
         <span>{userNameSafe.substring(0, 2)}</span>
-      </ProfileTooltip>
+      </UserTooltip>
     )
   );
 

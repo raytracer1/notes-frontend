@@ -36,10 +36,10 @@ export const signupUserAction = createAsyncThunk(
 
 export const updateUserAction = createAsyncThunk(
   'auth/updateUser',
-  async (params: { gender: string, country: string, imageUrl: string },
+  async (params: { gender: string, country: string, imageUrl: string, interests: string[] },
     { rejectWithValue }) => {
     try {
-      const response = await updateUser(params.gender, params.country, params.imageUrl);
+      const response = await updateUser(params.gender, params.country, params.imageUrl, params.interests);
       return response.data;
     } catch(err: any) {
       return rejectWithValue(err.response.data);
@@ -67,6 +67,7 @@ interface authState {
     gender: string,
     country: string,
     imageUrl: string,
+    interests: string[],
   };
   signup: string;
   signupErr: string;
@@ -90,6 +91,7 @@ const initialState: authState = {
       gender: '',
       country: '',
       imageUrl: '',
+      interests: [],
     },
   signup: 'init',
   signupErr: '',
@@ -113,6 +115,7 @@ export const authSlice = createSlice({
         gender: '',
         country: '',
         imageUrl: '',
+        interests: [],
       };
       localStorage.removeItem('user');
       localStorage.removeItem('token');
@@ -150,6 +153,7 @@ export const authSlice = createSlice({
         gender: action.payload.gender,
         country: action.payload.country,
         imageUrl: action.payload.imageUrl,
+        interests: action.payload.interests,
       };
       localStorage.setItem('user', JSON.stringify(state.user));
       localStorage.setItem('token', state.token);
@@ -169,6 +173,7 @@ export const authSlice = createSlice({
         gender: '',
         country: '',
         imageUrl: '',
+        interests: [],
       };
       localStorage.removeItem('user');
       localStorage.removeItem('token');
@@ -183,6 +188,7 @@ export const authSlice = createSlice({
         gender: '',
         country: '',
         imageUrl: '',
+        interests: [],
       };
       localStorage.removeItem('user');
       localStorage.removeItem('token');
@@ -207,6 +213,7 @@ export const authSlice = createSlice({
       state.user.gender = action.payload.gender;
       state.user.country = action.payload.country;
       state.user.imageUrl = action.payload.imageUrl;
+      state.user.interests = action.payload.interests;
       localStorage.setItem('user', JSON.stringify(state.user));
     });
     builder.addCase(updateUserAction.rejected, (state, action) => {
@@ -226,6 +233,7 @@ export const authSlice = createSlice({
         gender: action.payload.gender,
         country: action.payload.country,
         imageUrl: action.payload.imageUrl,
+        interests: action.payload.interests,
       };
       localStorage.setItem('user', JSON.stringify(state.user));
     });

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, FormGroup, Input } from 'reactstrap';
+import TagsInput from 'react-tagsinput';
+import 'react-tagsinput/react-tagsinput.css';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   updateUserAction, clearUpdateErrAction, refreshUserAction,
@@ -21,6 +23,8 @@ function Profile() {
   const [gender, setGender] = useState<string>(user.gender ? user.gender : 'secret');
   const [country, setCountry] = useState<string>(user.country ? user.country : 'secret');
   const [imageUrl, setImageUrl] = useState<string>(user.imageUrl ? user.imageUrl : '');
+  const [interests, setInterests] = useState<string[]>(user.interests ? user.interests : []);
+  const [interestChanged, setInterestsChanged] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(refreshUserAction());
@@ -35,9 +39,10 @@ function Profile() {
   }, [authenticated]);
 
   const handleUpdate = (
-    gender: string, country: string, imageUrl: string
+    gender: string, country: string, imageUrl: string, interests: string[]
   ) => {
-    dispatch(updateUserAction({gender, country, imageUrl}));
+    dispatch(updateUserAction({gender, country, imageUrl, interests}));
+    setInterestsChanged(false);
   }
 
   const clearUpdateErr = () => {
@@ -55,13 +60,19 @@ function Profile() {
   const profileChanged = () => {
     return (user.gender !== uploadGender()) ||
       (user.country !== uploadCountry()) ||
-      (imageUrl !== '' && user.imageUrl !== imageUrl);
+      (imageUrl !== '' && user.imageUrl !== imageUrl) ||
+      (interestChanged);
+  }
+
+  const handleInterestsChange = (interests:string[]) => {
+    setInterests(interests);
+    setInterestsChanged(true);
   }
 
   return (
     <div className='profile'>
       <Form onSubmit={(e:any) => {
-          handleUpdate(uploadGender(), uploadCountry(), imageUrl);
+          handleUpdate(uploadGender(), uploadCountry(), imageUrl, interests);
           e.preventDefault();
         }
       }>
@@ -132,8 +143,8 @@ function Profile() {
               <div className='description'>
                 <p>Sharing your details.</p>
               </div>
-              <div className='inputs'>
-                <FormGroup className={updateStatus === 'pending' ? 'disabled' : ''}>
+              <div className={updateStatus === 'pending' ? 'inputs disabled' : 'inputs'}>
+                <FormGroup>
                   <label htmlFor='gender'>gender</label>
                   <Input type='select' id='gender' name='gender'
                     disabled={updateStatus === 'pending'}
@@ -148,7 +159,7 @@ function Profile() {
                     <option>Female</option>
                   </Input>
                 </FormGroup>
-                <FormGroup className={updateStatus === 'pending' ? 'disabled' : ''}>
+                <FormGroup>
                   <label htmlFor='country'>country</label>
                   <Input type='select' id='country' name='country'
                     disabled={updateStatus === 'pending'}
@@ -174,7 +185,8 @@ function Profile() {
               <div className='description'>
                 <p>Add interests to your profile. You can add or update your interests any time.</p>
               </div>
-              <div className='inputs'>
+              <div className={updateStatus === 'pending' ? 'inputs disabled' : 'inputs'}>
+                <TagsInput value={interests} onChange={handleInterestsChange} disabled={updateStatus === 'pending'} />
               </div>
             </div>
           </div>

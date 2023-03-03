@@ -1,38 +1,16 @@
 import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input } from 'reactstrap';
-import ModalWrapper from '../../../components/Modal';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  updateUserAction, clearUpdateErrAction,
+} from '../../store/reducers/auth.reducer';
 import './style.scss';
 
-interface IProfileModalProps {
-  isModalOpen: boolean,
-  toggleModal: () => void,
-  handleUpdate: (
-    gender: string,
-    country: string,
-    imageUrl: string,
-  ) => void,
-  updateStatus: string,
-  updateErr: string,
-  clearUpdateErr: () => void;
-  user : {
-    email: string,
-    userName: string,
-    gender: string,
-    country: string,
-    imageUrl: string,
-  },
-}
-
-const ProfileModal = ({
-  isModalOpen,
-  toggleModal,
-  handleUpdate,
-  updateStatus,
-  updateErr,
-  clearUpdateErr,
-  user,
-} : IProfileModalProps) => {
-
+function Profile() {
+  const user = useAppSelector((state) => state.auth.user);
+  const updateStatus = useAppSelector((state) => state.auth.update);
+  const updateErr = useAppSelector((state) => state.auth.updateErr);
+  const dispatch = useAppDispatch();
   const [gender, setGender] = useState<string>(user.gender ? user.gender : 'secret');
   const [country, setCountry] = useState<string>(user.country ? user.country : 'secret');
   const [imageUrl, setImageUrl] = useState<string>(user.imageUrl ? user.imageUrl : '');
@@ -52,10 +30,19 @@ const ProfileModal = ({
 
   }, [user]);
 
+  const handleUpdate = (
+    gender: string, country: string, imageUrl: string
+  ) => {
+    dispatch(updateUserAction({gender, country, imageUrl}));
+  }
+
+  const clearUpdateErr = () => {
+    dispatch(clearUpdateErrAction());
+  }
+
   const toggleProfileModalHeler = () => {
     setGender(user.gender ? user.gender : 'secret');
     setCountry(user.country ? user.country : 'secret');
-    toggleModal();
     clearUpdateErr();
   }
 
@@ -74,11 +61,7 @@ const ProfileModal = ({
   }
 
   return (
-    <ModalWrapper
-      isModalOpen={isModalOpen}
-      toggleModal={toggleProfileModalHeler}
-      title='profile'
-    >
+    <div>
       <div className='user-image'>
         <img src={user.imageUrl} alt='user icon'
           onError={(e) => {
@@ -164,8 +147,8 @@ const ProfileModal = ({
           </Button>
         </Form>
       </div>
-    </ModalWrapper>
+    </div>
   );
 }
   
-export default ProfileModal;
+export default Profile;

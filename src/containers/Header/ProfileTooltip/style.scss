@@ -41,6 +41,16 @@
                 color: #0c0c0c;
                 font-weight: 700;
             }
+
+            a {
+                text-decoration: none;
+                color: #767676;
+
+                &:hover {
+                    color: #0c0c0c;
+                    font-weight: 700;
+                }
+            }
         }
     }
 }

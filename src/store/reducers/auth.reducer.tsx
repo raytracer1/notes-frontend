@@ -180,7 +180,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(signupUserAction.rejected, (state, action) => {
       state.signup = 'failed';
-      state.signupErr = (action.payload as any)?.err.message;
+      state.signupErr = (action.payload as any)?.err?.message;
     });
 
     builder.addCase(updateUserAction.pending, (state, action) => {
@@ -195,7 +195,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(updateUserAction.rejected, (state, action) => {
       state.update = 'failed';
-      state.updateErr = (action.payload as any)?.err.message;
+      state.updateErr = (action.payload as any)?.err?.message;
     });
   }
 });

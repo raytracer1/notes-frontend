@@ -69,7 +69,7 @@ function Header() {
   return (
     <div className='header'>
       <Navbar dark expand='md'>
-        <div className='container'>
+        <div className='header-container'>
           <div className='toggler'>
             <NavbarToggler onClick={toggleNav} />
             <NavbarBrand className='logo' href="/">

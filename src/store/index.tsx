@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import auth from './reducers/auth.reducer';
+import space from './reducers/space.reducer';
 import { autoLogoutAction } from './reducers/auth.reducer';
 import axios from 'axios';
 import { apiInstance } from '../api/requestInterceptor';
@@ -12,6 +13,7 @@ const getToken = () => {
 const store = configureStore({
   reducer: {
     auth: auth,
+    space: space,
   },
 });
 

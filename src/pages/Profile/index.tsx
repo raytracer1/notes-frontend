@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   updateUserAction, clearUpdateErrAction, refreshUserAction,
 } from '../../store/reducers/auth.reducer';
+import imgError from '../../assets/image/error.png';
 import './style.scss';
 
 function Profile() {
@@ -14,8 +15,6 @@ function Profile() {
   const dispatch = useAppDispatch();
 
   const authenticated = useAppSelector((state) => state.auth.authenticated);
-  const refreshStatus = useAppSelector((state) => state.auth.refresh);
-  const refreshErr = useAppSelector((state) => state.auth.refreshErr);
   const user = useAppSelector((state) => state.auth.user);
   const updateStatus = useAppSelector((state) => state.auth.update);
   const updateErr = useAppSelector((state) => state.auth.updateErr);
@@ -128,7 +127,7 @@ function Profile() {
               <img src={user.imageUrl} alt='user icon'
                 onError={(e) => {
                   if (e.target) {
-                    (e.target as HTMLImageElement).src = 'image/error.png'
+                    (e.target as HTMLImageElement).src = imgError
                   }
                   e.preventDefault();
                 }}

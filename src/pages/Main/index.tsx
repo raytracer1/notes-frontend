@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import Header from '../Header';
-import Footer from '../Footer';
+import Header from '../../containers/Header';
+import Footer from '../../containers/Footer';
 import Home from '../Home';
 import Space from '../Space';
 import Profile from "../Profile";

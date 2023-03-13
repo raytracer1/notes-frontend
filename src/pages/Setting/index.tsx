@@ -10,7 +10,7 @@ import {
 import imgError from '../../assets/image/error.png';
 import './style.scss';
 
-function Profile() {
+function Setting() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -56,7 +56,7 @@ function Profile() {
     return country === 'secret' ? '' : country;
   }
 
-  const profileChanged = () => {
+  const settingChanged = () => {
     return (user.gender !== uploadGender()) ||
       (user.country !== uploadCountry()) ||
       (imageUrl !== '' && user.imageUrl !== imageUrl) ||
@@ -69,7 +69,7 @@ function Profile() {
   }
 
   return (
-    <div className='profile'>
+    <div className='setting'>
       <Form onSubmit={(e:any) => {
           handleUpdate(uploadGender(), uploadCountry(), imageUrl, interests);
           e.preventDefault();
@@ -101,7 +101,7 @@ function Profile() {
             )
           }
           <Button type='submit' value='submit' color='primary'
-            disabled={updateStatus === 'pending' || !profileChanged()}
+            disabled={updateStatus === 'pending' || !settingChanged()}
           >
             {
               updateStatus === 'pending' ? (
@@ -134,7 +134,7 @@ function Profile() {
               />
             </div>
           </div>
-          <div className='profile-card personal-details'>
+          <div className='setting-card personal-details'>
             <div className='card-title'>
               <span>PERSONAL DETAILS</span>
             </div>
@@ -176,13 +176,13 @@ function Profile() {
               </div>
             </div>
           </div>
-          <div className='profile-card interests'>
+          <div className='setting-card interests'>
             <div className='card-title'>
               <span>interests</span>
             </div>
             <div className='card-body'>
               <div className='description'>
-                <p>Add interests to your profile. You can add or update your interests any time.</p>
+                <p>Add interests to your setting. You can add or update your interests any time.</p>
               </div>
               <div className={updateStatus === 'pending' ? 'inputs disabled' : 'inputs'}>
                 <TagsInput value={interests} onChange={handleInterestsChange} disabled={updateStatus === 'pending'} />
@@ -192,7 +192,7 @@ function Profile() {
         </div>
         <div className='btn-container'>
           <Button type='submit' value='submit' color='primary'
-            disabled={updateStatus === 'pending' || !profileChanged()}
+            disabled={updateStatus === 'pending' || !settingChanged()}
           >
             {
               updateStatus === 'pending' ? (
@@ -206,4 +206,4 @@ function Profile() {
   );
 }
   
-export default Profile;
+export default Setting;

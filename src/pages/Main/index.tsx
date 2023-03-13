@@ -3,7 +3,7 @@ import Header from '../../containers/Header';
 import Footer from '../../containers/Footer';
 import Home from '../Home';
 import Space from '../Space';
-import Profile from "../Profile";
+import Setting from "../Setting";
 import './style.scss';
 
 function Main() {
@@ -14,7 +14,7 @@ function Main() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/space' element={<Space />} />
-            <Route path='/profile' element={<Profile />} />
+            <Route path='/setting' element={<Setting />} />
             <Route path='*' element={<Navigate to='/' replace />} />
           </Routes>
         </div>

@@ -15,7 +15,7 @@ const UserTooltip = ({
     <div className='content'>
       <ul>
         <li>
-          <a href='profile'>my profile</a>
+          <a href='setting'>account setting</a>
         </li>
         <li onClick={handleLogout}>
           log out

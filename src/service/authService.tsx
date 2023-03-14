@@ -14,8 +14,8 @@ const signupUser = (userName: string, email: string, passWord: string) => {
   return Axios.post('user/signup', { userName: userName, email: email, password: passWord });
 }
 
-const updateUser = (gender: string, country: string, imageUrl: string, interests: string[]) => {
-  return Axios.post('user/update', { gender: gender, country: country, imageUrl: imageUrl, interests: interests });
+const updateUser = (gender: string, country: string, interests: string[], imgUrl?: string ) => {
+  return Axios.post('user/update', { gender: gender, country: country, interests: interests, imageUrl: imgUrl });
 }
 
 const refreshUser = () => {

@@ -1,6 +1,5 @@
 import { apiInstance as Axios } from '../api/requestInterceptor';
 
-//Login
 const getSpace = () => {
   return Axios.get('space');
 }

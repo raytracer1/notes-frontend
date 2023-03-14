@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { loginUser, logoutUser, signupUser, updateUser, refreshUser } from '../../service/authService';
+import { uploadImage } from '../../service/uploadService';
 
 export const loginUserAction = createAsyncThunk(
   'auth/loginUser',
@@ -36,10 +37,17 @@ export const signupUserAction = createAsyncThunk(
 
 export const updateUserAction = createAsyncThunk(
   'auth/updateUser',
-  async (params: { gender: string, country: string, imageUrl: string, interests: string[] },
+  async (params: { gender: string, country: string, interests: string[], imgFile?: File },
     { rejectWithValue }) => {
     try {
-      const response = await updateUser(params.gender, params.country, params.imageUrl, params.interests);
+      let imgUrl = '';
+      if (params.imgFile) {
+        const uploadResponse = await uploadImage(params.imgFile);
+        imgUrl = uploadResponse?.data?.url;
+      }
+
+      const response = await updateUser(params.gender, params.country, params.interests,
+        imgUrl !== '' ? imgUrl : undefined);
       return response.data;
     } catch(err: any) {
       return rejectWithValue(err.response.data);

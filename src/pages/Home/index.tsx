@@ -14,6 +14,7 @@ function Home() {
 
   useEffect(() => {
     dispatch(getSpaceAction());
+    // eslint-disable-next-line
   }, []);
 
   return (

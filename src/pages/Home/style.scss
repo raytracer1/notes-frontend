@@ -6,7 +6,7 @@
     flex-direction: column;
     justify-content: center;
 
-    .header {
+    .banner {
         background-color: #3ba8d5;
         width: 100%;
         display: flex;
@@ -84,32 +84,15 @@
         }
 
         .spinner {
-            margin: 0 auto;
             width: 60px;
             height: 60px;
-            border-width: 2px;
-            border-style: solid;
-            border-color: rgba(0,0,0,0.4) rgba(0,0,0,0.4) rgba(0,0,0,0.2) rgba(0,0,0,0.2);
-            opacity: 0.9;
-            border-radius: 60px;
-            animation: rotate 1s infinite linear;
-        }
-    
-        @keyframes rotate {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-    
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
         }
     }
 
-    .body {
+    .content {
         width: 1376px;
         margin: 0 auto;
-        padding: 12px 0;
+        padding: 12px 0 0 0;
 
         @media(max-width:767px) {
             width: 100%;
@@ -118,16 +101,11 @@
         .space-cards {
             display: flex;
             flex-direction: row;
-            width: 100%;
-            gap: 48px;
             flex-wrap: wrap;
-            margin-bottom: 64px;
+            margin-bottom: 20px;
 
             @media(max-width:767px) {
                 flex-direction: column;
-                padding: 20px 30px;
-                gap: 32px;
-                margin-bottom: 28px;
             }
         }
     }

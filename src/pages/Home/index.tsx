@@ -4,6 +4,7 @@ import {
   getSpaceAction,
 } from '../../store/reducers/space.reducer';
 import SpaceCard from "../../components/SpaceCard";
+import Spinner from "../../components/Spinner";
 import './style.scss';
 
 function Home() {
@@ -19,7 +20,7 @@ function Home() {
 
   return (
     <div className='home'>
-      <div className='header'>
+      <div className='banner'>
         <div className='description'>
           <h3>
             {
@@ -32,13 +33,13 @@ function Home() {
       {
         getSpaceStatus === 'pending' && (
           <div className='spinner-box'>
-            <div className='spinner'></div>
+            <Spinner />
           </div>
         )
       }
       {
         getSpaceStatus === 'success' && spaceList && (
-          <div className='body'>
+          <div className='content'>
             <div className='space-cards'>
               {
                 spaceList.map((item) => (
@@ -57,5 +58,5 @@ function Home() {
     </div>
   );
 }
-  
+
 export default Home;

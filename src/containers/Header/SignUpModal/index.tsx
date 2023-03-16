@@ -151,5 +151,5 @@ const SignUpModal = ({
     </ModalWrapper>
   );
 }
-  
+
 export default SignUpModal;

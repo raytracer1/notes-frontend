@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import auth from './reducers/auth.reducer';
 import space from './reducers/space.reducer';
+import profile from './reducers/profile.reducer';
 import { autoLogoutAction } from './reducers/auth.reducer';
 import axios from 'axios';
 import { apiInstance } from '../api/requestInterceptor';
@@ -14,6 +15,7 @@ const store = configureStore({
   reducer: {
     auth: auth,
     space: space,
+    profile: profile,
   },
 });
 

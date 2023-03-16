@@ -10,6 +10,7 @@ import {
   signupUserAction, clearSignupErrAction,
 } from '../../store/reducers/auth.reducer';
 import { ReactComponent as IconBlackHole } from '../../assets/svg/black-hole.svg';
+import LOGO from '../../assets/image/logo192.png';
 import './style.scss';
 
 function Header() {
@@ -61,6 +62,7 @@ function Header() {
   const userIcon = (
     <UserTooltip
       handleLogout={handleLogout}
+      userName={userName}
     >
       <span>{userNameSafe.substring(0, 2)}</span>
     </UserTooltip>
@@ -73,7 +75,7 @@ function Header() {
           <div className='toggler'>
             <NavbarToggler onClick={toggleNav} />
             <NavbarBrand className='logo' href="/">
-              <img className='img' src='logo192.png' alt='log' />
+              <img className='img' src={LOGO} alt='log' />
             </NavbarBrand>
             {
               authStatus === true && (
@@ -138,5 +140,5 @@ function Header() {
     </div>
   );
 }
-  
+
 export default Header;

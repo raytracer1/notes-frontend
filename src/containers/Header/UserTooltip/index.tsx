@@ -3,11 +3,13 @@ import Tooltip from '../../../components/Tooltip';
 import './style.scss';
 
 interface IUserTooltipProps {
-  handleLogout: () => void
+  handleLogout: () => void,
+  userName: string,
 }
 
 const UserTooltip = ({
   handleLogout,
+  userName,
   children,
 } :  PropsWithChildren<IUserTooltipProps>) => {
 
@@ -15,7 +17,10 @@ const UserTooltip = ({
     <div className='content'>
       <ul>
         <li>
-          <a href='setting'>account setting</a>
+          <a href={`/profile/${userName}`}>my profile</a>
+        </li>
+        <li>
+          <a href='/setting'>account setting</a>
         </li>
         <li onClick={handleLogout}>
           log out
@@ -36,5 +41,5 @@ const UserTooltip = ({
     </Tooltip>
   );
 }
-  
+
 export default UserTooltip;

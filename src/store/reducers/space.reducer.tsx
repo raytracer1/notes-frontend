@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getSpace, addSpace } from '../../service/spaceService';
 
 export const getSpaceAction = createAsyncThunk(
-  'auth/getSpace',
+  'space/getSpace',
   async (params, { rejectWithValue }) => {
     try {
       const response = await getSpace();
@@ -14,7 +14,7 @@ export const getSpaceAction = createAsyncThunk(
 )
 
 export const addSpaceAction = createAsyncThunk(
-  'auth/addSpace',
+  'space/addSpace',
   async (params: {
     name: string,
     description: string,

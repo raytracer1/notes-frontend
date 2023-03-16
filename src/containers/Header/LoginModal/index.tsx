@@ -134,5 +134,5 @@ const LoginModal = ({
     </ModalWrapper>
   );
 }
-  
+
 export default LoginModal;

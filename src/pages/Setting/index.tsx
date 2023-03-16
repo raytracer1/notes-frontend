@@ -9,6 +9,7 @@ import {
   updateUserAction, clearUpdateErrAction, refreshUserAction,
 } from '../../store/reducers/auth.reducer';
 import ImageUpload from "../../components/ImageUpload";
+import Spinner from "../../components/Spinner";
 import imgError from '../../assets/image/error.png';
 import { Gender, Country } from '../../interface';
 import { GENDER_OPTIONS, COUNTRY_OPTIONS } from "../../config";
@@ -110,7 +111,7 @@ function Setting() {
         >
           {
             updateStatus === 'pending' ? (
-              <div className='spinner'></div>
+              <Spinner />
             ) : "save changes"
           }
         </Button>
@@ -206,7 +207,7 @@ function Setting() {
         >
           {
             updateStatus === 'pending' ? (
-              <div className='spinner'></div>
+              <Spinner />
             ) : "save changes"
           }
         </Button>
@@ -214,5 +215,5 @@ function Setting() {
     </div>
   );
 }
-  
+
 export default Setting;

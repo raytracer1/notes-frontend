@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { loginUser, logoutUser, signupUser, updateUser, refreshUser } from '../../service/authService';
 import { uploadImage } from '../../service/uploadService';
+import { singleUser } from '../../interface';
 
 export const loginUserAction = createAsyncThunk(
   'auth/loginUser',
@@ -65,24 +66,17 @@ export const refreshUserAction = createAsyncThunk(
 
 // Define a type for the slice state
 interface authState {
-  authenticated: boolean;
+  authenticated: boolean,
   token: string,
-  login: string;
-  loginErr: string;
-  user: {
-    email: string,
-    userName: string,
-    gender: string,
-    country: string,
-    imageUrl: string,
-    interests: string[],
-  };
-  signup: string;
-  signupErr: string;
-  update: string;
-  updateErr: string;
-  refresh: string;
-  refreshErr: string;
+  login: string,
+  loginErr: string,
+  user: singleUser,
+  signup: string,
+  signupErr: string,
+  update: string,
+  updateErr: string,
+  refresh: string,
+  refreshErr: string,
 }
 
 // Define the initial state using that type
@@ -123,6 +117,7 @@ export const authSlice = createSlice({
         gender: '',
         country: '',
         imageUrl: '',
+        timeStamp: '',
         interests: [],
       };
       localStorage.removeItem('user');
@@ -161,6 +156,7 @@ export const authSlice = createSlice({
         gender: action.payload.gender,
         country: action.payload.country,
         imageUrl: action.payload.imageUrl,
+        timeStamp: '',
         interests: action.payload.interests,
       };
       localStorage.setItem('user', JSON.stringify(state.user));
@@ -181,6 +177,7 @@ export const authSlice = createSlice({
         gender: '',
         country: '',
         imageUrl: '',
+        timeStamp: '',
         interests: [],
       };
       localStorage.removeItem('user');
@@ -196,6 +193,7 @@ export const authSlice = createSlice({
         gender: '',
         country: '',
         imageUrl: '',
+        timeStamp: '',
         interests: [],
       };
       localStorage.removeItem('user');
@@ -241,6 +239,7 @@ export const authSlice = createSlice({
         gender: action.payload.gender,
         country: action.payload.country,
         imageUrl: action.payload.imageUrl,
+        timeStamp: '',
         interests: action.payload.interests,
       };
       localStorage.setItem('user', JSON.stringify(state.user));

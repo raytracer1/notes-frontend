@@ -14,7 +14,7 @@ function Main() {
       <div className='body'>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/space' element={<Space />} />
+          <Route path='/space/:spaceId' element={<Space />} />
           <Route path='/setting' element={<Setting />} />
           <Route path='/profile/:userName' element={<Profile />} />
           <Route path='*' element={<Navigate to='/' replace />} />

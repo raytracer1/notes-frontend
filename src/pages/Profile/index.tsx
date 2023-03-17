@@ -7,6 +7,7 @@ import {
 import { getMonthAndYear } from '../../util/dateHelper';
 import Spinner from "../../components/Spinner";
 import SpaceCard from "../../components/SpaceCard";
+import imgError from '../../assets/image/error.png';
 import './style.scss';
 
 function Profile() {
@@ -49,14 +50,21 @@ function Profile() {
           <div className='profile-container'>
             <div className='image-content'>
               <div className='image-box'>
-                <img src={profile.imageUrl} alt='user' />
+                <img src={profile.user.imageUrl} alt='user'
+                  onError={(e) => {
+                    if (e.target) {
+                      (e.target as HTMLImageElement).src = imgError;
+                    }
+                    e.preventDefault();
+                  }}
+                />
               </div>
-              <span>{profile.userName}</span>
+              <span>{profile.user.userName}</span>
             </div>
             <div className='profile-content'>
-              <div className='country'>{profile.country}</div>
+              <div className='country'>{profile.user.country}</div>
               <div className='time'>
-                member since {getMonthAndYear(profile.timestamp)}
+                member since {getMonthAndYear(profile.user.timeStamp)}
               </div>
             </div>
             <div className='activity-content'>
@@ -68,6 +76,7 @@ function Profile() {
                   profile.createdSpaces && (
                     profile.createdSpaces.map((item) => (
                       <SpaceCard key={item._id}
+                        id={item._id}
                         imageUrl={item.imageUrl}
                         name={item.name}
                         description={item.description}

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  getSpaceAction,
+  getSpacesAction,
 } from '../../store/reducers/space.reducer';
 import SpaceCard from "../../components/SpaceCard";
 import Spinner from "../../components/Spinner";
@@ -9,12 +9,12 @@ import './style.scss';
 
 function Home() {
   const authStatus = useAppSelector((state) => state.auth.authenticated);
-  const getSpaceStatus = useAppSelector((state) => state.space.getSpace);
-  const spaceList = useAppSelector((state) => state.space.spaceList);
+  const getSpacesStatus = useAppSelector((state) => state.space.getSpaces);
+  const spacesList = useAppSelector((state) => state.space.spacesList);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getSpaceAction());
+    dispatch(getSpacesAction());
     // eslint-disable-next-line
   }, []);
 
@@ -31,19 +31,20 @@ function Home() {
         </div>
       </div>
       {
-        getSpaceStatus === 'pending' && (
+        getSpacesStatus === 'pending' && (
           <div className='spinner-box'>
             <Spinner />
           </div>
         )
       }
       {
-        getSpaceStatus === 'success' && spaceList && (
+        getSpacesStatus === 'success' && spacesList && (
           <div className='content'>
             <div className='space-cards'>
               {
-                spaceList.map((item) => (
+                spacesList.map((item) => (
                   <SpaceCard key={item._id}
+                    id={item._id}
                     imageUrl={item.imageUrl}
                     name={item.name}
                     description={item.description}

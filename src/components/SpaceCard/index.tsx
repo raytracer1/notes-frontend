@@ -1,13 +1,35 @@
+import { useNavigate } from "react-router-dom";
 import { formatDate } from '../../util/dateHelper';
 import imgError from '../../assets/image/demo.jpg';
 import './style.scss';
 
-const SpaceCard = ({imageUrl, name, description, updatedAt}) => {
+interface ISpaceCardProps {
+  id: string,
+  imageUrl: string,
+  name: string,
+  description: string,
+  updatedAt: string,
+};
+
+const SpaceCard = ({
+  id,
+  imageUrl,
+  name,
+  description,
+  updatedAt
+} : ISpaceCardProps) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/space/${id}`);
+  }
+
   return (
     <div
       className='card-item-container'
     >
-      <div className='card-item'>
+      <div className='card-item'
+        onClick={handleClick}
+      >
         <div className='card-image'>
           <img src={imageUrl !== '' ? imageUrl : imgError}
             alt='space icon'

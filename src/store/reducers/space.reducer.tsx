@@ -1,11 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getSpace, addSpace } from '../../service/spaceService';
+import {
+  getSpaces, addSpace, getSpace, joinSpace, leaveSpace
+} from '../../service/spaceService';
+import { singleSpace } from '../../interface';
 
-export const getSpaceAction = createAsyncThunk(
-  'space/getSpace',
+export const getSpacesAction = createAsyncThunk(
+  'space/getSpaces',
   async (params, { rejectWithValue }) => {
     try {
-      const response = await getSpace();
+      const response = await getSpaces();
       return response.data;
     } catch(err: any) {
       return rejectWithValue(err.response.data);
@@ -23,8 +26,45 @@ export const addSpaceAction = createAsyncThunk(
     keywords: string[]
   }, { rejectWithValue }) => {
     try {
-      const response = await addSpace(params.name, params.description, params.imageUrl, params.prerequisites, params.keywords);
+      const response = await addSpace(params.name, params.description,
+        params.imageUrl, params.prerequisites, params.keywords);
       return response.data;
+    } catch(err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+)
+
+export const getSpaceAction = createAsyncThunk(
+  'space/getSpace',
+  async (params: { spaceId : string }, { rejectWithValue }) => {
+    try {
+      const response = await getSpace(params.spaceId);
+      return response.data;
+    } catch(err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+)
+
+export const joinSpaceAction = createAsyncThunk(
+  'space/joinSpace',
+  async (params: { spaceId : string }, { rejectWithValue }) => {
+    try {
+      const response = await joinSpace(params.spaceId);
+      return {space: params.spaceId, join: response.data};
+    } catch(err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+)
+
+export const leaveSpaceAction = createAsyncThunk(
+  'space/leaveSpace',
+  async (params: { spaceId : string }, { rejectWithValue }) => {
+    try {
+      const response = await leaveSpace(params.spaceId);
+      return {space: params.spaceId, join: response.data};
     } catch(err: any) {
       return rejectWithValue(err.response.data);
     }
@@ -33,25 +73,40 @@ export const addSpaceAction = createAsyncThunk(
 
 // Define a type for the slice state
 interface spaceState {
-  getSpace: string;
-  addSpace: string;
-  spaceList: {
-    name: string,
-    description: string,
-    imageUrl: string,
-    prerequisites: string[],
-    keywords: string[],
-    updatedAt: string,
-    author: {},
-    _id: string,
-  }[];
+  getSpaces: string,
+  addSpace: string,
+  spacesList: singleSpace[],
+  getSpace: string,
+  space: singleSpace,
 }
 
 // Define the initial state using that type
 const initialState: spaceState = {
-  getSpace: 'init',
+  getSpaces: 'init',
   addSpace: 'init',
-  spaceList: [],
+  spacesList: [],
+  getSpace: 'init',
+  space: {
+    name: '',
+    description: '',
+    imageUrl: '',
+    prerequisites: [],
+    keywords: [],
+    createdAt: '',
+    updatedAt: '',
+    author: {
+      email: '',
+      userName: '',
+      gender: '',
+      country: '',
+      imageUrl: '',
+      timeStamp: '',
+      interests: [],
+    },
+    join: [],
+    joinSpace: '',
+    _id: '',
+  },
 };
 
 export const spaceSlice = createSlice({
@@ -61,17 +116,17 @@ export const spaceSlice = createSlice({
 
   extraReducers: builder => {
 
-    builder.addCase(getSpaceAction.pending, (state, action) => {
-      state.getSpace = 'pending';
-      state.spaceList = [];
+    builder.addCase(getSpacesAction.pending, (state, action) => {
+      state.getSpaces = 'pending';
+      state.spacesList = [];
     });
-    builder.addCase(getSpaceAction.fulfilled, (state, action) => {
-      state.getSpace = 'success';
-      state.spaceList = action.payload;
+    builder.addCase(getSpacesAction.fulfilled, (state, action) => {
+      state.getSpaces = 'success';
+      state.spacesList = action.payload;
     });
-    builder.addCase(getSpaceAction.rejected, (state, action) => {
-      state.getSpace = 'failed';
-      state.spaceList = [];
+    builder.addCase(getSpacesAction.rejected, (state, action) => {
+      state.getSpaces = 'failed';
+      state.spacesList = [];
     });
 
     builder.addCase(addSpaceAction.pending, (state, action) => {
@@ -82,6 +137,43 @@ export const spaceSlice = createSlice({
     });
     builder.addCase(addSpaceAction.rejected, (state, action) => {
       state.addSpace = 'failed';
+    });
+
+    builder.addCase(getSpaceAction.pending, (state, action) => {
+      state.getSpace = 'pending';
+    });
+    builder.addCase(getSpaceAction.fulfilled, (state, action) => {
+      state.getSpace = 'success';
+      state.space = action.payload;
+    });
+    builder.addCase(getSpaceAction.rejected, (state, action) => {
+      state.getSpace = 'failed';
+    });
+
+    builder.addCase(joinSpaceAction.pending, (state, action) => {
+      state.space.joinSpace = 'pending';
+    });
+    builder.addCase(joinSpaceAction.fulfilled, (state, action) => {
+      state.space.joinSpace = 'success';
+      if (action.payload.space === state.space._id) {
+        state.space.join = action.payload.join;
+      }
+    });
+    builder.addCase(joinSpaceAction.rejected, (state, action) => {
+      state.space.joinSpace = 'failed';
+    });
+
+    builder.addCase(leaveSpaceAction.pending, (state, action) => {
+      state.space.joinSpace = 'pending';
+    });
+    builder.addCase(leaveSpaceAction.fulfilled, (state, action) => {
+      state.space.joinSpace = 'success';
+      if (action.payload.space === state.space._id) {
+        state.space.join = action.payload.join;
+      }
+    });
+    builder.addCase(leaveSpaceAction.rejected, (state, action) => {
+      state.space.joinSpace = 'failed';
     });
   }
 });

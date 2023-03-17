@@ -1,6 +1,6 @@
 import { apiInstance as Axios } from '../api/requestInterceptor';
 
-const getSpace = () => {
+const getSpaces = () => {
   return Axios.get('space');
 }
 
@@ -22,7 +22,22 @@ const addSpace = (
   );
 }
 
+const getSpace = (spaceId: string) => {
+  return Axios.get(`space/${spaceId}`);
+}
+
+const joinSpace = (spaceId: string) => {
+  return Axios.post(`join/${spaceId}`);
+}
+
+const leaveSpace = (spaceId: string) => {
+  return Axios.delete(`join/${spaceId}`);
+}
+
 export {
-  getSpace,
+  getSpaces,
   addSpace,
+  getSpace,
+  joinSpace,
+  leaveSpace,
 };

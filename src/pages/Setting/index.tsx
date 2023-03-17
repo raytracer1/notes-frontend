@@ -105,7 +105,7 @@ function Setting() {
             )
           )
         }
-        <Button type='submit' value='submit' color='primary'
+        <Button color='primary'
           disabled={updateStatus === 'pending' || !settingChanged()}
           onClick={handleClick}
         >
@@ -201,7 +201,7 @@ function Setting() {
         </div>
       </div>
       <div className='btn-container'>
-        <Button type='submit' value='submit' color='primary'
+        <Button color='primary'
           disabled={updateStatus === 'pending' || !settingChanged()}
           onClick={handleClick}
         >

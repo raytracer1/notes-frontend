@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getProfile } from '../../service/profileService';
+import { singleUser, singleSpace } from '../../interface';
 
 export const getProfileAction = createAsyncThunk(
   'profile/getProfile',
@@ -17,37 +18,24 @@ export const getProfileAction = createAsyncThunk(
 interface profileState {
   getProfile: string,
   profile: {
-    email: string,
-    userName: string,
-    gender: string,
-    country: string,
-    imageUrl: string,
-    timestamp: string,
-    interests: string[],
-    createdSpaces: {
-      name: string,
-      description: string,
-      imageUrl: string,
-      prerequisites: string[],
-      keywords: string[],
-      updatedAt: string,
-      author: {},
-      _id: string,
-    }[];
-  };
+    user: singleUser,
+    createdSpaces: singleSpace[],
+  },
 }
 
 // Define the initial state using that type
 const initialState: profileState = {
   getProfile: 'init',
   profile: {
-    email: '',
-    userName: '',
-    gender: '',
-    country: '',
-    imageUrl: '',
-    timestamp: '',
-    interests: [],
+    user: {
+      email: '',
+      userName: '',
+      gender: '',
+      country: '',
+      imageUrl: '',
+      timeStamp: '',
+      interests: [],
+    },
     createdSpaces: [],
   },
 };
@@ -65,13 +53,15 @@ export const spaceSlice = createSlice({
     builder.addCase(getProfileAction.fulfilled, (state, action) => {
       state.getProfile = 'success';
       state.profile = {
-        email: action.payload.email,
-        userName: action.payload.userName,
-        gender: action.payload.gender,
-        country: action.payload.country,
-        imageUrl: action.payload.imageUrl,
-        timestamp: action.payload.timestamp,
-        interests: action.payload.interests,
+        user: {
+          email: action.payload.email,
+          userName: action.payload.userName,
+          gender: action.payload.gender,
+          country: action.payload.country,
+          imageUrl: action.payload.imageUrl,
+          timeStamp: action.payload.timeStamp,
+          interests: action.payload.interests,
+        },
         createdSpaces: action.payload.createdSpaces,
       };
     });

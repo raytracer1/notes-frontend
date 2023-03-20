@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from 'reactstrap';
 import TagsInput from 'react-tagsinput';
 import Select from 'react-select';
+import cn from 'classnames';
 import 'react-tagsinput/react-tagsinput.css';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -148,7 +149,7 @@ function Setting() {
             <div className='description'>
               <p>Sharing your details.</p>
             </div>
-            <div className={updateStatus === 'pending' ? 'inputs disabled' : 'inputs'}>
+            <div className={cn('inputs', { disabled: updateStatus === 'pending' })}>
               <div className='input-row'>
                 <label htmlFor='gender'>gender</label>
                 <Select
@@ -194,7 +195,7 @@ function Setting() {
             <div className='description'>
               <p>Add interests to your setting. You can add or update your interests any time.</p>
             </div>
-            <div className={updateStatus === 'pending' ? 'inputs disabled' : 'inputs'}>
+            <div className={cn('inputs', { disabled: updateStatus === 'pending' })}>
               <TagsInput value={interests} onChange={handleInterestsChange} disabled={updateStatus === 'pending'} />
             </div>
           </div>

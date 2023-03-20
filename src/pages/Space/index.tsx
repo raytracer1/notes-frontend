@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   getSpaceAction, joinSpaceAction, leaveSpaceAction
 } from '../../store/reducers/space.reducer';
@@ -22,12 +22,14 @@ const SETTINGS_TABS = [
 
 function Space() {
   const { spaceId } = useParams();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const authStatus = useAppSelector((state) => state.auth.authenticated);
   const user = useAppSelector((state) => state.auth.user);
   const getSpaceStatus = useAppSelector((state) => state.space.getSpace);
-  const space = useAppSelector((state) => state.space.space);
+  const space = useAppSelector((state) => state.space.space.space);
+  const join = useAppSelector((state) => state.space.space.join);
 
   const [tab, setTab] = useState<String>('posts');
 
@@ -36,13 +38,15 @@ function Space() {
   useEffect(() => {
     if (spaceId) {
       dispatch(getSpaceAction({spaceId: spaceId}));
+    } else {
+      navigate('/');
     }
     // eslint-disable-next-line
   }, [spaceId]);
 
   const joinStatus = () => {
-    if (space.join)
-      return !!(space.join.find((item) => item.user.userName === user.userName));
+    if (join)
+      return !!(join.find((item) => item.user.userName === user.userName));
     else
       return false;
   }
@@ -58,6 +62,13 @@ function Space() {
     }
   }
 
+  const handleEdit = (e:any) => {
+    e.preventDefault();
+    if (!spaceId)
+      return;
+    navigate(`/space/edit/${spaceId}`);
+  }
+
   const ButtonUI = (
     !isAuthor ? (
       <Button color='primary'
@@ -68,7 +79,9 @@ function Space() {
         }
       </Button>
     ) : (
-      <Button color='primary'>
+      <Button color='primary'
+        onClick={handleEdit}
+      >
         edit
       </Button>
     )
@@ -90,14 +103,17 @@ function Space() {
           <div className='space-container'>
             <div className='space-header'>
               <div className='name-container'>
-                <div className='back-icon'>
-                  <a href='/home'><IconBackLeft /></a>
-                </div>
+                  <a href='/home'>
+                    <div className='back-icon'><IconBackLeft /></div>
+                  </a>
                 <span>{space.name}</span>
               </div>
               <div className='btn-container'>
                 {authStatus && ButtonUI}
               </div>
+            </div>
+            <div className='mobile-name'>
+              <span>{space.name}</span>
             </div>
             <div className='space-description'>
               <div className='image-container'>

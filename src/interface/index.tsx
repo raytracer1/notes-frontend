@@ -17,6 +17,7 @@ export interface singleUser {
 };
 
 export interface singleSpace {
+  _id: string,
   name: string,
   description: string,
   imageUrl: string,
@@ -25,10 +26,4 @@ export interface singleSpace {
   createdAt: string,
   updatedAt: string,
   author: singleUser,
-  join: {
-    user: singleUser,
-    createdAt: string,
-  }[],
-  joinSpace: string,
-  _id: string,
 }

@@ -93,7 +93,7 @@ function Header() {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink className='nav-link' to='/space'>
+                <NavLink className='nav-link' to='/space/create'>
                   <IconBlackHole />Create Learning Space
                 </NavLink>
               </NavItem>

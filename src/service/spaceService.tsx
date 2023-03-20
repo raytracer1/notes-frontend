@@ -4,26 +4,45 @@ const getSpaces = () => {
   return Axios.get('space');
 }
 
-const addSpace = (
+const createSpace = (
   name: string,
   description: string,
-  imageUrl: string,
   prerequisites: string[],
-  keywords: string[]
+  keywords: string[],
+  imageUrl?: string,
 ) => {
   return Axios.post('space',
     {
       name: name,
       description: description,
-      imageUrl: imageUrl,
       prerequisites: prerequisites,
-      keywords: keywords
+      keywords: keywords,
+      imageUrl: imageUrl,
     }
   );
 }
 
 const getSpace = (spaceId: string) => {
   return Axios.get(`space/${spaceId}`);
+}
+
+const updateSpace = (
+  spaceId: string,
+  name: string,
+  description: string,
+  prerequisites: string[],
+  keywords: string[],
+  imageUrl?: string,
+) => {
+  return Axios.post(`space/${spaceId}`,
+    {
+      name: name,
+      description: description,
+      prerequisites: prerequisites,
+      keywords: keywords,
+      imageUrl: imageUrl,
+    }
+  );
 }
 
 const joinSpace = (spaceId: string) => {
@@ -36,8 +55,9 @@ const leaveSpace = (spaceId: string) => {
 
 export {
   getSpaces,
-  addSpace,
+  createSpace,
   getSpace,
   joinSpace,
   leaveSpace,
+  updateSpace
 };

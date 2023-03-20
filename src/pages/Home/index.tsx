@@ -1,13 +1,17 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   getSpacesAction,
 } from '../../store/reducers/space.reducer';
 import SpaceCard from "../../components/SpaceCard";
+import CreateCard from "../../components/CreateCard";
 import Spinner from "../../components/Spinner";
 import './style.scss';
 
 function Home() {
+  const navigate = useNavigate();
+
   const authStatus = useAppSelector((state) => state.auth.authenticated);
   const getSpacesStatus = useAppSelector((state) => state.space.getSpaces);
   const spacesList = useAppSelector((state) => state.space.spacesList);
@@ -17,6 +21,11 @@ function Home() {
     dispatch(getSpacesAction());
     // eslint-disable-next-line
   }, []);
+
+  const handleCreate = (e:any) => {
+    e.preventDefault();
+    navigate('/space/create');
+  }
 
   return (
     <div className='home'>
@@ -51,6 +60,11 @@ function Home() {
                     updatedAt={item.updatedAt}
                   />
                 ))
+              }
+              {
+                authStatus && (
+                  <CreateCard handleClick={handleCreate}/>
+                )
               }
             </div>
           </div>

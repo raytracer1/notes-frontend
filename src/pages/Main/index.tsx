@@ -5,6 +5,8 @@ import Home from '../Home';
 import Space from '../Space';
 import Setting from '../Setting';
 import Profile from '../Profile';
+import EditSpace from "../EditSpace";
+import CreateSpace from "../CreateSpace";
 import './style.scss';
 
 function Main() {
@@ -15,6 +17,8 @@ function Main() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/space/:spaceId' element={<Space />} />
+          <Route path='/space/edit/:spaceId' element={<EditSpace />} />
+          <Route path='/space/create/' element={<CreateSpace />} />
           <Route path='/setting' element={<Setting />} />
           <Route path='/profile/:userName' element={<Profile />} />
           <Route path='*' element={<Navigate to='/' replace />} />

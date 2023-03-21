@@ -12,7 +12,7 @@ function Footer() {
                 <h5>Links</h5>
                 <ul className="list-unstyled">
                   <li><Link to='/home'>Home</Link></li>
-                  <li><Link to='/space'>Create Learning Space</Link></li>
+                  <li><Link to='/space/create'>Create Learning Space</Link></li>
                 </ul>
               </div>
             </div>

@@ -129,14 +129,27 @@ function Space() {
                   {` created at ${getMonthAndYear(space.createdAt)}`}
                 </div>
                 <div className='prerequisites'>
-                  prerequisites: {space.prerequisites}
+                  prerequisites:
+                  {
+                    space.prerequisites.map((item) => (
+                      <span>{item}</span>
+                    ))
+                  }
                 </div>
                 <div className='description'>
                   decription:<br/>
-                  <div className='description-content'>{space.description}</div>
+                  <div className='description-content'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    {space.description}
+                  </div>
                 </div>
                 <div className='keywords'>
-                  keywords: {space.keywords}
+                  keywords:
+                  {
+                    space.keywords.map((item) => (
+                      <span>{item}</span>
+                    ))
+                  }
                 </div>
               </div>
             </div>

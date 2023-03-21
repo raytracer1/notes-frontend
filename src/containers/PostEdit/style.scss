@@ -1,0 +1,168 @@
+@import '../../styles/global';
+
+.post-edit {
+    max-width: 1376px;
+    margin: 0 auto;
+    padding: 32px 0 28px;
+
+    @media(max-width:767px) {
+        padding: 20px 10px 27px;
+    }
+
+    .post-header {
+        display: flex;
+        width: 100%;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding-bottom: 20px;
+    
+        .name-container {
+            display: flex;
+            align-items: center;
+            margin-top: -8px;
+    
+            @media(max-width:767px) {
+                margin-top: 0;
+            }
+    
+            a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+    
+                .back-icon {
+                    width: 32px;
+                    height: 24px;
+                    border: 1.5px solid #137d60;
+                    border-radius: 24px;
+                    padding: 4px 8px;
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+    
+            span {
+                @include barlow-condensed;
+                font-weight: 600;
+                font-size: 34px;
+                color: #2a2a2a;
+                line-height: 40px;
+                letter-spacing: -.78px;
+                margin-left: 10px;
+    
+                @media(max-width:767px) {
+                    display: none;
+                }
+            }
+        }
+    
+        .btn-container {
+            button {
+                padding: 10px 40px;
+                border-radius: 23px;
+                width: 185px;
+                height: 46px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+    
+    .mobile-name {
+        display: none;
+    
+        span {
+            @include barlow-condensed;
+            font-weight: 600;
+            font-size: 34px;
+            color: #2a2a2a;
+            line-height: 40px;
+            letter-spacing: -.78px;
+        }
+    
+        @media(max-width:767px) {
+            display: block;
+            margin-bottom: 10px;
+        }
+    }
+    
+    .inputs {
+        width: 100%;
+    
+        @media(max-width:767px) {
+            width: 100%;
+        }
+    
+        .input-row {
+            margin-bottom: 15px;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            padding: 0 2px;
+            width: 100%;
+    
+            .title {
+                width: 100%;
+                display: flex;
+                padding-top: 10px;
+    
+                label, span {
+                    @include roboto-sans-regular;
+                    font-weight: 500;
+                    font-size: 11px;
+                    line-height: 10px;
+                    color: #137d60;
+                    padding-left: 8px;
+                    text-transform: capitalize;
+                }
+    
+                span {
+                    margin-left: auto;
+                    color: unset;
+    
+                    .infinite {
+                        margin-left: 0;
+                        padding-left: 2px;
+                        font-size: 20px;
+                        line-height: 10px;
+                    }
+                }
+            }
+    
+            .text-box, .text-area {
+                border: unset;
+                outline: none !important;
+                display: block;
+    
+                @include roboto-sans-regular;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 12px;
+            }
+    
+            .text-box {
+                width: 100%;
+                padding: 2px 8px;
+                height: 24px;
+            }
+    
+            .text-area {
+                width: calc(100% - 8px);
+                margin-top: 5px;
+                margin-left: 6px;
+                min-height: 70vh;
+            }
+        }
+    
+        &.disabled {
+            .input-row {
+                background-color: #e9ecef;
+                .text-box, .text-area {
+                    background-color: #e9ecef;
+                }
+            }
+        }
+    }
+}

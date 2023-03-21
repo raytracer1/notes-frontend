@@ -81,7 +81,7 @@ function SpaceEdit({
   }
 
   return (
-    <div className='edit'>
+    <div className='space-edit'>
       <div className='btn-container top'>
         {
           posted === true && status === 'success' && (

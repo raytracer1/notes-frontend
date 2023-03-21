@@ -53,11 +53,55 @@ const leaveSpace = (spaceId: string) => {
   return Axios.delete(`join/${spaceId}`);
 }
 
+const createPost = (
+  spaceId: string,
+  title: string,
+  description: string,
+) => {
+  return Axios.post(`space/${spaceId}/post`,
+    {
+      title: title,
+      description: description,
+    }
+  );
+}
+
+const getPost = (
+  spaceId: string,
+  postId: string,
+) => {
+  return Axios.get(`space/${spaceId}/post/${postId}`);
+}
+
+const updatePost = (
+  spaceId: string,
+  postId: string,
+  title: string,
+  description: string,
+) => {
+  return Axios.post(`space/${spaceId}/post/${postId}`,
+    {
+      title: title,
+      description: description,
+    }
+  );
+}
+
+const getPosts = (
+  spaceId: string,
+) => {
+  return Axios.get(`space/${spaceId}/post`);
+}
+
 export {
   getSpaces,
   createSpace,
   getSpace,
   joinSpace,
   leaveSpace,
-  updateSpace
+  updateSpace,
+  createPost,
+  getPost,
+  updatePost,
+  getPosts
 };

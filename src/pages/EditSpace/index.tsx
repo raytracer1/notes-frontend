@@ -30,14 +30,14 @@ function EditSpace() {
   }, [spaceId]);
 
   useEffect(() => {
-    if (getSpaceStatus === 'success') {
+    if (getSpaceStatus === 'success' || updateStatus === 'success') {
       setName(space.name);
       setDescription(space.description);
       setPrerequisites(space.prerequisites);
       setKeywords(space.keywords);
     }
     // eslint-disable-next-line
-  }, [getSpaceStatus, space]);
+  }, [getSpaceStatus, updateStatus, space]);
 
   const handleClick = () => {
     if (spaceId) {

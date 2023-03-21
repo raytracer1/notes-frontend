@@ -20,9 +20,7 @@ function CreateSpace() {
 
   useEffect(() => {
     if (createStatus === 'success') {
-      setInterval(() => {
-        navigate(`/space/edit/${space._id}`);
-      }, 2000);
+      navigate(`/space/edit/${space._id}`);
     }
   // eslint-disable-next-line
   }, [createStatus, space]);

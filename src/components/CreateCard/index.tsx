@@ -13,7 +13,7 @@ const CreateCard = ({
       className='create-card-container'
       onClick={handleClick}
     >
-      <div className='create-card'>
+      <div className='card-item'>
         <div className='first'>
         </div>
         <div className='last'>

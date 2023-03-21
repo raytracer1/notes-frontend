@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
-  getSpaces, createSpace, getSpace, joinSpace, leaveSpace, updateSpace
+  getSpaces, createSpace, getSpace, joinSpace, leaveSpace, updateSpace,
+  createPost, getPost, updatePost, getPosts
 } from '../../service/spaceService';
 import { uploadImage } from '../../service/uploadService';
-import { singleSpace } from '../../interface';
+import { singleSpace, singlePost } from '../../interface';
 
 export const getSpacesAction = createAsyncThunk(
   'space/getSpaces',
@@ -104,14 +105,79 @@ export const leaveSpaceAction = createAsyncThunk(
   }
 )
 
+export const createPostAction = createAsyncThunk(
+  'space/createPost',
+  async (params: {
+    spaceId: string,
+    title: string,
+    description: string,
+  }, { rejectWithValue }) => {
+    try {
+      const response = await createPost(params.spaceId, params.title, params.description);
+      return response.data;
+    } catch(err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+)
+
+export const getPostAction = createAsyncThunk(
+  'space/getPost',
+  async (params: {
+    spaceId: string,
+    postId: string,
+  }, { rejectWithValue }) => {
+    try {
+      const response = await getPost(params.spaceId, params.postId);
+      return response.data;
+    } catch(err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+)
+
+export const updatePostAction = createAsyncThunk(
+  'space/updatePost',
+  async (params: {
+    spaceId: string,
+    postId: string,
+    title: string,
+    description: string,
+  }, { rejectWithValue }) => {
+    try {
+      const response = await updatePost(params.spaceId, params.postId,
+        params.title, params.description);
+      return response.data;
+    } catch(err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+)
+
+export const getPostsAction = createAsyncThunk(
+  'space/getPosts',
+  async (params: {
+    spaceId: string,
+  }, { rejectWithValue }) => {
+    try {
+      const response = await getPosts(params.spaceId);
+      return {spaceId: params.spaceId, postsList: response.data};
+    } catch(err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+)
+
 // Define a type for the slice state
 interface spaceState {
   getSpaces: string,
+  spacesList: singleSpace[],
+
   createSpace: string,
   createSpaceErr: string,
   updateSpace: string,
   updateSpaceErr: string,
-  spacesList: singleSpace[],
+
   getSpace: string,
   space: {
     space: singleSpace,
@@ -123,16 +189,32 @@ interface spaceState {
     }[],
   },
   joinSpace: string,
+
+  getPosts: string,
+  posts : {
+    spaceId: string,
+    postsList: singlePost[]
+  },
+
+  createPost: string,
+  createPostErr: string,
+  updatePost: string,
+  updatePostErr: string,
+
+  getPost: string,
+  post: singlePost,
 }
 
 // Define the initial state using that type
 const initialState: spaceState = {
   getSpaces: 'init',
+  spacesList: [],
+
   createSpace: 'init',
   createSpaceErr: '',
   updateSpace: 'init',
   updateSpaceErr: '',
-  spacesList: [],
+
   getSpace: 'init',
   space: {
     space: {
@@ -157,6 +239,26 @@ const initialState: spaceState = {
     join: [],
   },
   joinSpace: 'init',
+
+  getPosts: 'init',
+  posts : {
+    spaceId: '',
+    postsList: []
+  },
+
+  createPost: 'init',
+  createPostErr: '',
+  updatePost: 'init',
+  updatePostErr: '',
+
+  getPost: 'init',
+  post: {
+    _id: '',
+    title: '',
+    description: '',
+    createdAt: '',
+    updatedAt: '',
+  },
 };
 
 export const spaceSlice = createSlice({
@@ -236,6 +338,50 @@ export const spaceSlice = createSlice({
     });
     builder.addCase(leaveSpaceAction.rejected, (state, action) => {
       state.joinSpace = 'failed';
+    });
+
+    builder.addCase(createPostAction.pending, (state, action) => {
+      state.createPost = 'pending';
+    });
+    builder.addCase(createPostAction.fulfilled, (state, action) => {
+      state.createPost = 'success';
+      state.post = action.payload;
+    });
+    builder.addCase(createPostAction.rejected, (state, action) => {
+      state.createPost = 'failed';
+    });
+
+    builder.addCase(getPostAction.pending, (state, action) => {
+      state.getPost = 'pending';
+    });
+    builder.addCase(getPostAction.fulfilled, (state, action) => {
+      state.getPost = 'success';
+      state.post = action.payload;
+    });
+    builder.addCase(getPostAction.rejected, (state, action) => {
+      state.getPost = 'failed';
+    });
+
+    builder.addCase(updatePostAction.pending, (state, action) => {
+      state.updatePost = 'pending';
+    });
+    builder.addCase(updatePostAction.fulfilled, (state, action) => {
+      state.updatePost = 'success';
+      state.post = action.payload;
+    });
+    builder.addCase(updatePostAction.rejected, (state, action) => {
+      state.updatePost = 'failed';
+    });
+
+    builder.addCase(getPostsAction.pending, (state, action) => {
+      state.getPost = 'pending';
+    });
+    builder.addCase(getPostsAction.fulfilled, (state, action) => {
+      state.getPosts = 'success';
+      state.posts = action.payload;
+    });
+    builder.addCase(getPostsAction.rejected, (state, action) => {
+      state.getPosts = 'failed';
     });
   }
 });

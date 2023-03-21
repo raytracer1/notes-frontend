@@ -1,26 +1,27 @@
-import { useNavigate } from "react-router-dom";
 import { formatDate } from '../../util/dateHelper';
 import imgError from '../../assets/image/demo.jpg';
 import './style.scss';
 
-interface ISpaceCardProps {
-  id: string,
-  imageUrl: string,
+interface IContentCardrops {
+  showImage: boolean,
+  imageUrl?: string,
   name: string,
   description: string,
   updatedAt: string,
+  handleClick: () => void,
 };
 
-const SpaceCard = ({
-  id,
+const ContentCard = ({
+  showImage,
   imageUrl,
   name,
   description,
-  updatedAt
-} : ISpaceCardProps) => {
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate(`/space/${id}`);
+  updatedAt,
+  handleClick
+} : IContentCardrops) => {
+  const handleClickHelper = (e:any) => {
+    e.preventDefault();
+    handleClick();
   }
 
   return (
@@ -28,13 +29,17 @@ const SpaceCard = ({
       className='card-item-container'
     >
       <div className='card-item'
-        onClick={handleClick}
+        onClick={handleClickHelper}
       >
-        <div className='card-image'>
-          <img src={imageUrl !== '' ? imageUrl : imgError}
-            alt='space icon'
-          />
-        </div>
+        {
+          showImage && (
+            <div className='card-image'>
+              <img src={imageUrl !== '' ? imageUrl : imgError}
+                alt='space icon'
+              />
+            </div>
+          )
+        }
         <div className='card-info'>
           {
             name && (
@@ -61,4 +66,4 @@ const SpaceCard = ({
   )
 };
 
-export default SpaceCard;
+export default ContentCard;

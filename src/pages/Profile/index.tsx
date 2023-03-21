@@ -6,7 +6,8 @@ import {
 } from '../../store/reducers/profile.reducer';
 import { getMonthAndYear } from '../../util/dateHelper';
 import Spinner from "../../components/Spinner";
-import SpaceCard from "../../components/SpaceCard";
+import ContentCard from "../../components/ContentCard";
+import CreateCard from "../../components/CreateCard";
 import imgError from '../../assets/image/error.png';
 import './style.scss';
 
@@ -32,6 +33,12 @@ function Profile() {
     }
   // eslint-disable-next-line
   }, [authenticated]);
+
+
+  const handleCreate = (e:any) => {
+    e.preventDefault();
+    navigate('/space/create');
+  }
 
   return (
     <div className='profile'>
@@ -75,16 +82,20 @@ function Profile() {
                 {
                   profile.createdSpaces && (
                     profile.createdSpaces.map((item) => (
-                      <SpaceCard key={item._id}
-                        id={item._id}
+                      <ContentCard key={item._id}
+                        showImage={true}
                         imageUrl={item.imageUrl}
                         name={item.name}
                         description={item.description}
                         updatedAt={item.updatedAt}
+                        handleClick={() => {
+                          navigate(`/space/${item._id}`);
+                        }}
                       />
                     ))
                   )
                 }
+                <CreateCard handleClick={handleCreate}/>
               </div>
             </div>
           </div>

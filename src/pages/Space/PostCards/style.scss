@@ -1,0 +1,46 @@
+@import '../../../styles/global';
+
+.post-cards-container {
+    display: flex;
+    flex-direction: column;
+
+    .post-cards {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+        gap: 30px;
+
+        @media(max-width:767px) {
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .create-card-container, .card-item-container {
+            width: calc((100% - 90px) / 4);
+            padding: 0 0;
+
+            @media(max-width:767px) {
+                width: 100%;
+                padding: 20px 0;
+            }
+
+            .card-item {
+                height: 260px;
+
+                .card-info {
+                    height: 100%;
+                }
+            }
+        }
+
+        .no-posts {
+            width: 100%;
+            padding-top: 50px;
+
+            @media(max-width:767px) {
+                padding-left: 10px;
+            }
+        }
+    }
+}

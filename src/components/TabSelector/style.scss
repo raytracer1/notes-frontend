@@ -104,6 +104,10 @@
     text-transform: uppercase;
     padding-left: 16px;
     padding-top: 10px;
+
+    @media(max-width:767px) {
+      padding-left: 10px;
+    }
   }
 
   .icon {

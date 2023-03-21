@@ -4,8 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   getSpacesAction,
 } from '../../store/reducers/space.reducer';
-import SpaceCard from "../../components/SpaceCard";
-import CreateCard from "../../components/CreateCard";
+import ContentCard from "../../components/ContentCard";
+
 import Spinner from "../../components/Spinner";
 import './style.scss';
 
@@ -21,11 +21,6 @@ function Home() {
     dispatch(getSpacesAction());
     // eslint-disable-next-line
   }, []);
-
-  const handleCreate = (e:any) => {
-    e.preventDefault();
-    navigate('/space/create');
-  }
 
   return (
     <div className='home'>
@@ -51,20 +46,18 @@ function Home() {
           <div className='content'>
             <div className='space-cards'>
               {
-                spacesList.map((item) => (
-                  <SpaceCard key={item._id}
-                    id={item._id}
+                spacesList.map((item: any) => (
+                  <ContentCard key={item._id}
+                    showImage={true}
                     imageUrl={item.imageUrl}
                     name={item.name}
                     description={item.description}
                     updatedAt={item.updatedAt}
+                    handleClick={() => {
+                      navigate(`/space/${item._id}`);
+                    }}
                   />
                 ))
-              }
-              {
-                authStatus && (
-                  <CreateCard handleClick={handleCreate}/>
-                )
               }
             </div>
           </div>

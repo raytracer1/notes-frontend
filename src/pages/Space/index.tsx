@@ -7,6 +7,7 @@ import {
 } from '../../store/reducers/space.reducer';
 import Spinner from '../../components/Spinner';
 import TabSelector from '../../components/TabSelector';
+import PostCards from "./PostCards";
 import { ReactComponent as IconBackLeft }  from '../../assets/svg/back-left.svg';
 import imgError from '../../assets/image/demo.jpg';
 import { getMonthAndYear } from '../../util/dateHelper';
@@ -66,7 +67,7 @@ function Space() {
     e.preventDefault();
     if (!spaceId)
       return;
-    navigate(`/space/edit/${spaceId}`);
+    navigate(`/space/${spaceId}/edit`);
   }
 
   const ButtonUI = (
@@ -103,16 +104,16 @@ function Space() {
           <div className='space-container'>
             <div className='space-header'>
               <div className='name-container'>
-                  <a href='/home'>
-                    <div className='back-icon'><IconBackLeft /></div>
-                  </a>
+                <a href='/home'>
+                  <div className='back-icon'><IconBackLeft /></div>
+                </a>
                 <span>{space.name}</span>
               </div>
               <div className='btn-container'>
                 {authStatus && ButtonUI}
               </div>
             </div>
-            <div className='mobile-name'>
+            <div className='space-mobile-name'>
               <span>{space.name}</span>
             </div>
             <div className='space-description'>
@@ -159,6 +160,16 @@ function Space() {
                 tabs={SETTINGS_TABS}
                 selectTab={setTab}
               />
+              <div className='content'>
+                {
+                  tab === 'posts' && (
+                    <PostCards
+                      spaceId={spaceId ? spaceId : ''}
+                      isAuthor={isAuthor}
+                    />
+                  )
+                }
+              </div>
             </div>
           </div>
         )

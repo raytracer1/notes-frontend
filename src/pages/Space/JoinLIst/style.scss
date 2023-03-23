@@ -1,0 +1,51 @@
+@import '../../../styles/global';
+
+.join-lists-container {
+    display: flex;
+    flex-direction: column;
+
+    .join-lists {
+        display: flex;
+        flex-direction: column;
+
+        .join-list {
+            display: flex;
+            flex-direction: row;
+            font-weight: 500;
+            line-height: 22px;
+            color: #151516;
+            font-size: 14px;
+            padding-top: 16px;
+            padding-bottom: 15px;
+            background-color: unset;
+            border-bottom: 1px solid #d5d5d5;
+
+            .user-name {
+                margin-left: 10px;
+                width: 50%;
+            }
+
+            .join-date {
+                width: 50%;
+            }
+
+            &.list-header {
+                padding-top: 14px;
+                padding-bottom: 17px;
+                color: #767676;
+                font-size: 11px;
+                line-height: 14px;
+                text-transform: uppercase;
+            }
+        }
+
+        .no-joins {
+            width: 100%;
+            padding-top: 50px;
+
+            @media(max-width:767px) {
+                padding-left: 10px;
+            }
+        }
+    }
+}

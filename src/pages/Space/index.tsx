@@ -8,6 +8,7 @@ import {
 import Spinner from '../../components/Spinner';
 import TabSelector from '../../components/TabSelector';
 import PostCards from "./PostCards";
+import JoinList from "./JoinLIst";
 import { ReactComponent as IconBackLeft }  from '../../assets/svg/back-left.svg';
 import imgError from '../../assets/image/demo.jpg';
 import { getMonthAndYear } from '../../util/dateHelper';
@@ -166,6 +167,13 @@ function Space() {
                     <PostCards
                       spaceId={spaceId ? spaceId : ''}
                       isAuthor={isAuthor}
+                    />
+                  )
+                }
+                {
+                  tab === 'joins' && (
+                    <JoinList
+                      joinList={join}
                     />
                   )
                 }

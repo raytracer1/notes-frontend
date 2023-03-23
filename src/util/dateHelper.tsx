@@ -16,3 +16,11 @@ export const getMonthAndYear = (dateString: string) => {
 
     return Month + ' ' + YY;
 }
+
+export const getHourAndMinute = (dateString: string) => {
+    var date = new Date(dateString);
+    var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+    var mm = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
+
+    return hh + mm;
+}

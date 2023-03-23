@@ -18,6 +18,7 @@ function Profile() {
   const { userName } = useParams();
   const getProfileStatus = useAppSelector((state) => state.profile.getProfile);
   const profile = useAppSelector((state) => state.profile.profile);
+  const user = useAppSelector((state) => state.auth.user);
 
   useEffect(() => {
     if (userName) {
@@ -86,7 +87,11 @@ function Profile() {
                     ))
                   )
                 }
-                <CreateCard handleClick={handleCreate}/>
+                {
+                  user.userName === userName && (
+                    <CreateCard handleClick={handleCreate}/>
+                  )
+                }
               </div>
             </div>
           </div>

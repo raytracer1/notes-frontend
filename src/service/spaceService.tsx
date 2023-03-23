@@ -93,6 +93,23 @@ const getPosts = (
   return Axios.get(`space/${spaceId}/post`);
 }
 
+const getComments = (
+  spaceId: string,
+) => {
+  return Axios.get(`space/${spaceId}/comment`);
+}
+
+const createComment = (
+  spaceId: string,
+  content: string,
+) => {
+  return Axios.post(`space/${spaceId}/comment`,
+    {
+      content: content,
+    }
+  );
+}
+
 export {
   getSpaces,
   createSpace,
@@ -103,5 +120,7 @@ export {
   createPost,
   getPost,
   updatePost,
-  getPosts
+  getPosts,
+  getComments,
+  createComment
 };

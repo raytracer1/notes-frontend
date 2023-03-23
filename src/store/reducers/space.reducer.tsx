@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   getSpaces, createSpace, getSpace, joinSpace, leaveSpace, updateSpace,
-  createPost, getPost, updatePost, getPosts
+  createPost, getPost, updatePost, getPosts,
+  getComments, createComment
 } from '../../service/spaceService';
 import { uploadImage } from '../../service/uploadService';
-import { singleSpace, singlePost } from '../../interface';
+import { singleSpace, singlePost, singleComment } from '../../interface';
 
 export const getSpacesAction = createAsyncThunk(
   'space/getSpaces',
@@ -168,6 +169,35 @@ export const getPostsAction = createAsyncThunk(
   }
 )
 
+export const getCommentsAction = createAsyncThunk(
+  'space/getComments',
+  async (params: {
+    spaceId: string,
+  }, { rejectWithValue }) => {
+    try {
+      const response = await getComments(params.spaceId);
+      return {spaceId: params.spaceId, commentsList: response.data};
+    } catch(err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+)
+
+export const createCommentAction = createAsyncThunk(
+  'space/createComment',
+  async (params: {
+    spaceId: string,
+    content: string,
+  }, { rejectWithValue }) => {
+    try {
+      const response = await createComment(params.spaceId, params.content);
+      return {spaceId: params.spaceId, commentsList: response.data};
+    } catch(err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+)
+
 // Define a type for the slice state
 interface spaceState {
   getSpaces: string,
@@ -203,6 +233,15 @@ interface spaceState {
 
   getPost: string,
   post: singlePost,
+
+  getComments: string,
+  comments : {
+    spaceId: string,
+    commentsList: singleComment[]
+  },
+
+  createComment: string,
+  createCommentErr: string,
 }
 
 // Define the initial state using that type
@@ -259,6 +298,15 @@ const initialState: spaceState = {
     createdAt: '',
     updatedAt: '',
   },
+
+  getComments: 'init',
+  comments: {
+    spaceId: '',
+    commentsList: [],
+  },
+
+  createComment: 'init',
+  createCommentErr: '',
 };
 
 export const spaceSlice = createSlice({
@@ -374,7 +422,7 @@ export const spaceSlice = createSlice({
     });
 
     builder.addCase(getPostsAction.pending, (state, action) => {
-      state.getPost = 'pending';
+      state.getPosts = 'pending';
     });
     builder.addCase(getPostsAction.fulfilled, (state, action) => {
       state.getPosts = 'success';
@@ -382,6 +430,28 @@ export const spaceSlice = createSlice({
     });
     builder.addCase(getPostsAction.rejected, (state, action) => {
       state.getPosts = 'failed';
+    });
+
+    builder.addCase(getCommentsAction.pending, (state, action) => {
+      state.getComments = 'pending';
+    });
+    builder.addCase(getCommentsAction.fulfilled, (state, action) => {
+      state.getComments = 'success';
+      state.comments = action.payload;
+    });
+    builder.addCase(getCommentsAction.rejected, (state, action) => {
+      state.getComments = 'failed';
+    });
+
+    builder.addCase(createCommentAction.pending, (state, action) => {
+      state.createComment = 'pending';
+    });
+    builder.addCase(createCommentAction.fulfilled, (state, action) => {
+      state.createComment = 'success';
+      state.comments = action.payload;
+    });
+    builder.addCase(createCommentAction.rejected, (state, action) => {
+      state.createComment = 'failed';
     });
   }
 });

@@ -7,8 +7,9 @@ import {
 } from '../../store/reducers/space.reducer';
 import Spinner from '../../components/Spinner';
 import TabSelector from '../../components/TabSelector';
-import PostCards from "./PostCards";
-import JoinList from "./JoinList";
+import PostCards from './PostCards';
+import JoinList from './JoinList';
+import Comment from './Comment';
 import { ReactComponent as IconBackLeft }  from '../../assets/svg/back-left.svg';
 import imgError from '../../assets/image/demo.jpg';
 import { getMonthAndYear } from '../../util/dateHelper';
@@ -134,8 +135,8 @@ function Space() {
                 <div className='prerequisites'>
                   prerequisites:
                   {
-                    space.prerequisites.map((item) => (
-                      <span>{item}</span>
+                    space.prerequisites.map((item, index) => (
+                      <span key={index}>{item}</span>
                     ))
                   }
                 </div>
@@ -149,8 +150,8 @@ function Space() {
                 <div className='keywords'>
                   keywords:
                   {
-                    space.keywords.map((item) => (
-                      <span>{item}</span>
+                    space.keywords.map((item, index) => (
+                      <span key={index}>{item}</span>
                     ))
                   }
                 </div>
@@ -182,6 +183,14 @@ function Space() {
                   tab === 'related' && (
                     <RelatedList
                       spaceId={spaceId}
+                    />
+                  )
+                }
+                {
+                  tab === 'comments' && (
+                    <Comment
+                      spaceId={spaceId}
+                      authStatus={authStatus}
                     />
                   )
                 }

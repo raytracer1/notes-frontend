@@ -35,3 +35,12 @@ export interface singlePost {
   createdAt: string,
   updatedAt: string,
 }
+
+export interface singleComment {
+  author : {
+    imageUrl: string,
+    userName: string,
+  },
+  content: string,
+  createdAt: string,
+}

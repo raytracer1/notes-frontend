@@ -16,7 +16,6 @@ function Profile() {
   const dispatch = useAppDispatch();
 
   const { userName } = useParams();
-  const authenticated = useAppSelector((state) => state.auth.authenticated);
   const getProfileStatus = useAppSelector((state) => state.profile.getProfile);
   const profile = useAppSelector((state) => state.profile.profile);
 
@@ -26,14 +25,6 @@ function Profile() {
     }
   // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    if (!authenticated) {
-      navigate('/');
-    }
-  // eslint-disable-next-line
-  }, [authenticated]);
-
 
   const handleCreate = (e:any) => {
     e.preventDefault();

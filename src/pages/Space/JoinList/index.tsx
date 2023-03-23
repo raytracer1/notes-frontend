@@ -27,7 +27,11 @@ function JoinList({
           ) : (
             joinList.map((item: any) => (
               <div className='join-list'>
-                <div className='user-name'>{item.user.userName}</div>
+                <div className='user-name'>
+                  <a href={`/profile/${item.user.userName}`}>
+                    {item.user.userName}
+                  </a>
+                </div>
                 <div className='join-date'>
                   {getMonthAndYear(item.createdAt) + ' '}
                   {getHourAndMinute(item.createdAt)}

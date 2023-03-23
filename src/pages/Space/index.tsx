@@ -8,7 +8,7 @@ import {
 import Spinner from '../../components/Spinner';
 import TabSelector from '../../components/TabSelector';
 import PostCards from "./PostCards";
-import JoinList from "./JoinLIst";
+import JoinList from "./JoinList";
 import { ReactComponent as IconBackLeft }  from '../../assets/svg/back-left.svg';
 import imgError from '../../assets/image/demo.jpg';
 import { getMonthAndYear } from '../../util/dateHelper';

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  getPostAction,
+  getSpaceAction, getPostAction,
 } from '../../store/reducers/space.reducer';
 import { ReactComponent as IconBackLeft }  from '../../assets/svg/back-left.svg';
 import Spinner from "../../components/Spinner";
@@ -24,6 +24,7 @@ function Post() {
 
   useEffect(() => {
     if (spaceId && postId) {
+      dispatch(getSpaceAction({spaceId: spaceId}));
       dispatch(getPostAction({spaceId: spaceId, postId: postId}));
     } else {
       navigate('/');
@@ -55,9 +56,6 @@ function Post() {
           </a>
           <span>{space.name}</span>
         </div>
-      </div>
-      <div className='post-mobile-name'>
-        <span>{space.name}</span>
       </div>
       {
         getPostStatus === 'pending' && (

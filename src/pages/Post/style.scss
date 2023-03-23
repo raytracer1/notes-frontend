@@ -53,10 +53,6 @@
                 line-height: 40px;
                 letter-spacing: -.78px;
                 margin-left: 10px;
-
-                @media(max-width:767px) {
-                    display: none;
-                }
             }
         }
 
@@ -70,24 +66,6 @@
                 align-items: center;
                 justify-content: center;
             }
-        }
-    }
-
-    .post-mobile-name {
-        display: none;
-
-        span {
-            @include barlow-condensed;
-            font-weight: 600;
-            font-size: 34px;
-            color: #2a2a2a;
-            line-height: 40px;
-            letter-spacing: -.78px;
-        }
-
-        @media(max-width:767px) {
-            display: block;
-            margin-bottom: 10px;
         }
     }
 

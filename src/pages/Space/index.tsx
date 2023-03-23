@@ -14,6 +14,7 @@ import imgError from '../../assets/image/demo.jpg';
 import { getMonthAndYear } from '../../util/dateHelper';
 
 import './style.scss';
+import RelatedList from "./Related";
 
 const SETTINGS_TABS = [
   'posts',
@@ -99,7 +100,7 @@ function Space() {
         )
       }
       {
-        getSpaceStatus === 'failed' ? (
+        getSpaceStatus === 'failed' || !spaceId ? (
           <div>no such space</div>
         ) : (
           <div className='space-container'>
@@ -165,7 +166,7 @@ function Space() {
                 {
                   tab === 'posts' && (
                     <PostCards
-                      spaceId={spaceId ? spaceId : ''}
+                      spaceId={spaceId}
                       isAuthor={isAuthor}
                     />
                   )
@@ -174,6 +175,13 @@ function Space() {
                   tab === 'joins' && (
                     <JoinList
                       joinList={join}
+                    />
+                  )
+                }
+                {
+                  tab === 'related' && (
+                    <RelatedList
+                      spaceId={spaceId}
                     />
                   )
                 }

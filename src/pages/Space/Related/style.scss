@@ -1,0 +1,20 @@
+@import '../../../styles/global';
+
+.related-lists-container {
+    display: flex;
+    flex-direction: column;
+
+    .related-lists {
+        display: flex;
+        flex-direction: column;
+
+        .no-related {
+            width: 100%;
+            padding-top: 50px;
+
+            @media(max-width:767px) {
+                padding-left: 10px;
+            }
+        }
+    }
+}

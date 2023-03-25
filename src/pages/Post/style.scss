@@ -23,6 +23,10 @@
             align-items: center;
             margin-top: -8px;
 
+            &.hasButton {
+                width: calc(100% - 200px);
+            }
+
             @media(max-width:767px) {
                 margin-top: 0;
             }
@@ -53,6 +57,9 @@
                 line-height: 40px;
                 letter-spacing: -.78px;
                 margin-left: 10px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
             }
         }
 
@@ -81,27 +88,6 @@
 
     .post-description {
         font-size: 20px;
-    }
-
-    .btn-container {
-        position: absolute;
-        bottom: 20px;
-        width: 100%;
-
-        button {
-            margin-left: auto;
-            padding: 10px 40px;
-            border-radius: 23px;
-            width: 185px;
-            height: 46px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            @media(max-width:767px) {
-                margin-right: 10px;
-            }
-        }
     }
 }
 

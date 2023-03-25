@@ -1,4 +1,5 @@
 import { formatDate } from '../../util/dateHelper';
+import MarkdownPreview from '@uiw/react-markdown-preview';
 import imgError from '../../assets/image/demo.jpg';
 import './style.scss';
 
@@ -50,7 +51,11 @@ const ContentCard = ({
           }
           {
             description && (
-              <div className='card-description'>{description}</div>
+              <div className='card-description'>
+                <MarkdownPreview
+                  source={description}
+                />
+              </div>
             )
           }
           {

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from 'reactstrap';
+import MDEditor from '@uiw/react-md-editor';
 import cn from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -87,9 +88,9 @@ function PostEdit({
     <div className='post-edit'>
       <div className='post-header'>
         <div className='name-container'>
-            <a href={`/space/${spaceId}`}>
-              <div className='back-icon'><IconBackLeft /></div>
-            </a>
+          <a href={`/space/${spaceId}`}>
+            <div className='back-icon'><IconBackLeft /></div>
+          </a>
           <span>{space.name}</span>
         </div>
         {
@@ -120,9 +121,6 @@ function PostEdit({
           {ButtonUI}
         </div>
       </div>
-      <div className='mobile-name'>
-        <span>{space.name}</span>
-      </div>
       <div className={cn('inputs', { disabled: disabled })}>
         <div className='input-row'>
           <div className='title'>
@@ -138,19 +136,20 @@ function PostEdit({
             }}
           />
         </div>
-        <div className='input-row'>
+        <div className='input-row md'>
           <div className='title'>
             <label htmlFor='name'>description</label>
             <span>{description.length} /
               <span className='infinite'>∞</span>
             </span>
           </div>
-          <textarea
+          <MDEditor
             className='text-area'
             value={description}
-            disabled={disabled}
             onChange={(e) => {
-              setDescription(e.target.value)
+              if (e !== undefined) {
+                setDescription(e)
+              }
             }}
           />
         </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useParams, useNavigate } from "react-router-dom";
+import cn from 'classnames';
 import {
   getSpaceAction, joinSpaceAction, leaveSpaceAction
 } from '../../store/reducers/space.reducer';
@@ -106,18 +107,19 @@ function Space() {
         ) : (
           <div className='space-container'>
             <div className='space-header'>
-              <div className='name-container'>
+              <div className={cn('name-container', { hasButton: authStatus})}>
                 <a href='/home'>
                   <div className='back-icon'><IconBackLeft /></div>
                 </a>
                 <span>{space.name}</span>
               </div>
-              <div className='btn-container'>
-                {authStatus && ButtonUI}
-              </div>
-            </div>
-            <div className='space-mobile-name'>
-              <span>{space.name}</span>
+              {
+                authStatus && (
+                  <div className='btn-container'>
+                    {ButtonUI}
+                  </div>
+                )
+              }
             </div>
             <div className='space-description'>
               <div className='image-container'>

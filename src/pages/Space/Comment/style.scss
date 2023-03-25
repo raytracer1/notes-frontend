@@ -73,19 +73,25 @@
             line-height: 12px;
 
             width: 100%;
+
+            .w-md-editor-content {
+                height: calc(100% - 30px);
+            }
         }
 
-        button {
-            margin-top: 20px;
-            margin-left: auto;
+        .button-container {
+            button {
+                margin-top: 20px;
+                margin-left: auto;
 
-            padding: 10px 40px;
-            border-radius: 23px;
-            width: 185px;
-            height: 46px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+                padding: 10px 40px;
+                border-radius: 23px;
+                width: 185px;
+                height: 46px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
     }
 }

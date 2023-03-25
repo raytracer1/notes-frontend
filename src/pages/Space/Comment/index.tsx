@@ -4,6 +4,8 @@ import {
   getCommentsAction, createCommentAction
 } from '../../../store/reducers/space.reducer';
 import Spinner from "../../../components/Spinner";
+import MDEditor from '@uiw/react-md-editor';
+import MarkdownPreview from '@uiw/react-markdown-preview';
 import { Button } from 'reactstrap';
 import { formatDate } from '../../../util/dateHelper';
 import './style.scss';
@@ -62,7 +64,11 @@ function Comment({
                       {item.author.userName}
                     </a>
                   </div>
-                  <div className='content'>{item.content}</div>
+                  <div className='content'>
+                  <MarkdownPreview
+                    source={item.content}
+                  />
+                  </div>
                   <div className='date'>{formatDate(item.createdAt)}</div>
                 </div>
               </div>
@@ -71,21 +77,23 @@ function Comment({
         }
       </div>
       <div className='create-comment'>
-        <textarea
+        <MDEditor
           className='text-area'
           value={content}
-          disabled={createCommentStatus === 'pending' || !authStatus}
           onChange={(e) => {
-            setContent(e.target.value)
+            if (e !== undefined) {
+              setContent(e)
+            }
           }}
-          rows={5}
         />
-        <Button color='primary'
-          onClick={handleCreate}
-          disabled={createCommentStatus === 'pending' || !authStatus || content === ''}
-        >
-          comment
-        </Button>
+        <div className='button-container'>
+          <Button color='primary'
+            onClick={handleCreate}
+            disabled={createCommentStatus === 'pending' || !authStatus || content === ''}
+          >
+            comment
+          </Button>
+        </div>
       </div>
     </div>
   );

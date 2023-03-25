@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from 'reactstrap';
+import cn from 'classnames';
+import MarkdownPreview from '@uiw/react-markdown-preview';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   getSpaceAction, getPostAction,
@@ -50,12 +52,17 @@ function Post() {
   return (
     <div className='post'>
       <div className='post-header'>
-        <div className='name-container'>
+        <div className={cn('name-container', { hasButton: isAuthor})}>
           <a href={`/space/${spaceId}`}>
             <div className='back-icon'><IconBackLeft /></div>
           </a>
           <span>{space.name}</span>
         </div>
+        {
+          isAuthor && (
+            ButtonUI
+          )
+        }
       </div>
       {
         getPostStatus === 'pending' && (
@@ -71,14 +78,10 @@ function Post() {
               {post.title}
             </div>
             <div className='post-description'>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              {post.description}
+              <MarkdownPreview
+               source={post.description}
+              />
             </div>
-            {
-              isAuthor && (
-                ButtonUI
-              )
-            }
           </React.Fragment>
         )
       }

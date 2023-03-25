@@ -3,7 +3,7 @@
 .card-item-container {
     width: 25%;
     padding: 20px 20px;
-    
+
     @media(max-width:767px) {
         width: 100%;
     }
@@ -12,6 +12,7 @@
         height: 384px;
         border: 1px solid #e1e1e1;
         box-shadow: 0 1px 6px rgba(31,31,31,.12), 0 1px 4px rgba(31,31,31,.12);
+        background-color: #fff;
 
         @media(max-width:767px) {
             height: 350px;
@@ -44,7 +45,7 @@
             .card-name {
                 font-size: 24px;
                 font-weight: 700;
-                margin-bottom: 24px;
+                margin-bottom: 16px;
                 color: #0062e4;
                 text-transform: capitalize;
             }
@@ -53,6 +54,8 @@
                 font-size: 16px;
                 font-weight: 400;
                 margin-bottom: 12px;
+                height: 60%;
+                overflow: hidden;
             }
     
             .card-timestamp {

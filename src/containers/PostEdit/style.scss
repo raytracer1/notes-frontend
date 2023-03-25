@@ -20,8 +20,10 @@
             display: flex;
             align-items: center;
             margin-top: -8px;
+            width: calc(100% - 200px);
     
             @media(max-width:767px) {
+                margin-right: 5px;
                 margin-top: 0;
             }
     
@@ -51,10 +53,9 @@
                 line-height: 40px;
                 letter-spacing: -.78px;
                 margin-left: 10px;
-    
-                @media(max-width:767px) {
-                    display: none;
-                }
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
             }
         }
     
@@ -71,24 +72,6 @@
         }
     }
     
-    .mobile-name {
-        display: none;
-    
-        span {
-            @include barlow-condensed;
-            font-weight: 600;
-            font-size: 34px;
-            color: #2a2a2a;
-            line-height: 40px;
-            letter-spacing: -.78px;
-        }
-    
-        @media(max-width:767px) {
-            display: block;
-            margin-bottom: 10px;
-        }
-    }
-    
     .inputs {
         width: 100%;
     
@@ -102,6 +85,14 @@
             border-radius: 4px;
             padding: 0 2px;
             width: 100%;
+
+            &.md {
+                padding: 0;
+
+                .title {
+                    padding-bottom: 5px;
+                }
+            }
     
             .title {
                 width: 100%;
@@ -149,10 +140,17 @@
             }
     
             .text-area {
-                width: calc(100% - 8px);
-                margin-top: 5px;
-                margin-left: 6px;
+                width: 100%;
+                margin: 0;
                 min-height: 70vh;
+
+                .w-md-editor-content {
+                    height: calc(100% - 30px);
+
+                    @media(max-width:767px) {
+                        height: calc(100% - 50px);
+                    }
+                }
             }
         }
     

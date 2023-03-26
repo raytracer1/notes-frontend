@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from 'reactstrap';
-import cn from 'classnames';
 import MarkdownPreview from '@uiw/react-markdown-preview';
+import { jsPDF } from "jspdf";
+import html2canvas from 'html2canvas';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   getSpaceAction, getPostAction,
@@ -39,7 +40,22 @@ function Post() {
     navigate(`/space/${spaceId}/post/${postId}/edit`);
   }
 
-  const ButtonUI = (
+  const handleSave = (e:any) => {
+    e.preventDefault();
+    const input = document.getElementsByClassName('text-area')[0] as HTMLElement;
+    if (input) {
+      html2canvas(input)
+        .then((canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF();
+          pdf.addImage(imgData, 'JPEG', 4, 4, 0, 0);
+          pdf.save(`${space.name}-${post.title}.pdf`);
+        })
+      ;
+    }
+  }
+
+  const editButtonUI = (
     <div className='btn-container'>
       <Button color='primary'
         onClick={handleEdit}
@@ -49,18 +65,30 @@ function Post() {
     </div>
   );
 
+  const saveButtonUI = (
+    <div className='btn-container'>
+      <Button color='primary'
+        onClick={handleSave}
+      >
+        save
+      </Button>
+    </div>
+  );
+
   return (
     <div className='post'>
       <div className='post-header'>
-        <div className={cn('name-container', { hasButton: isAuthor})}>
+        <div className='name-container'>
           <a href={`/space/${spaceId}`}>
             <div className='back-icon'><IconBackLeft /></div>
           </a>
           <span>{space.name}</span>
         </div>
         {
-          isAuthor && (
-            ButtonUI
+          isAuthor ? (
+            editButtonUI
+          ) : (
+            saveButtonUI
           )
         }
       </div>
@@ -73,16 +101,17 @@ function Post() {
       }
       {
         getPostStatus === 'success' && (
-          <React.Fragment>
+          <div className='post-content'>
             <div className='post-title'>
               {post.title}
             </div>
             <div className='post-description'>
               <MarkdownPreview
                source={post.description}
+               className='text-area'
               />
             </div>
-          </React.Fragment>
+          </div>
         )
       }
     </div>

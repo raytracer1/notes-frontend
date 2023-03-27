@@ -67,19 +67,17 @@ const createPost = (
 }
 
 const getPost = (
-  spaceId: string,
   postId: string,
 ) => {
-  return Axios.get(`space/${spaceId}/post/${postId}`);
+  return Axios.get(`post/${postId}`);
 }
 
 const updatePost = (
-  spaceId: string,
   postId: string,
   title: string,
   description: string,
 ) => {
-  return Axios.post(`space/${spaceId}/post/${postId}`,
+  return Axios.post(`post/${postId}`,
     {
       title: title,
       description: description,
@@ -94,18 +92,16 @@ const getPosts = (
 }
 
 const getComments = (
-  spaceId: string,
   postId: string,
 ) => {
-  return Axios.get(`space/${spaceId}/post/${postId}/comment`);
+  return Axios.get(`post/${postId}/comment`);
 }
 
 const createComment = (
-  spaceId: string,
   postId: string,
   content: string,
 ) => {
-  return Axios.post(`space/${spaceId}/post/${postId}/comment`,
+  return Axios.post(`post/${postId}/comment`,
     {
       content: content,
     }

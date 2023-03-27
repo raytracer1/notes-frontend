@@ -17,6 +17,15 @@ export const getMonthAndYear = (dateString: string) => {
     return Month + ' ' + YY;
 }
 
+export const getMonthAndYearAndDay = (dateString: string) => {
+    var date = new Date(dateString);
+    var YY = date.getFullYear();
+    var Month = date.toLocaleString('en-US', { month: 'short' });
+    var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+
+    return Month + ' ' + DD + ', ' + YY;
+}
+
 export const getHourAndMinute = (dateString: string) => {
     var date = new Date(dateString);
     var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';

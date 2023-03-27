@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
@@ -38,37 +38,43 @@ function PostCards({
     <div className='post-cards-container'>
       <div className='post-cards'>
         {
-          isAuthor && (
-            <CreateCard handleClick={handleCreate}/>
+          getPostsStatus === 'pending' && (
+            <div className='spinner-box'>
+              <Spinner />
+            </div>
           )
         }
         {
-          posts.postsList.length === 0 ? (
-            !isAuthor && (
-              <div className='no-posts'>No Posts</div>
-            )
-          ) : (
-            posts.postsList.map((item: any) => (
-              <ContentCard key={item._id}
-                showImage={false}
-                name={item.title}
-                description={item.description}
-                updatedAt={item.updatedAt}
-                handleClick={() => {
-                  navigate(`/space/${spaceId}/post/${item._id}`);
-                }}
-              />)
-            )
+          getPostsStatus === 'success' && (
+            <React.Fragment>
+              {
+                isAuthor && (
+                  <CreateCard handleClick={handleCreate}/>
+                )
+              }
+              {  
+                posts.postsList.length === 0 ? (
+                  !isAuthor && (
+                    <div className='no-posts'>No Posts</div>
+                  )
+                ) : (
+                  posts.postsList.map((item: any) => (
+                    <ContentCard key={item._id}
+                      showImage={false}
+                      name={item.title}
+                      description={item.description}
+                      updatedAt={item.updatedAt}
+                      handleClick={() => {
+                        navigate(`/post/${item._id}`);
+                      }}
+                    />)
+                  )
+                )
+              }
+            </React.Fragment>
           )
         }
       </div>
-      {
-        getPostsStatus === 'pending' && (
-          <div className='spinner-box'>
-            <Spinner />
-          </div>
-        )
-      }
     </div>
   );
 }

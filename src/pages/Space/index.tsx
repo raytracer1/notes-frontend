@@ -12,7 +12,7 @@ import PostCards from './PostCards';
 import JoinList from './JoinList';
 import { ReactComponent as IconBackLeft }  from '../../assets/svg/back-left.svg';
 import imgError from '../../assets/image/demo.jpg';
-import { getMonthAndYear } from '../../util/dateHelper';
+import { getMonthAndYearAndDay } from '../../util/dateHelper';
 
 import './style.scss';
 import RelatedList from "./Related";
@@ -130,7 +130,7 @@ function Space() {
                   <a href={`/profile/${space.author.userName}`}>
                     {space.author.userName}
                   </a>
-                  {` created at ${getMonthAndYear(space.createdAt)}`}
+                  {` created at ${getMonthAndYearAndDay(space.createdAt)}`}
                 </div>
                 <div className='prerequisites'>
                   prerequisites:

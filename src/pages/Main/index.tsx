@@ -24,8 +24,8 @@ function Main() {
           <Route path='/space/:spaceId' element={<Space />} />
           <Route path='/space/:spaceId/edit' element={<EditSpace />} />
           <Route path='/space/:spaceId/post/create' element={<CreatePost />} />
-          <Route path='/space/:spaceId/post/:postId' element={<Post />} />
-          <Route path='/space/:spaceId/post/:postId/edit' element={<EditPost />} />
+          <Route path='/post/:postId' element={<Post />} />
+          <Route path='/post/:postId/edit' element={<EditPost />} />
           <Route path='/setting' element={<Setting />} />
           <Route path='/profile/:userName' element={<Profile />} />
           <Route path='*' element={<Navigate to='/' replace />} />

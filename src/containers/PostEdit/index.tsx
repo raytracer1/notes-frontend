@@ -1,13 +1,9 @@
-
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from 'reactstrap';
 import MDEditor from '@uiw/react-md-editor';
 import cn from 'classnames';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import {
-  getSpaceAction
-} from '../../store/reducers/space.reducer';
+import { useAppSelector } from '../../store/hooks';
 import { ReactComponent as IconBackLeft }  from '../../assets/svg/back-left.svg';
 import './style.scss';
 
@@ -38,34 +34,19 @@ function PostEdit({
   status,
   error,
 } : IPostEditProps) {
-  const { spaceId } = useParams();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const authStatus = useAppSelector((state) => state.auth.authenticated);
-  const user = useAppSelector((state) => state.auth.user);
-  const getSpaceStatus = useAppSelector((state) => state.space.getSpace);
   const space = useAppSelector((state) => state.space.space.space);
 
   const [posted, setPosted] = useState<boolean>(false);
 
   useEffect(() => {
-    if (spaceId && authStatus) {
-      dispatch(getSpaceAction({spaceId: spaceId}));
-    } else {
+    if (!authStatus) {
       navigate('/');
     }
     // eslint-disable-next-line
-  }, [spaceId]);
-
-  useEffect(() => {
-    if (getSpaceStatus === 'success') {
-      if (space.author.userName !== user.userName) {
-        navigate('/');
-      }
-    }
-    // eslint-disable-next-line
-  }, [getSpaceStatus, space]);
+  }, [authStatus]);
 
   const handleClickHelper = (e:any) => {
     e.preventDefault();

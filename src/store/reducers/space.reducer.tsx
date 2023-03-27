@@ -125,11 +125,10 @@ export const createPostAction = createAsyncThunk(
 export const getPostAction = createAsyncThunk(
   'space/getPost',
   async (params: {
-    spaceId: string,
     postId: string,
   }, { rejectWithValue }) => {
     try {
-      const response = await getPost(params.spaceId, params.postId);
+      const response = await getPost(params.postId);
       return response.data;
     } catch(err: any) {
       return rejectWithValue(err.response.data);
@@ -140,13 +139,12 @@ export const getPostAction = createAsyncThunk(
 export const updatePostAction = createAsyncThunk(
   'space/updatePost',
   async (params: {
-    spaceId: string,
     postId: string,
     title: string,
     description: string,
   }, { rejectWithValue }) => {
     try {
-      const response = await updatePost(params.spaceId, params.postId,
+      const response = await updatePost(params.postId,
         params.title, params.description);
       return response.data;
     } catch(err: any) {
@@ -172,11 +170,10 @@ export const getPostsAction = createAsyncThunk(
 export const getCommentsAction = createAsyncThunk(
   'space/getComments',
   async (params: {
-    spaceId: string,
     postId: string,
   }, { rejectWithValue }) => {
     try {
-      const response = await getComments(params.spaceId, params.postId);
+      const response = await getComments(params.postId);
       return {postId: params.postId, commentsList: response.data};
     } catch(err: any) {
       return rejectWithValue(err.response.data);
@@ -187,12 +184,11 @@ export const getCommentsAction = createAsyncThunk(
 export const createCommentAction = createAsyncThunk(
   'space/createComment',
   async (params: {
-    spaceId: string,
     postId: string,
     content: string,
   }, { rejectWithValue }) => {
     try {
-      const response = await createComment(params.spaceId, params.postId, params.content);
+      const response = await createComment(params.postId, params.content);
       return {postId: params.postId, commentsList: response.data};
     } catch(err: any) {
       return rejectWithValue(err.response.data);
@@ -407,6 +403,7 @@ export const spaceSlice = createSlice({
     builder.addCase(getPostAction.fulfilled, (state, action) => {
       state.getPost = 'success';
       state.post = action.payload;
+      state.space.space = action.payload.space;
     });
     builder.addCase(getPostAction.rejected, (state, action) => {
       state.getPost = 'failed';
@@ -418,6 +415,7 @@ export const spaceSlice = createSlice({
     builder.addCase(updatePostAction.fulfilled, (state, action) => {
       state.updatePost = 'success';
       state.post = action.payload;
+      state.space.space = action.payload.space;
     });
     builder.addCase(updatePostAction.rejected, (state, action) => {
       state.updatePost = 'failed';

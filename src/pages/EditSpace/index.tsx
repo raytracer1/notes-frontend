@@ -13,6 +13,7 @@ function EditSpace() {
   const updateStatus = useAppSelector((state) => state.space.updateSpace);
   const updateErr = useAppSelector((state) => state.space.updateSpaceErr);
   const space = useAppSelector((state) => state.space.space.space);
+  const user = useAppSelector((state) => state.auth.user);
 
   const [imgFile, setImgFile] = useState<File>();
   const [name, setName] = useState<string>('');
@@ -36,8 +37,13 @@ function EditSpace() {
       setPrerequisites(space.prerequisites);
       setKeywords(space.keywords);
     }
+    if (getSpaceStatus === 'success') {
+      if (user.userName !== space.author.userName) {
+        navigate('/');
+      }
+    }
     // eslint-disable-next-line
-  }, [getSpaceStatus, updateStatus, space]);
+  }, [getSpaceStatus, updateStatus, space, user]);
 
   const handleClick = () => {
     if (spaceId) {

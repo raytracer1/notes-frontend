@@ -13,6 +13,7 @@ import './style.scss';
 
 interface IPostEditProps {
   buttonTxt: string,
+  backUrl: string,
   title: string,
   setTitle: (title: string) => void,
   description: string,
@@ -26,6 +27,7 @@ interface IPostEditProps {
 
 function PostEdit({
   buttonTxt,
+  backUrl,
   title,
   setTitle,
   description,
@@ -88,7 +90,7 @@ function PostEdit({
     <div className='post-edit'>
       <div className='post-header'>
         <div className='name-container'>
-          <a href={`/space/${spaceId}`}>
+          <a href={`${backUrl}`}>
             <div className='back-icon'><IconBackLeft /></div>
           </a>
           <span>{space.name}</span>

@@ -46,6 +46,7 @@ function CreatePost() {
   return (
     <PostEdit
       buttonTxt={'modify'}
+      backUrl={`/space/${spaceId}/post/${postId}`}
       title={title}
       setTitle={setTitle}
       description={description}

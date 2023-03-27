@@ -10,7 +10,6 @@ import Spinner from '../../components/Spinner';
 import TabSelector from '../../components/TabSelector';
 import PostCards from './PostCards';
 import JoinList from './JoinList';
-import Comment from './Comment';
 import { ReactComponent as IconBackLeft }  from '../../assets/svg/back-left.svg';
 import imgError from '../../assets/image/demo.jpg';
 import { getMonthAndYear } from '../../util/dateHelper';
@@ -21,8 +20,7 @@ import RelatedList from "./Related";
 const SETTINGS_TABS = [
   'posts',
   'joins',
-  'related',
-  'comments'
+  'related'
 ];
 
 function Space() {
@@ -185,14 +183,6 @@ function Space() {
                   tab === 'related' && (
                     <RelatedList
                       spaceId={spaceId}
-                    />
-                  )
-                }
-                {
-                  tab === 'comments' && (
-                    <Comment
-                      spaceId={spaceId}
-                      authStatus={authStatus}
                     />
                   )
                 }

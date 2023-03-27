@@ -173,10 +173,11 @@ export const getCommentsAction = createAsyncThunk(
   'space/getComments',
   async (params: {
     spaceId: string,
+    postId: string,
   }, { rejectWithValue }) => {
     try {
-      const response = await getComments(params.spaceId);
-      return {spaceId: params.spaceId, commentsList: response.data};
+      const response = await getComments(params.spaceId, params.postId);
+      return {postId: params.postId, commentsList: response.data};
     } catch(err: any) {
       return rejectWithValue(err.response.data);
     }
@@ -187,11 +188,12 @@ export const createCommentAction = createAsyncThunk(
   'space/createComment',
   async (params: {
     spaceId: string,
+    postId: string,
     content: string,
   }, { rejectWithValue }) => {
     try {
-      const response = await createComment(params.spaceId, params.content);
-      return {spaceId: params.spaceId, commentsList: response.data};
+      const response = await createComment(params.spaceId, params.postId, params.content);
+      return {postId: params.postId, commentsList: response.data};
     } catch(err: any) {
       return rejectWithValue(err.response.data);
     }
@@ -236,7 +238,7 @@ interface spaceState {
 
   getComments: string,
   comments : {
-    spaceId: string,
+    postId: string,
     commentsList: singleComment[]
   },
 
@@ -301,7 +303,7 @@ const initialState: spaceState = {
 
   getComments: 'init',
   comments: {
-    spaceId: '',
+    postId: '',
     commentsList: [],
   },
 

@@ -95,15 +95,17 @@ const getPosts = (
 
 const getComments = (
   spaceId: string,
+  postId: string,
 ) => {
-  return Axios.get(`space/${spaceId}/comment`);
+  return Axios.get(`space/${spaceId}/post/${postId}/comment`);
 }
 
 const createComment = (
   spaceId: string,
+  postId: string,
   content: string,
 ) => {
-  return Axios.post(`space/${spaceId}/comment`,
+  return Axios.post(`space/${spaceId}/post/${postId}/comment`,
     {
       content: content,
     }

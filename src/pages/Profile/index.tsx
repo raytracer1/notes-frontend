@@ -72,6 +72,11 @@ function Profile() {
               </div>
               <div className='space-cards'>
                 {
+                  user.userName === userName && (
+                    <CreateCard handleClick={handleCreate}/>
+                  )
+                }
+                {
                   profile.createdSpaces && (
                     profile.createdSpaces.map((item) => (
                       <ContentCard key={item._id}
@@ -85,11 +90,6 @@ function Profile() {
                         }}
                       />
                     ))
-                  )
-                }
-                {
-                  user.userName === userName && (
-                    <CreateCard handleClick={handleCreate}/>
                   )
                 }
               </div>

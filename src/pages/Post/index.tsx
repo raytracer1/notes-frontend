@@ -7,12 +7,15 @@ import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  getPostAction, getCommentsAction, createCommentAction
+  getPostAction, getCommentsAction, createCommentAction,
+  createPostVoteAction, createCommentVoteAction
 } from '../../store/reducers/space.reducer';
 import { ReactComponent as IconBackLeft }  from '../../assets/svg/back-left.svg';
+import { ReactComponent as IconHand }  from '../../assets/svg/hand.svg';
 import Spinner from "../../components/Spinner";
 import { formatDate } from '../../util/dateHelper';
 import './style.scss';
+import { singleComment } from "../../interface";
 
 
 function Post() {
@@ -23,7 +26,8 @@ function Post() {
   const getPostStatus = useAppSelector((state) => state.space.getPost);
   const authStatus = useAppSelector((state) => state.auth.authenticated);
   const space = useAppSelector((state) => state.space.space.space);
-  const post = useAppSelector((state) => state.space.post);
+  const post = useAppSelector((state) => state.space.post.post);
+  const postVote = useAppSelector((state) => state.space.post.voteList);
   const user = useAppSelector((state) => state.auth.user);
 
   const getCommentsStatus = useAppSelector((state) => state.space.getComments);
@@ -92,6 +96,24 @@ function Post() {
     setContent('');
   }
 
+  const handlePostVote = (vote: string) => {
+    if (postId && authStatus) {
+      const alreadyVote = !!postVote.find((item) => item.author.userName === user.userName);
+      if (!alreadyVote) {
+        dispatch(createPostVoteAction({postId: postId, vote: vote}));
+      }
+    }
+  }
+
+  const handleCommentVote = (item: singleComment, vote: string) => {
+    if (postId && authStatus) {
+      const alreadyVote = !!item.voteList.find((item) => item.author.userName === user.userName);
+      if (!alreadyVote) {
+        dispatch(createCommentVoteAction({postId: postId, commentId: item.comment._id, vote: vote}));
+      }
+    }
+  }
+
   return (
     <div className='post'>
       {
@@ -119,15 +141,37 @@ function Post() {
                 )
               }
             </div>
-            <div className='post-content'>
-              <div className='post-title'>
-                {post.title}
+            <div className='post-content-container'>
+              <div className='votes'>
+                <div className='vote-container'>
+                  <div className='up' onClick={(e: any) => {
+                    e.preventDefault();
+                    handlePostVote('up')}
+                  }>
+                    <IconHand />
+                  </div>
+                  <span>{postVote.filter((item) => item.vote === 'up').length}</span>
+                </div>
+                <div className='vote-container'>
+                  <div className='down' onClick={(e: any) => {
+                    e.preventDefault();
+                    handlePostVote('down')}
+                  }>
+                    <IconHand />
+                  </div>
+                  <span>{postVote.filter((item) => item.vote === 'down').length}</span>
+                </div>
               </div>
-              <div className='post-description'>
-                <MarkdownPreview
-                source={post.description}
-                className='text-area'
-                />
+              <div className='post-content'>
+                <div className='post-title'>
+                  {post.title}
+                </div>
+                <div className='post-description'>
+                  <MarkdownPreview
+                    source={post.description}
+                    className='text-area'
+                  />
+                </div>
               </div>
             </div>
             <div className='comment-container'>
@@ -144,22 +188,42 @@ function Post() {
                     comments.commentsList.map((item, index) => (
                       <div key={index} className='comment-item'>
                         <div className='image-box'>
-                          <a href={`/profile/${item.author.userName}`}>
-                            <img src={item.author.imageUrl} alt='user'/>
+                          <a href={`/profile/${item.comment.author.userName}`}>
+                            <img src={item.comment.author.imageUrl} alt='user'/>
                           </a>
                         </div>
                         <div className='content-box'>
                           <div className='author'>
-                            <a href={`/profile/${item.author.userName}`}>
-                              {item.author.userName}
+                            <a href={`/profile/${item.comment.author.userName}`}>
+                              {item.comment.author.userName}
                             </a>
+                            <div className='votes'>
+                              <div className='vote-container'>
+                                <div className='up' onClick={(e:any) => {
+                                  e.preventDefault();
+                                  handleCommentVote(item, 'up');
+                                }}>
+                                  <IconHand />
+                                </div>
+                                <span>{item.voteList.filter((item) => item.vote === 'up').length}</span>
+                              </div>
+                              <div className='vote-container'>
+                                <div className='down' onClick={(e:any) => {
+                                  e.preventDefault();
+                                  handleCommentVote(item, 'down');
+                                }}>
+                                  <IconHand />
+                                </div>
+                                <span>{item.voteList.filter((item) => item.vote === 'down').length}</span>
+                              </div>
+                            </div>
                           </div>
                           <div className='content'>
                           <MarkdownPreview
-                            source={item.content}
+                            source={item.comment.content}
                           />
                           </div>
-                          <div className='date'>{formatDate(item.createdAt)}</div>
+                          <div className='date'>{formatDate(item.comment.createdAt)}</div>
                         </div>
                       </div>
                     ))

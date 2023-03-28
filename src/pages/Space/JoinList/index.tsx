@@ -1,4 +1,4 @@
-import { getMonthAndYear, getHourAndMinute } from '../../../util/dateHelper';
+import { getMonthAndYearAndDay, getHourAndMinute } from '../../../util/dateHelper';
 import './style.scss';
 
 interface IJoinListProps {
@@ -33,7 +33,7 @@ function JoinList({
                   </a>
                 </div>
                 <div className='join-date'>
-                  {getMonthAndYear(item.createdAt) + ' '}
+                  {getMonthAndYearAndDay(item.createdAt) + ' '}
                   {getHourAndMinute(item.createdAt)}
                 </div>
               </div>

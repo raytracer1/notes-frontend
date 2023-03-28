@@ -2,7 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   getSpaces, createSpace, getSpace, joinSpace, leaveSpace, updateSpace,
   createPost, getPost, updatePost, getPosts,
-  getComments, createComment
+  getComments, createComment,
+  createPostVote, createCommentVote
 } from '../../service/spaceService';
 import { uploadImage } from '../../service/uploadService';
 import { singleSpace, singlePost, singleComment } from '../../interface';
@@ -196,6 +197,37 @@ export const createCommentAction = createAsyncThunk(
   }
 )
 
+export const createPostVoteAction = createAsyncThunk(
+  'space/createPostVote',
+  async (params: {
+    postId: string,
+    vote: string,
+  }, { rejectWithValue }) => {
+    try {
+      const response = await createPostVote(params.postId, params.vote);
+      return {postId: params.postId, voteList: response.data};
+    } catch(err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+)
+
+export const createCommentVoteAction = createAsyncThunk(
+  'space/createCommentVote',
+  async (params: {
+    postId: string,
+    commentId: string,
+    vote: string,
+  }, { rejectWithValue }) => {
+    try {
+      const response = await createCommentVote(params.postId, params.commentId, params.vote);
+      return {postId: params.postId, commentsList: response.data};
+    } catch(err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+)
+
 // Define a type for the slice state
 interface spaceState {
   getSpaces: string,
@@ -231,6 +263,7 @@ interface spaceState {
 
   getPost: string,
   post: singlePost,
+  createPostVote: string,
 
   getComments: string,
   comments : {
@@ -240,6 +273,8 @@ interface spaceState {
 
   createComment: string,
   createCommentErr: string,
+
+  createCommentVote: string,
 }
 
 // Define the initial state using that type
@@ -290,12 +325,16 @@ const initialState: spaceState = {
 
   getPost: 'init',
   post: {
-    _id: '',
-    title: '',
-    description: '',
-    createdAt: '',
-    updatedAt: '',
+    post: {
+      _id: '',
+      title: '',
+      description: '',
+      createdAt: '',
+      updatedAt: '',
+    },
+    voteList: [],
   },
+  createPostVote: 'init',
 
   getComments: 'init',
   comments: {
@@ -305,6 +344,8 @@ const initialState: spaceState = {
 
   createComment: 'init',
   createCommentErr: '',
+
+  createCommentVote: 'init',
 };
 
 export const spaceSlice = createSlice({
@@ -403,7 +444,7 @@ export const spaceSlice = createSlice({
     builder.addCase(getPostAction.fulfilled, (state, action) => {
       state.getPost = 'success';
       state.post = action.payload;
-      state.space.space = action.payload.space;
+      state.space.space = action.payload.post.space;
     });
     builder.addCase(getPostAction.rejected, (state, action) => {
       state.getPost = 'failed';
@@ -452,6 +493,30 @@ export const spaceSlice = createSlice({
     });
     builder.addCase(createCommentAction.rejected, (state, action) => {
       state.createComment = 'failed';
+    });
+
+    builder.addCase(createPostVoteAction.pending, (state, action) => {
+      state.createPostVote = 'pending';
+    });
+    builder.addCase(createPostVoteAction.fulfilled, (state, action) => {
+      state.createPostVote = 'success';
+      state.post.voteList = action.payload.voteList;
+
+    });
+    builder.addCase(createPostVoteAction.rejected, (state, action) => {
+      state.createPostVote = 'failed';
+    });
+
+    builder.addCase(createCommentVoteAction.pending, (state, action) => {
+      state.createCommentVote = 'pending';
+    });
+    builder.addCase(createCommentVoteAction.fulfilled, (state, action) => {
+      state.createCommentVote = 'success';
+      state.comments = action.payload;
+
+    });
+    builder.addCase(createCommentVoteAction.rejected, (state, action) => {
+      state.createCommentVote = 'failed';
     });
   }
 });

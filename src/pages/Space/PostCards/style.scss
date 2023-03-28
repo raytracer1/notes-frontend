@@ -16,6 +16,13 @@
             gap: 0;
         }
 
+        .spinner-box {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
         .create-card-container, .card-item-container {
             width: calc((100% - 90px) / 4);
             padding: 0 0;

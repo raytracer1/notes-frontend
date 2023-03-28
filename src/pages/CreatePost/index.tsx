@@ -16,7 +16,7 @@ function CreatePost() {
   const createErr = useAppSelector((state) => state.space.createPostErr);
   const space = useAppSelector((state) => state.space.space.space);
   const user = useAppSelector((state) => state.auth.user);
-  const post = useAppSelector((state) => state.space.post);
+  const post = useAppSelector((state) => state.space.post.post);
 
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');

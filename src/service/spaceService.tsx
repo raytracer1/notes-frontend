@@ -91,6 +91,17 @@ const getPosts = (
   return Axios.get(`space/${spaceId}/post`);
 }
 
+const createPostVote = (
+  postId: string,
+  vote: string
+) => {
+  return Axios.post(`post/${postId}/vote`,
+    {
+      vote: vote,
+    }
+  );
+}
+
 const getComments = (
   postId: string,
 ) => {
@@ -108,6 +119,18 @@ const createComment = (
   );
 }
 
+const createCommentVote = (
+  postId: string,
+  commentId: string,
+  vote: string,
+) => {
+  return Axios.post(`post/${postId}/comment/${commentId}/vote`,
+    {
+      vote: vote,
+    }
+  );
+}
+
 export {
   getSpaces,
   createSpace,
@@ -120,5 +143,7 @@ export {
   updatePost,
   getPosts,
   getComments,
-  createComment
+  createComment,
+  createPostVote,
+  createCommentVote
 };

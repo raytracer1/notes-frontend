@@ -11,6 +11,51 @@
         padding: 20px 10px 27px;
     }
 
+    .votes {
+        align-items: center;
+        display: flex;
+        margin-left: auto;
+        margin-bottom: 10px;
+        font-size: 20px;
+        line-height: 20px;
+
+        .vote-container {
+            display: flex;
+
+            .up, .down {
+                display: flex;
+                align-items: center;
+                margin-right: 5px;
+
+                svg {
+                    width: 20px;
+                    height: 20px;
+                    opacity: 0.75;
+
+                    &:hover {
+                        opacity: 1.0;
+                    }
+                }
+            }
+    
+            .down {
+                transform: rotateX(180deg);
+                svg {
+                    margin-bottom: 1px;
+                }
+            }
+
+            span {
+                @include barlow-condensed;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                text-align: left;
+                width: 20px;
+            }
+        }
+    }
+
     .post-header {
         display: flex;
         width: 100%;
@@ -73,30 +118,39 @@
         }
     }
 
-    .post-content {
+    .post-content-container {
         width: 880px;
         margin: 0 auto;
-        border: 1px solid #e9e9e9;
-        padding: 20px 20px;
-        border-radius: 8px;
-        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
 
         @media(max-width:767px) {
             width: 100%;
         }
 
-        .post-title {
-            display: flex;
-            justify-content: center;
-
-            @include barlow-condensed;
-            font-weight: 600;
-            font-size: 30px;
-            text-transform: capitalize;
+        .votes {
+            margin-bottom: 10px;
         }
+    
+        .post-content {
+            border: 1px solid #e9e9e9;
+            border-radius: 8px;
+            padding: 20px 20px;
+            min-height: 90vh;
 
-        .post-description {
-            font-size: 20px;
+            .post-title {
+                display: flex;
+                justify-content: center;
+
+                @include barlow-condensed;
+                font-weight: 600;
+                font-size: 30px;
+                text-transform: capitalize;
+            }
+
+            .post-description {
+                font-size: 20px;
+            }
         }
     }
 
@@ -145,11 +199,14 @@
                         font-weight: 700;
                         margin-bottom: 10px;
                         font-size: 18px;
+                        display: flex;
     
                         a {
                             text-decoration: unset;
                             color: #151516;
                         }
+
+                        
                     }
     
                     .content {

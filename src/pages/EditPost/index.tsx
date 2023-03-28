@@ -14,7 +14,7 @@ function EditPost() {
   const getPostStatus = useAppSelector((state) => state.space.getPost);
   const updateStatus = useAppSelector((state) => state.space.updatePost);
   const updateErr = useAppSelector((state) => state.space.updatePostErr);
-  const post = useAppSelector((state) => state.space.post);
+  const post = useAppSelector((state) => state.space.post.post);
 
   const space = useAppSelector((state) => state.space.space.space);
   const user = useAppSelector((state) => state.auth.user);

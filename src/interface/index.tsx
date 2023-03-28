@@ -29,18 +29,31 @@ export interface singleSpace {
 }
 
 export interface singlePost {
-  _id: string,
-  title: string,
-  description: string,
-  createdAt: string,
-  updatedAt: string,
+  post: {
+    _id: string,
+    title: string,
+    description: string,
+    createdAt: string,
+    updatedAt: string,
+  },
+  voteList: {
+    author: singleUser,
+    vote: string,
+  }[],
 }
 
 export interface singleComment {
-  author : {
-    imageUrl: string,
-    userName: string,
+  comment: {
+    _id: string,
+    author : {
+      imageUrl: string,
+      userName: string,
+    },
+    content: string,
+    createdAt: string,
   },
-  content: string,
-  createdAt: string,
+  voteList: {
+    author: singleUser,
+    vote: string,
+  }[],
 }

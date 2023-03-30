@@ -1,0 +1,59 @@
+@import '../../styles/global';
+
+.highlight {
+    background-color: #82eacf;
+}
+
+.annotation-area {
+    @media(max-width:767px) {
+        width: 100%;
+    }
+}
+
+.annotation {
+    flex: 1;
+    margin-left: 20px;
+    background-color: #fff;
+    padding: 20px 5px;
+    border-radius: 8px;
+
+    @media(max-width:767px) {
+        display: none;
+    }
+
+    .annotation-title {
+        @include barlow-condensed;
+        font-weight: 600;
+        font-size: 30px;
+        text-transform: capitalize;
+        border-bottom: 1px solid #2a2a2a;
+    }
+}
+
+.annotation-buttons {
+    position: absolute;
+    display: none;
+    background-color: #2a2a2a;
+    border-radius: 18px;
+
+    svg {
+        width: 20px;
+        height: 20px;
+        fill: #82eacf;
+    }
+
+    button {
+        background-color: #2a2a2a;
+        border: unset;
+        border-radius: 18px 0 0 18px;
+        padding: 2px 5px 5px 5px;
+
+        &:hover {
+            background-color: unset;
+        }
+
+        &:last-child {
+            border-radius: 0 18px 18px 0;
+        }
+    }
+}

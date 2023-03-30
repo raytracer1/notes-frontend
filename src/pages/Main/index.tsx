@@ -5,11 +5,11 @@ import Home from '../Home';
 import Space from '../Space';
 import Setting from '../Setting';
 import Profile from '../Profile';
-import EditSpace from "../EditSpace";
-import CreateSpace from "../CreateSpace";
-import Post from "../Post";
-import CreatePost from "../CreatePost";
-import EditPost from "../EditPost";
+import EditSpace from '../EditSpace';
+import CreateSpace from '../CreateSpace';
+import Post from '../Post';
+import CreatePost from '../CreatePost';
+import EditPost from '../EditPost';
 import './style.scss';
 
 

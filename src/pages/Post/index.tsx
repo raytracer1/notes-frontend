@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import MDEditor from '@uiw/react-md-editor';
 import MarkdownPreview from '@uiw/react-markdown-preview';
-import { jsPDF } from "jspdf";
+import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -12,10 +12,11 @@ import {
 } from '../../store/reducers/space.reducer';
 import { ReactComponent as IconBackLeft }  from '../../assets/svg/back-left.svg';
 import { ReactComponent as IconHand }  from '../../assets/svg/hand.svg';
-import Spinner from "../../components/Spinner";
+import Spinner from '../../components/Spinner';
 import { formatDate } from '../../util/dateHelper';
+import { singleComment } from '../../interface';
+import Annotation from '../../containers/Annotation';
 import './style.scss';
-import { singleComment } from "../../interface";
 
 
 function Post() {
@@ -115,145 +116,151 @@ function Post() {
   }
 
   return (
-    <div className='post'>
-      {
-        getPostStatus === 'pending' && (
-          <div className='spinner-box'>
-            <Spinner />
-          </div>
-        )
-      }
-      {
-        getPostStatus === 'success' && (
-          <React.Fragment>
-            <div className='post-header'>
-              <div className='name-container'>
-                <a href={`/space/${space._id}`}>
-                  <div className='back-icon'><IconBackLeft /></div>
-                </a>
-                <span>{space.name}</span>
-              </div>
-              {
-                isAuthor ? (
-                  editButtonUI
-                ) : (
-                  saveButtonUI
-                )
-              }
+    <div className='post-container'>
+      <div className='post'>
+        {
+          getPostStatus === 'pending' && (
+            <div className='spinner-box'>
+              <Spinner />
             </div>
-            <div className='post-content-container'>
-              <div className='votes'>
-                <div className='vote-container'>
-                  <div className='up' onClick={(e: any) => {
-                    e.preventDefault();
-                    handlePostVote('up')}
-                  }>
-                    <IconHand />
-                  </div>
-                  <span>{postVote.filter((item) => item.vote === 'up').length}</span>
+          )
+        }
+        {
+          getPostStatus === 'success' && (
+            <React.Fragment>
+              <div className='post-header'>
+                <div className='name-container'>
+                  <a href={`/space/${space._id}`}>
+                    <div className='back-icon'><IconBackLeft /></div>
+                  </a>
+                  <span>{space.name}</span>
                 </div>
-                <div className='vote-container'>
-                  <div className='down' onClick={(e: any) => {
-                    e.preventDefault();
-                    handlePostVote('down')}
-                  }>
-                    <IconHand />
-                  </div>
-                  <span>{postVote.filter((item) => item.vote === 'down').length}</span>
-                </div>
-              </div>
-              <div className='post-content'>
-                <div className='post-title'>
-                  {post.title}
-                </div>
-                <div className='post-description'>
-                  <MarkdownPreview
-                    source={post.description}
-                    className='text-area'
-                  />
-                </div>
-              </div>
-            </div>
-            <div className='comment-container'>
-              <div className='comment'>
                 {
-                  getCommentsStatus === 'pending' && (
-                    <div className='spinner-box'>
-                      <Spinner />
-                    </div>
+                  isAuthor ? (
+                    editButtonUI
+                  ) : (
+                    saveButtonUI
                   )
                 }
-                {
-                  getCommentsStatus === 'success' && comments.commentsList.length > 0 && (
-                    comments.commentsList.map((item, index) => (
-                      <div key={index} className='comment-item'>
-                        <div className='image-box'>
-                          <a href={`/profile/${item.comment.author.userName}`}>
-                            <img src={item.comment.author.imageUrl} alt='user'/>
-                          </a>
-                        </div>
-                        <div className='content-box'>
-                          <div className='author'>
+              </div>
+              <div className='post-content-container'>
+                <div className='votes'>
+                  <div className='vote-container'>
+                    <div className='up' onClick={(e: any) => {
+                      e.preventDefault();
+                      handlePostVote('up')}
+                    }>
+                      <IconHand />
+                    </div>
+                    <span>{postVote.filter((item) => item.vote === 'up').length}</span>
+                  </div>
+                  <div className='vote-container'>
+                    <div className='down' onClick={(e: any) => {
+                      e.preventDefault();
+                      handlePostVote('down')}
+                    }>
+                      <IconHand />
+                    </div>
+                    <span>{postVote.filter((item) => item.vote === 'down').length}</span>
+                  </div>
+                </div>
+                <div className='post-annotation'>
+                  <Annotation>
+                    <div className='post-content'>
+                      <div className='post-title'>
+                        {post.title}
+                      </div>
+                      <div className='post-description'>
+                        <MarkdownPreview
+                          source={post.description}
+                          className='text-area'
+                        />
+                      </div>
+                    </div>
+                  </Annotation>
+                </div>
+              </div>
+              <div className='comment-container'>
+                <div className='comment'>
+                  {
+                    getCommentsStatus === 'pending' && (
+                      <div className='spinner-box'>
+                        <Spinner />
+                      </div>
+                    )
+                  }
+                  {
+                    getCommentsStatus === 'success' && comments.commentsList.length > 0 && (
+                      comments.commentsList.map((item, index) => (
+                        <div key={index} className='comment-item'>
+                          <div className='image-box'>
                             <a href={`/profile/${item.comment.author.userName}`}>
-                              {item.comment.author.userName}
+                              <img src={item.comment.author.imageUrl} alt='user'/>
                             </a>
-                            <div className='votes'>
-                              <div className='vote-container'>
-                                <div className='up' onClick={(e:any) => {
-                                  e.preventDefault();
-                                  handleCommentVote(item, 'up');
-                                }}>
-                                  <IconHand />
+                          </div>
+                          <div className='content-box'>
+                            <div className='author'>
+                              <a href={`/profile/${item.comment.author.userName}`}>
+                                {item.comment.author.userName}
+                              </a>
+                              <div className='votes'>
+                                <div className='vote-container'>
+                                  <div className='up' onClick={(e:any) => {
+                                    e.preventDefault();
+                                    handleCommentVote(item, 'up');
+                                  }}>
+                                    <IconHand />
+                                  </div>
+                                  <span>{item.voteList.filter((item) => item.vote === 'up').length}</span>
                                 </div>
-                                <span>{item.voteList.filter((item) => item.vote === 'up').length}</span>
-                              </div>
-                              <div className='vote-container'>
-                                <div className='down' onClick={(e:any) => {
-                                  e.preventDefault();
-                                  handleCommentVote(item, 'down');
-                                }}>
-                                  <IconHand />
+                                <div className='vote-container'>
+                                  <div className='down' onClick={(e:any) => {
+                                    e.preventDefault();
+                                    handleCommentVote(item, 'down');
+                                  }}>
+                                    <IconHand />
+                                  </div>
+                                  <span>{item.voteList.filter((item) => item.vote === 'down').length}</span>
                                 </div>
-                                <span>{item.voteList.filter((item) => item.vote === 'down').length}</span>
                               </div>
                             </div>
+                            <div className='content'>
+                            <MarkdownPreview
+                              source={item.comment.content}
+                            />
+                            </div>
+                            <div className='date'>{formatDate(item.comment.createdAt)}</div>
                           </div>
-                          <div className='content'>
-                          <MarkdownPreview
-                            source={item.comment.content}
-                          />
-                          </div>
-                          <div className='date'>{formatDate(item.comment.createdAt)}</div>
                         </div>
-                      </div>
-                    ))
-                  )
-                }
-              </div>
-              <div className='create-comment'>
-                <MDEditor
-                  className='text-area'
-                  value={content}
-                  preview='edit'
-                  onChange={(e) => {
-                    if (e !== undefined) {
-                      setContent(e)
-                    }
-                  }}
-                />
-                <div className='button-container'>
-                  <Button color='primary'
-                    onClick={handleCreate}
-                    disabled={createCommentStatus === 'pending' || !authStatus || content === ''}
-                  >
-                    comment
-                  </Button>
+                      ))
+                    )
+                  }
+                </div>
+                <div className='create-comment'>
+                  <MDEditor
+                    className='text-area'
+                    value={content}
+                    preview='edit'
+                    onChange={(e) => {
+                      if (e !== undefined) {
+                        setContent(e)
+                      }
+                    }}
+                  />
+                  <div className='button-container'>
+                    <Button color='primary'
+                      onClick={handleCreate}
+                      disabled={createCommentStatus === 'pending' || !authStatus || content === ''}
+                    >
+                      comment
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </React.Fragment>
-        )
-      }
+            </React.Fragment>
+          )
+        }
+      </div>
     </div>
   );
 }

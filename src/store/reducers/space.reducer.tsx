@@ -432,7 +432,7 @@ export const spaceSlice = createSlice({
     });
     builder.addCase(createPostAction.fulfilled, (state, action) => {
       state.createPost = 'success';
-      state.post = action.payload;
+      state.post.post = action.payload;
     });
     builder.addCase(createPostAction.rejected, (state, action) => {
       state.createPost = 'failed';

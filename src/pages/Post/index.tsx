@@ -164,21 +164,19 @@ function Post() {
                     <span>{postVote.filter((item) => item.vote === 'down').length}</span>
                   </div>
                 </div>
-                <div className='post-annotation'>
-                  <Annotation>
-                    <div className='post-content'>
-                      <div className='post-title'>
-                        {post.title}
-                      </div>
-                      <div className='post-description'>
-                        <MarkdownPreview
-                          source={post.description}
-                          className='text-area'
-                        />
-                      </div>
+                <Annotation>
+                  <div className='post-content'>
+                    <div className='post-title'>
+                      {post.title}
                     </div>
-                  </Annotation>
-                </div>
+                    <div className='post-description'>
+                      <MarkdownPreview
+                        source={post.description}
+                        className='text-area'
+                      />
+                    </div>
+                  </div>
+                </Annotation>
               </div>
               <div className='comment-container'>
                 <div className='comment'>

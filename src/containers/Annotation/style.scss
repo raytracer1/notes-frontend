@@ -5,9 +5,7 @@
 }
 
 .annotation-area {
-    @media(max-width:767px) {
-        width: 100%;
-    }
+    width: 100%;
 }
 
 .annotation {
@@ -30,30 +28,71 @@
     }
 }
 
-.annotation-buttons {
+.annotation-edit {
     position: absolute;
-    display: none;
+    visibility: hidden;
     background-color: #2a2a2a;
+    display: flex;
+    width: 270px;
     border-radius: 18px;
+    padding: 0 9px;
 
-    svg {
-        width: 20px;
-        height: 20px;
-        fill: #82eacf;
-    }
-
-    button {
+    .buttons-container {
+        position: absolute;
+        display: flex;
         background-color: #2a2a2a;
-        border: unset;
-        border-radius: 18px 0 0 18px;
-        padding: 2px 5px 5px 5px;
-
-        &:hover {
+        border-radius: 18px 0 0 0;
+        margin-left: -5px;
+        button {
+            border: unset;
             background-color: unset;
-        }
+            padding: 2px 5px;
+            border-radius: 18px 0 0 0;
 
-        &:last-child {
-            border-radius: 0 18px 18px 0;
+            svg {
+                width: 20px;
+                height: 20px;
+                fill: #82eacf;
+            }
+
+            &:active {
+                background-color: unset;
+            }
         }
     }
+
+    .edit-box {
+        border: unset;
+        border-radius: 18px;
+        outline: none !important;
+        width: 100%;
+        flex-wrap: wrap;
+        background-color: #2a2a2a;
+        color:#82eacf;
+        word-wrap: break-word;
+        overflow-y: hidden;
+
+        @include roboto-sans-regular;
+        font-weight: 500;
+        font-size: 16px;
+        letter-spacing: 0.1rem;
+        line-height: 28px;
+    }
+}
+
+.annotation-view {
+    position: absolute;
+    visibility: hidden;
+    background-color: #2a2a2a;
+    width: 270px;
+    height: 100px;
+    border-radius: 18px;
+    padding: 0 9px;
+    color:#82eacf;
+
+    @include roboto-sans-regular;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.1rem;
+    line-height: 28px;
 }

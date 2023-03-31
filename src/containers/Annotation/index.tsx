@@ -1,14 +1,15 @@
-import React, { PropsWithChildren, useEffect } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 import Highlighter from 'web-highlighter';
 import { Button } from 'reactstrap';
 import { ReactComponent as IconAnnotate }  from '../../assets/svg/annotate.svg';
 import { ReactComponent as IconCancel }  from '../../assets/svg/cancel.svg';
 import './style.scss';
 
+const PLACEHOLDER = '         ';
+
 let curretAnnotate = {
   status: 'init',
   id: '',
-  text: '',
 };
 
 function getPosition($node: HTMLElement | null) {
@@ -27,61 +28,87 @@ function getPosition($node: HTMLElement | null) {
   return offset;
 }
 
-const displayButtons = (id: string, $node: HTMLElement, highlighter: Highlighter) => {
-  const buttons = document.getElementById('annotation-buttons');
+const displayEdit = ($node: HTMLElement) => {
+  const container = document.getElementById('annotation-edit');
   const offset = getPosition($node);
-  if (buttons) {
-    buttons.setAttribute('style',
+  if (container) {
+    container.setAttribute('style',
       `top: ${offset.top + $node.offsetHeight + 2}px;
-      left: ${offset.left + $node.offsetWidth / 2 - 30}px;
-      display: block`
+      left: ${offset.left + $node.offsetWidth / 2 - 135}px;
+      visibility: visible`
     );
+    const edit = document.getElementById('edit-box');
+    if (edit) {
+      edit.focus();
+    }
   }
 };
 
-const disappearButtons = () => {
-  const buttons = document.getElementById('annotation-buttons');
-  if (buttons) {
-    buttons.setAttribute('style',
-      'display: none'
+const disappearEdit = () => {
+  const container = document.getElementById('annotation-edit');
+  if (container) {
+    container.setAttribute('style',
+      'visibility: hidden'
     );
   }
 };
 
 const createAnnotate = (id: string, text: string) => {
-  const lists = document.getElementById('annotation-list');
-  if (lists) {
-    const $div = document.createElement('div');
-    $div.dataset['id'] = id;
-    $div.textContent = text;
-    lists.appendChild($div);
-  }
+  localStorage.setItem(`annotate-${id}`, text.slice(PLACEHOLDER.length));
 };
 
 interface IAnnotationProps {
 }
 
+const displayView = ($node: HTMLElement) => {
+  const container = document.getElementById('annotation-view');
+  const offset = getPosition($node);
+  if (container) {
+    container.setAttribute('style',
+      `top: ${offset.top - $node.offsetHeight - 82}px;
+      left: ${offset.left + $node.offsetWidth / 2 - 135}px;
+      visibility: visible`
+    );
+  }
+};
+
+const disappearView = () => {
+  const container = document.getElementById('annotation-view');
+  if (container) {
+    container.setAttribute('style',
+      'visibility: hidden'
+    );
+  }
+};
+
 const Annotation = ({
   children,
 } : PropsWithChildren<IAnnotationProps> ) => {
 
+  const [curAnnotateEdit, setCurAnnotateEdit] = useState<string>(PLACEHOLDER);
+  const [curAnnotateView, setCurAnnotateView] = useState<string>(PLACEHOLDER);
+
   const highlighter = new Highlighter({
     wrapTag: 'i',
-    exceptSelectors: ['.annotation-tip', '.highlight'],
+    exceptSelectors: ['.annotation-edit', '.highlight'],
     style: {
       className: 'highlight',
     },
   });
 
-  // add some listeners to handle interaction, such as hover
   highlighter
   .on('selection:hover', ({id}) => {
-    // display different bg color when hover
     highlighter.addClass('highlight-wrap-hover', id);
+    const nodes = highlighter.getDoms(id);
+    const annotate = localStorage.getItem(`annotate-${id}`); 
+    if (annotate) {
+      setCurAnnotateView(annotate);
+      displayView(nodes[0]);
+    }
   })
   .on('selection:hover-out', ({id}) => {
-    // remove the hover effect when leaving
     highlighter.removeClass('highlight-wrap-hover', id);
+    disappearView();
   })
   .on('selection:create', ({sources}) => {
     sources.forEach(s => {
@@ -91,8 +118,7 @@ const Annotation = ({
       }
       curretAnnotate.id = s.id;
       curretAnnotate.status = 'triggering';
-      curretAnnotate.text += ' ' + s.text;
-      displayButtons(s.id, nodes[0], highlighter);
+      displayEdit(nodes[0]);
     });
   });
 
@@ -103,7 +129,7 @@ const Annotation = ({
         $root: hightLightArea
       });
     }
-    highlighter.run();
+    // highlighter.run();
   // eslint-disable-next-line
   }, []);
 
@@ -112,17 +138,17 @@ const Annotation = ({
     highlighter.remove(curretAnnotate.id);
     curretAnnotate.status = 'init';
     curretAnnotate.id = '';
-    curretAnnotate.text = '';
-    disappearButtons();
+    disappearEdit();
+    setCurAnnotateEdit(PLACEHOLDER);
   }
 
   const handleAnnotate = (e: any) => {
     e.preventDefault();
     if (curretAnnotate.status === 'triggering') {
-      disappearButtons();
-      createAnnotate(curretAnnotate.id, curretAnnotate.text);
+      disappearEdit();
+      setCurAnnotateEdit(PLACEHOLDER);
+      createAnnotate(curretAnnotate.id, curAnnotateEdit);
       curretAnnotate.status = 'finished';
-      curretAnnotate.text = '';
     }
   }
 
@@ -131,24 +157,34 @@ const Annotation = ({
       <div id='annotation-area' className='annotation-area'>
         {children}
       </div>
-      <div className='annotation'>
-        <div className='annotation-title'>
-          annotation
+      <div id='annotation-edit' className='annotation-edit'>
+        <div className='buttons-container'>
+          <Button color='primary'
+            onClick={handleCancel}
+          >
+            <IconCancel />
+          </Button>
+          <Button color='primary'
+            onClick={handleAnnotate}
+            disabled={curAnnotateEdit === PLACEHOLDER}
+          >
+            <IconAnnotate />
+          </Button>
         </div>
-        <div className='annotation-list' id='annotation-list'>
-        </div>
+        <textarea
+          className='edit-box'
+          id='edit-box'
+          value={curAnnotateEdit}
+          onChange={(e) => {
+            if (e.target.value.length >= PLACEHOLDER.length) {
+              setCurAnnotateEdit(e.target.value)
+            }
+          }}
+          rows={4}
+        />
       </div>
-      <div id='annotation-buttons' className='annotation-buttons'>
-        <Button color='primary'
-          onClick={handleCancel}
-        >
-          <IconCancel />
-        </Button>
-        <Button color='primary'
-          onClick={handleAnnotate}
-        >
-          <IconAnnotate />
-        </Button>
+      <div id='annotation-view' className='annotation-view'>
+        <p>{curAnnotateView}</p>
       </div>
     </React.Fragment>
   )

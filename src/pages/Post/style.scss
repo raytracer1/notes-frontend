@@ -135,34 +135,24 @@
             margin-bottom: 10px;
         }
     
-        .post-annotation {
-            display: flex;
-            background-color: #f4f4f4;
+        .post-content {
+            padding: 20px 20px;
+            min-height: 90vh;
+            background-color: #fff;
+            border-radius: 8px;
 
-            .post-content {
-                padding: 20px 20px;
-                min-height: 90vh;
-                width: 800px;
-                background-color: #fff;
-                border-radius: 8px;
+            .post-title {
+                display: flex;
+                justify-content: center;
 
-                @media(max-width:767px) {
-                    width: 100%;
-                }
+                @include barlow-condensed;
+                font-weight: 600;
+                font-size: 30px;
+                text-transform: capitalize;
+            }
 
-                .post-title {
-                    display: flex;
-                    justify-content: center;
-
-                    @include barlow-condensed;
-                    font-weight: 600;
-                    font-size: 30px;
-                    text-transform: capitalize;
-                }
-
-                .post-description {
-                    font-size: 20px;
-                }
+            .post-description {
+                font-size: 20px;
             }
         }
     }

@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Button } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation  } from "react-router-dom";
+import { Button } from 'reactstrap';
 import LoginModal from './LoginModal';
 import SignUpModal from './SignUpModal';
 import UserTooltip from './UserTooltip';
@@ -10,8 +10,8 @@ import {
   signupUserAction, clearSignupErrAction,
 } from '../../store/reducers/auth.reducer';
 import { ReactComponent as IconBlackHole } from '../../assets/svg/black-hole.svg';
-import LOGO from '../../assets/image/logo192.png';
 import './style.scss';
+
 
 function Header() {
   const authStatus = useAppSelector((state) => state.auth.authenticated);
@@ -22,13 +22,27 @@ function Header() {
   const signupErr = useAppSelector((state) => state.auth.signupErr);
   const dispatch = useAppDispatch();
 
-  const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState<boolean>(false);
 
-  const toggleNav = () => {
-    setIsNavOpen(!isNavOpen);
+  let location = useLocation();
+
+  const getTitle = (path: string) => {
+    const temp = path.split('/');
+    if (temp[1] === 'space' && temp[2] === 'create') {
+      return 'Create Learning Space';
+    } else if (temp[1] === 'space' && temp[3] === 'post' && temp[4] === 'create') {
+      return 'Create Learning Post';
+    } else {
+      return path.split('/')[1] || 'home';
+    }
   }
+
+  const [title, setTitle] = useState<string>(getTitle(location.pathname) || 'home');
+
+  useEffect(() => {
+    setTitle(getTitle(location.pathname));
+  }, [location]);
 
   const toggleLoginModal = () => {
     setIsLoginModalOpen(!isLoginModalOpen);
@@ -70,57 +84,30 @@ function Header() {
 
   return (
     <div className='header'>
-      <Navbar dark expand='md'>
-        <div className='header-container'>
-          <div className='toggler'>
-            <NavbarToggler onClick={toggleNav} />
-            <NavbarBrand className='logo' href="/">
-              <img className='img' src={LOGO} alt='log' />
-            </NavbarBrand>
-            {
-              authStatus === true && (
-                <div className='user mobile'>
-                  {userIcon}
-                </div>
-              )
-            }
-          </div>
-          <Collapse isOpen={isNavOpen} navbar>
-            <Nav navbar>
-              <NavItem>
-                <NavLink className='nav-link' to='/'>
-                  <span className='fa fa-home fa-lg'></span>Home
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink className='nav-link' to='/space/create'>
-                  <IconBlackHole />Create Learning Space
-                </NavLink>
-              </NavItem>
-            </Nav>
-            {
-              authStatus === false ? (
-                <Nav className='button' navbar>
-                  <NavItem>
-                    <Button outline onClick={toggleLoginModal}>
-                      <span className='fa fa-sign-in fa-lg'></span>Login
-                    </Button>
-                  </NavItem>
-                  <NavItem>
-                    <Button outline onClick={toggleSignUpModal}>
-                      <span className='fa fa-user fa-lg'></span>Sign Up
-                    </Button>
-                  </NavItem>
-                </Nav>
-              ) : (
-                <div className='user desktop'>
-                  {userIcon}
-                </div>
-              )
-            }
-          </Collapse>
+      <div className='header-container'>
+        <div className='logo'>
+          <a href='/'><IconBlackHole /></a>
         </div>
-      </Navbar>
+        <div className='title'>
+          {title}
+        </div>
+        {
+          authStatus === false ? (
+            <div className='button'>
+              <Button outline onClick={toggleLoginModal}>
+                <span className='fa fa-sign-in fa-lg'></span>Login
+              </Button>
+              <Button outline onClick={toggleSignUpModal}>
+                <span className='fa fa-user fa-lg'></span>Sign Up
+              </Button>
+            </div>
+          ) : (
+            <div className='user'>
+              {userIcon}
+            </div>
+          )
+        }
+      </div>
       <LoginModal
         isModalOpen={isLoginModalOpen}
         toggleModal={toggleLoginModal}

@@ -25,8 +25,8 @@ function JoinList({
           joinList.length === 0 ? (
             <div className='no-joins'>No Joins</div>
           ) : (
-            joinList.map((item: any) => (
-              <div className='join-list'>
+            joinList.map((item: any, index:number) => (
+              <div className='join-list' key={index}>
                 <div className='user-name'>
                   <a href={`/profile/${item.user.userName}`}>
                     {item.user.userName}

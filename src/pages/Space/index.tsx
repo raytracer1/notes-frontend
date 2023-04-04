@@ -100,9 +100,12 @@ function Space() {
         )
       }
       {
-        getSpaceStatus === 'failed' || !spaceId ? (
+        getSpaceStatus === 'failed' || !spaceId && (
           <div>no such space</div>
-        ) : (
+        )
+      }
+      {
+        getSpaceStatus === 'success' && spaceId && (
           <div className='space-container'>
             <div className='space-header'>
               <div className={cn('name-container', { hasButton: authStatus})}>

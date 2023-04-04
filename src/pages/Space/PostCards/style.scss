@@ -35,6 +35,10 @@
             .card-item {
                 height: 260px;
 
+                @media(max-width:767px) {
+                    height: calc(100vw - 80px);
+                }
+
                 .card-info {
                     height: 100%;
                 }

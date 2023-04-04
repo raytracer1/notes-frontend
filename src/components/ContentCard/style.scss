@@ -16,7 +16,7 @@
         background-color: #fff;
 
         @media(max-width:767px) {
-            height: 350px;
+            height: calc(100vw - 48px);
         }
 
         &:hover {

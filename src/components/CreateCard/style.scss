@@ -6,6 +6,7 @@
 
     @media(max-width:767px) {
         width: 100%;
+        padding: 12px 12px;
     }
 
     .card-item {
@@ -23,7 +24,7 @@
         }
 
         @media(max-width:767px) {
-            height: 350px;
+            height: calc(100vw - 48px);
         }
 
         .first {

@@ -100,7 +100,7 @@ function Space() {
         )
       }
       {
-        getSpaceStatus === 'failed' || !spaceId && (
+        (getSpaceStatus === 'failed' || !spaceId) && (
           <div>no such space</div>
         )
       }

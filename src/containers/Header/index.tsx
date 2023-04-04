@@ -95,7 +95,7 @@ function Header() {
           authStatus === false ? (
             <div className='button'>
               <Button outline onClick={toggleLoginModal}>
-                <span className='fa fa-sign-in fa-lg'></span>Login
+                <span className='fa fa-sign-in fa-lg'></span>Log in
               </Button>
               <Button outline onClick={toggleSignUpModal}>
                 <span className='fa fa-user fa-lg'></span>Sign Up

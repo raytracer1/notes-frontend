@@ -1,6 +1,6 @@
 import { Gender, Country } from '../interface';
 
-export const baseURL = 'https://3.83.251.117:3444';
+export const baseURL = 'https://18.163.190.158:3444';
 
 export const GENDER_OPTIONS : Gender[] = [
     { value : 'secret' },

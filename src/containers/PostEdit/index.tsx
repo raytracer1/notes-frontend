@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { Button } from 'reactstrap';
 import MDEditor from '@uiw/react-md-editor';
 import cn from 'classnames';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  refreshUserAction,
+} from '../../store/reducers/auth.reducer';
 import { ReactComponent as IconBackLeft }  from '../../assets/svg/back-left.svg';
 import './style.scss';
 
@@ -35,11 +38,17 @@ function PostEdit({
   error,
 } : IPostEditProps) {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const authStatus = useAppSelector((state) => state.auth.authenticated);
   const space = useAppSelector((state) => state.space.space.space);
 
   const [posted, setPosted] = useState<boolean>(false);
+
+  useEffect(() => {
+    dispatch(refreshUserAction());
+  // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     if (!authStatus) {

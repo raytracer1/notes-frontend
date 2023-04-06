@@ -4,7 +4,10 @@ import { Button } from 'reactstrap';
 import cn from 'classnames';
 import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  refreshUserAction,
+} from '../../store/reducers/auth.reducer';
 import ImageUpload from "../../components/ImageUpload";
 import Spinner from "../../components/Spinner";
 import imgError from '../../assets/image/demo.jpg';
@@ -50,10 +53,16 @@ function SpaceEdit({
   error,
 } : ISpaceEditProps) {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [posted, setPosted] = useState<boolean>(false);
 
   const authenticated = useAppSelector((state) => state.auth.authenticated);
+
+  useEffect(() => {
+    dispatch(refreshUserAction());
+  // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     if (!authenticated) {

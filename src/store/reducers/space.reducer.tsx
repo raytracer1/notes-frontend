@@ -456,7 +456,7 @@ export const spaceSlice = createSlice({
     builder.addCase(updatePostAction.fulfilled, (state, action) => {
       state.updatePost = 'success';
       state.post = action.payload;
-      state.space.space = action.payload.space;
+      state.space.space = action.payload.post.space;
     });
     builder.addCase(updatePostAction.rejected, (state, action) => {
       state.updatePost = 'failed';

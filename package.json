@@ -169,6 +169,5 @@
     "presets": [
       "react-app"
     ]
-  },
-  "homepage":"/"
+  }
 }

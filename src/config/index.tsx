@@ -1,6 +1,6 @@
 import { Gender, Country } from '../interface';
 
-export const baseURL = 'http://phynotes.com:3001';
+export const baseURL = 'http://phynotes.com:2052';
 
 export const GENDER_OPTIONS : Gender[] = [
     { value : 'secret' },
